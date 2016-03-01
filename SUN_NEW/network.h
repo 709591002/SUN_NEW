@@ -12,7 +12,7 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
-
+#include "other.h"
 using namespace std;
 
 //ÍøÂçÀàĞÍÃ¶¾Ù

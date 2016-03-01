@@ -47,18 +47,18 @@ network::network(string in)
 	//检查文件是否读取失败
 	if (file.fail())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "读取文件失败，路径为： " << in.c_str() << "，已自动将本对象替换为 空网络。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		new (this) network(1, DIRECT_WITH_WEIGHT);
 	}
 	//文件没有读取失败，正常进行
 	else 
 	{
 		int error = 0;				//错误标记
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+		CCol(0,1);
 		cout << "读取文件成功，路径为： " << in.c_str()  << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		string line;				//储存临时一行
 		
 		getline(file, line);		//开始读取节点信息，即第一行
@@ -112,9 +112,9 @@ network::network(string in)
 				}
 
 		}
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+			CCol(0,1);
 			cout << "普通格式文件读取完毕，路径为： " << in.c_str() << endl;
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+			CCol(0,0);
 		}
 		//判断为pajek格式成功
 		else if(tempNum == "*vertices")
@@ -183,9 +183,9 @@ network::network(string in)
 			
 			type = DIRECT_WITH_WEIGHT;		//默认网络类型
 
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+			CCol(0,1);
 			cout << "pajek格式文件读取完毕，路径为： " << in.c_str() << endl;
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+			CCol(0,0);
 
 		}
 		//什么格式都不是，返回错误
@@ -196,9 +196,9 @@ network::network(string in)
 
 		if (error)
 		{
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+			CCol(0,2);
 			cout << "文件格式错误，路径为： " << in.c_str() << "，已自动将本对象替换为 空网络。" << endl;
-			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+			CCol(0,0);
 			nodes.clear();		//清空节点信息
 			new (this) network(0, UN_DIRECT_WITH_WEIGHT);
 		}
@@ -267,10 +267,10 @@ int network::addLinkToNetwork(int from, int to //从from到to增加链接
 		error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误，无法为 网络"<<netid<<" 添加从 " << from << " -->> " << to << " 的链接，因为越界了。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		
 		return error;
 	}
@@ -301,10 +301,10 @@ int network::delLinkFromNetwork(int from, int to)//从from到to删除链接
 		error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法删除 网络 "<<netid<<"的 " << from << " --> " << to << " 的链接，因为越界了。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		
 		return error;
 	}
@@ -320,10 +320,10 @@ int network::delLinkFromNetwork(int from, int to)//从from到to删除链接
 		error = NOLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法删除从 " << from << " --> " << to << " 的链接，因为没有链接。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -343,10 +343,10 @@ int network::addNodesToNetwork(int N)//为网络增加N个节点
 	{
 		int error=1;
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法为 网络 "<<netid<<" 增加 " << N << " 个节点。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -372,10 +372,10 @@ int network::delNodeFromNetwork(int nodeid) //要删除节点编号
 		error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法删除 网络"<<netid<<" 的 节点"<<nodeid<<" ，它还存在多网络链接 " << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -386,10 +386,10 @@ int network::delNodeFromNetwork(int nodeid) //要删除节点编号
 		error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法删除节点 " << nodeid <<"因为它越界了"<< endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -400,10 +400,10 @@ int network::delNodeFromNetwork(int nodeid) //要删除节点编号
 		error = REDUNDANTLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法再次删除已删除的节点 " << nodeid << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -474,10 +474,10 @@ int network::setLinkWeight(int from, int to, double weight)
 	{
 		int error = BEYONDLIMIT;
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误，无法设置 网络" <<netid<< " 的 " << from << " -->> " << to << " 的权值，因为越界。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return error;
 	}
 
@@ -492,10 +492,10 @@ int network::setLinkWeight(int from, int to, double weight)
 		int error = NOLINK;
 		
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误，无法设置 网络"<<netid<<" 的 " << from << " -->> " << to << " 的权值，因为出度信息不存在。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -511,10 +511,10 @@ int network::setLinkWeight(int from, int to, double weight)
 		int error = NOLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误，无法设置 网络" << netid << " 的 " << from << " -->> " << to << " 的权值，因为入度信息不存在。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -529,10 +529,10 @@ double network::getLinkWeight(int from, int to)
 	{
 		int error = BEYONDLIMIT;
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误，无法获取从 网络" << netid << " 的 " << from << " -->> " << to << " 的权值，因为越界了。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return error;
 	}
 
@@ -546,10 +546,10 @@ double network::getLinkWeight(int from, int to)
 		int error = NOLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误，无法获取从 网络" << netid << " 的 " << from << " -->> " << to << " 的权值，因为没有链接了。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -560,9 +560,9 @@ void network::outputNetwork(string out) //输出流
 {
 	if (out.empty())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "路径不允许为空，已自动返回。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return;
 	}
 
@@ -580,19 +580,19 @@ void network::outputNetwork(string out) //输出流
 	{
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "创建文件路径错误： " << out.c_str() <<" ，请检查路径是否正确！"<< endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return;
 	}
 
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout << "正在创建普通格式的网络信息文件： " << out.c_str() <<  endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 	//开始写入文件
 	file << nodeNum <<" "<< type << endl;
@@ -615,9 +615,9 @@ void network::outputNetwork_pajek(string out)
 {
 	if (out.empty())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "路径不允许为空，已自动返回。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return;
 	}
 
@@ -635,17 +635,17 @@ void network::outputNetwork_pajek(string out)
 	{
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "创建文件路径错误： " << out.c_str() << " ，请检查路径是否正确！" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return;
 	}
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout << "正在创建普通Pajek格式的网络信息文件： " << out.c_str() << endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 	//开始写入文件
 	file << "*vertices "<< nodeNum<<" " << endl;
@@ -686,9 +686,9 @@ void network::outputNetwork_pajek_frac(string out)
 {
 	if (out.empty())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "路径不允许为空，已自动返回。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return;
 	}
 
@@ -706,17 +706,17 @@ void network::outputNetwork_pajek_frac(string out)
 	{
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "创建文件路径错误： " << out.c_str() << " ，请检查路径是否正确！" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return;
 	}
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout << "正在创高级Pajek格式的网络信息文件： " << out.c_str() << endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 	//开始写入文件
 	file << "*vertices " << nodeNum << " " << endl;
