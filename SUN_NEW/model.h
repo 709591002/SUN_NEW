@@ -5,6 +5,7 @@
 #include <map>
 #include <iostream>
 #include "error.h"
+#include "windows.h"
 #include "stdafx.h"
 #include "network.h"
 #include "multiNet.h"

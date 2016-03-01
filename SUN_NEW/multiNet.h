@@ -5,31 +5,27 @@
 #include <map>
 #include <iostream>
 #include "error.h"
-
-#ifdef _WIN32
 #include "windows.h"
-#endif
-
 #include "stdafx.h"
 #include "network.h"
 
 using namespace std;
 
-//å¤šç½‘ç»œç½‘ç»œç±»å‹
+//¶àÍøÂçÍøÂçÀàĞÍ
 enum multiType {
-	INTER_DEPENDENT = 0,  //ç›¸ä¾ç½‘ç»œï¼ŒåŒç½‘ç»œ
-	INTER_CONNECT = 1,	//ç›¸è¿ç½‘ç»œï¼ŒåŒç½‘ç»œ
-	MULTI = 2				//çº¯å¤šç½‘ç»œï¼Œæ•°é‡æ— ä¸Šé™
+	INTER_DEPENDENT = 0,  //ÏàÒÀÍøÂç£¬Ë«ÍøÂç
+	INTER_CONNECT = 1,	//ÏàÁ¬ÍøÂç£¬Ë«ÍøÂç
+	MULTI = 2				//´¿¶àÍøÂç£¬ÊıÁ¿ÎŞÉÏÏŞ
 };
 
 class multiNet
 {
 public:
-	int netNum;					//å­ç½‘ç»œæ•°é‡
-	vector<network> nets;		//å­ç½‘ç»œå®¹å™¨
-	int  nodeNum;				//èŠ‚ç‚¹æ•°é‡
-	int  linkNum;				//è¾¹çš„æ•°é‡
-	int type;					//ç½‘ç»œç±»å‹
+	int netNum;					//×ÓÍøÂçÊıÁ¿
+	vector<network> nets;		//×ÓÍøÂçÈİÆ÷
+	int  nodeNum;				//½ÚµãÊıÁ¿
+	int  linkNum;				//±ßµÄÊıÁ¿
+	int type;					//ÍøÂçÀàĞÍ
 
 	multiNet();
 	multiNet(network A, network B, multiType type);

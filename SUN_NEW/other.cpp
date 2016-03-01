@@ -1,22 +1,6 @@
 #include "other.h"
 
-#ifdef _WIN32
-#include <direct.h>
-#include <io.h>
-#else
-#include <stdarg.h>
-#include <sys/stat.h>
-#endif
-
-#ifdef _WIN32
-#define ACCESS _access
-#define MKDIR(a) _mkdir((a))
-#else
-#define ACCESS access
-#define MKDIR(a) mkdir((a),0755)
-#endif
-
-//åˆ›å»ºç›®å½•ï¼Œæ”¯æŒlinux
+//´´½¨Ä¿Â¼£¬Ö§³Ölinux
 int CreatDir(char *pDir)
 {
 	int i = 0;
@@ -32,14 +16,14 @@ int CreatDir(char *pDir)
 	pszDir = strdup(pDir);
 	iLen = strlen(pszDir);
 
-	// åˆ›å»ºä¸­é—´ç›®å½•  
+	// ´´½¨ÖĞ¼äÄ¿Â¼  
 	for (i = 0; i < iLen; i++)
 	{
 		if (pszDir[i] == '\\' || pszDir[i] == '/')
 		{
 			pszDir[i] = '\0';
 
-			//å¦‚æœä¸å­˜åœ¨,åˆ›å»º  
+			//Èç¹û²»´æÔÚ,´´½¨  
 			iRet = ACCESS(pszDir, 0);
 			if (iRet != 0)
 			{
@@ -49,7 +33,7 @@ int CreatDir(char *pDir)
 					return -1;
 				}
 			}
-			//æ”¯æŒlinux,å°†æ‰€æœ‰\æ¢æˆ/  
+			//Ö§³Ölinux,½«ËùÓĞ\»»³É/  
 			pszDir[i] = '/';
 		}
 	}
@@ -59,24 +43,24 @@ int CreatDir(char *pDir)
 	return iRet;
 }
 
-//ä»æ–‡ä»¶åä¸­è·å–è·¯å¾„åï¼Œå¹¶åˆ›å»ºè·¯å¾„
+//´ÓÎÄ¼şÃûÖĞ»ñÈ¡Â·¾¶Ãû£¬²¢´´½¨Â·¾¶
 void GetDirAndCreate(string FullName)
 {
-	//è·å–ç›®å½•dir
+	//»ñÈ¡Ä¿Â¼dir
 	FullName = FullName.substr(0, FullName.find_last_of("/"));
 
-	//è½¬æ¢è¯»å–ç›®å½•çš„æ ¼å¼
+	//×ª»»¶ÁÈ¡Ä¿Â¼µÄ¸ñÊ½
 	char* temp;
 	const int len = FullName.length();
 	temp = new char[len + 1];
 	strcpy(temp, FullName.c_str());
 
-	//åˆ›å»ºç›®å½•
+	//´´½¨Ä¿Â¼
 	CreatDir(temp);
 
 }
 
-//åˆ¤æ–­ä¸€ä¸ªå­—ç¬¦ä¸²æ˜¯å¦ä¸ºæ•°å­—ï¼ˆè¯»å–æ–‡ä»¶åˆ¤æ–­ç”¨ï¼‰
+//ÅĞ¶ÏÒ»¸ö×Ö·û´®ÊÇ·ñÎªÊı×Ö£¨¶ÁÈ¡ÎÄ¼şÅĞ¶ÏÓÃ£©
 bool isNum(string str)
 {
 	stringstream sin(str);

@@ -1,17 +1,14 @@
-// stdafx.h : æ ‡å‡†ç³»ç»ŸåŒ…å«æ–‡ä»¶çš„åŒ…å«æ–‡ä»¶ï¼Œ
-// æˆ–æ˜¯ç»å¸¸ä½¿ç”¨ä½†ä¸å¸¸æ›´æ”¹çš„
-// ç‰¹å®šäºé¡¹ç›®çš„åŒ…å«æ–‡ä»¶
+// stdafx.h : ±ê×¼ÏµÍ³°üº¬ÎÄ¼şµÄ°üº¬ÎÄ¼ş£¬
+// »òÊÇ¾­³£Ê¹ÓÃµ«²»³£¸ü¸ÄµÄ
+// ÌØ¶¨ÓÚÏîÄ¿µÄ°üº¬ÎÄ¼ş
 //
 
 #pragma once
 
-#ifdef _WIN32
-#include "windows.h"
-#endif
-
 #include "targetver.h"
+#include "windows.h"
 #include <stdio.h>
-//#include <tchar.h>
+#include <tchar.h>
 #include <iostream>
 #include <vector>
 #include <map>
@@ -24,4 +21,4 @@ using namespace std;
 
 
 
-// TODO:  åœ¨æ­¤å¤„å¼•ç”¨ç¨‹åºéœ€è¦çš„å…¶ä»–å¤´æ–‡ä»¶
+// TODO:  ÔÚ´Ë´¦ÒıÓÃ³ÌĞòĞèÒªµÄÆäËûÍ·ÎÄ¼ş

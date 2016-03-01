@@ -1,215 +1,182 @@
 #include "node.h"
 
-//èŠ‚ç‚¹ç±»æ„é€ å‡½æ•°
+//½ÚµãÀà¹¹Ôìº¯Êı
 node::node(int id)
 {
-	adjOut.clear();			//åˆå§‹åŒ–å‡ºåº¦é‚»æ¥å®¹å™¨
-	numAdjOut = 0;			//åˆå§‹åŒ–å‡ºåº¦é‚»å±…æ•°é‡
-	adjIn.clear();			//åˆå§‹åŒ–å…¥åº¦é‚»æ¥å®¹å™¨
-	numAdjIn = 0;			//åˆå§‹åŒ–å…¥åº¦é‚»å±…æ•°é‡
+	adjOut.clear();			//³õÊ¼»¯³ö¶ÈÁÚ½ÓÈİÆ÷
+	numAdjOut = 0;			//³õÊ¼»¯³ö¶ÈÁÚ¾ÓÊıÁ¿
+	adjIn.clear();			//³õÊ¼»¯Èë¶ÈÁÚ½ÓÈİÆ÷
+	numAdjIn = 0;			//³õÊ¼»¯Èë¶ÈÁÚ¾ÓÊıÁ¿
 
-	adjMultiOut.clear();	//åˆå§‹åŒ–å¤šç½‘ç»œå‡ºåº¦é‚»æ¥èŠ‚ç‚¹ä¿¡æ¯
-	numAdjMultiOut=0;		//åˆå§‹åŒ–å¤šç½‘ç»œå‡ºåº¦é‚»å±…èŠ‚ç‚¹ä¸ªæ•°
-	adjMultiIn.clear();		//åˆå§‹åŒ–å¤šç½‘ç»œå…¥åº¦é‚»æ¥èŠ‚ç‚¹ä¿¡æ¯
-	numAdjMultiIn=0;		//åˆå§‹åŒ–å¤šç½‘ç»œå…¥åº¦é‚»å±…èŠ‚ç‚¹ä¸ªæ•°
+	adjMultiOut.clear();	//³õÊ¼»¯¶àÍøÂç³ö¶ÈÁÚ½Ó½ÚµãĞÅÏ¢
+	numAdjMultiOut=0;		//³õÊ¼»¯¶àÍøÂç³ö¶ÈÁÚ¾Ó½Úµã¸öÊı
+	adjMultiIn.clear();		//³õÊ¼»¯¶àÍøÂçÈë¶ÈÁÚ½Ó½ÚµãĞÅÏ¢
+	numAdjMultiIn=0;		//³õÊ¼»¯¶àÍøÂçÈë¶ÈÁÚ¾Ó½Úµã¸öÊı
 
-	strength = 0.0;			//åˆå§‹åŒ–èŠ‚ç‚¹æƒé‡
-	this->id = id;			//åˆå§‹åŒ–èŠ‚ç‚¹IDå·
-	status = NODE_ACTIVE;	//æ¿€æ´»è¯¥èŠ‚ç‚¹
+	strength = 0.0;			//³õÊ¼»¯½ÚµãÈ¨ÖØ
+	this->id = id;			//³õÊ¼»¯½ÚµãIDºÅ
+	status = NODE_ACTIVE;	//¼¤»î¸Ã½Úµã
 }
 
-//èŠ‚ç‚¹ç±»ææ„å‡½æ•°
+//½ÚµãÀàÎö¹¹º¯Êı
 node::~node()
 {
-	adjOut.clear();		//æ¸…ç©ºé‚»æ¥å®¹å™¨
+	adjOut.clear();		//Çå¿ÕÁÚ½ÓÈİÆ÷
 }
 
-//æ‰“å°ä¿¡æ¯
+//´òÓ¡ĞÅÏ¢
 void node::showNode()
 {
 	cout << endl;
 	cout << "---------------------------------------" << endl;
-	//æ‰“å°è¯¥èŠ‚ç‚¹åŸºç¡€ä¿¡æ¯
+	//´òÓ¡¸Ã½Úµã»ù´¡ĞÅÏ¢
 
-	//æ‰“å°èŠ‚ç‚¹åŸºæœ¬ä¿¡æ¯
-	cout <<"èŠ‚ç‚¹ç¼–å·ï¼š"<< id<<" ,èŠ‚ç‚¹æƒé‡ï¼š"<< strength << endl;
+	//´òÓ¡½Úµã»ù±¾ĞÅÏ¢
+	cout <<"½Úµã±àºÅ£º"<< id<<" ,½ÚµãÈ¨ÖØ£º"<< strength << endl;
 	
-	//æ‰“å°å‡ºåº¦
+	//´òÓ¡³ö¶È
 	if (numAdjOut != 0)
 	{
 		cout << endl;
-        
-        #ifdef _WIN32
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		//mapè¿­ä»£å™¨ï¼Œå¤‡ç”¨
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		//mapµü´úÆ÷£¬±¸ÓÃ
 		//map <int, double>::iterator it;
-        #endif
-        
-		cout <<" "<<numAdjOut<< " ä¸ªå‡ºåº¦ï¼š" << endl;
+		cout <<" "<<numAdjOut<< " ¸ö³ö¶È£º" << endl;
 		for (auto it:adjOut)
-			cout<<id << "  -->>  " << it.first << " ,æƒé‡ï¼š" << it.second << endl;
+			cout<<id << "  -->>  " << it.first << " ,È¨ÖØ£º" << it.second << endl;
 	}
 	
-	//æ‰“å°å…¥åº¦
+	//´òÓ¡Èë¶È
 	if (numAdjIn != 0)
 	{
 		cout << endl;
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºç»¿
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
-#endif
-		//mapè¿­ä»£å™¨ï¼Œå¤‡ç”¨
+		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÂÌ
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+		//mapµü´úÆ÷£¬±¸ÓÃ
 		//map <int, double>::iterator it;
 
-		cout << " " <<numAdjIn<< " ä¸ªå…¥åº¦ï¼š" << endl;
+		cout << " " <<numAdjIn<< " ¸öÈë¶È£º" << endl;
 		for (auto it : adjIn)
-			cout <<id<< "  <<--  " << it.first << " ,æƒé‡ï¼š" << it.second << endl;
+			cout <<id<< "  <<--  " << it.first << " ,È¨ÖØ£º" << it.second << endl;
 	}
 
-	//æ‰“å°å¤šç½‘ç»œå‡ºåº¦
+	//´òÓ¡¶àÍøÂç³ö¶È
 	if (numAdjMultiOut != 0)
 	{
 		cout << endl;
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-        
-        #ifdef _WIN32
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | FOREGROUND_RED);
-        #endif
-        
-        //mapè¿­ä»£å™¨ï¼Œå¤‡ç”¨
+		//mapµü´úÆ÷£¬±¸ÓÃ
 		//map <int, double>::iterator it;
-		cout << " " << numAdjMultiOut << " ä¸ªå¤šç½‘ç»œå‡ºåº¦ï¼š" << endl;
+		cout << " " << numAdjMultiOut << " ¸ö¶àÍøÂç³ö¶È£º" << endl;
 		for (auto it : adjMultiOut)
 			for(auto it2 : it.second)
-			cout << "  -->>  "<<" ç½‘ç»œ "<<it.first <<" çš„ "<< it2.first << " ,æƒé‡ï¼š" << it2.second << endl;
+			cout << "  -->>  "<<" ÍøÂç "<<it.first <<" µÄ "<< it2.first << " ,È¨ÖØ£º" << it2.second << endl;
 	}
 
-	//æ‰“å°å¤šç½‘ç»œå…¥åº¦
+	//´òÓ¡¶àÍøÂçÈë¶È
 	if (numAdjMultiIn != 0)
 	{
 		cout << endl;
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºç»¿
-        
-		#ifdef _WIN32
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | FOREGROUND_BLUE);
-        #endif
-		//mapè¿­ä»£å™¨ï¼Œå¤‡ç”¨
+		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÂÌ
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | FOREGROUND_BLUE);
+		//mapµü´úÆ÷£¬±¸ÓÃ
 		//map <int, double>::iterator it;
 
-		cout << " " << numAdjMultiIn << " ä¸ªå¤šç½‘ç»œå…¥åº¦ï¼š" << endl;
+		cout << " " << numAdjMultiIn << " ¸ö¶àÍøÂçÈë¶È£º" << endl;
 		for (auto it : adjMultiIn)
 			for (auto it2 : it.second)
-			cout << "  <<--  " << " ç½‘ç»œ " << it.first << " çš„ " << it2.first << " ,æƒé‡ï¼š" << it2.second << endl;
+			cout << "  <<--  " << " ÍøÂç " << it.first << " µÄ " << it2.first << " ,È¨ÖØ£º" << it2.second << endl;
 	}
 
-	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
-	#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 }
 
-//å¢åŠ åˆ°nodeidèŠ‚ç‚¹çš„é“¾æ¥
-int node::addLinkToNode(int nodeid //ä¸ºå½“å‰èŠ‚ç‚¹å¢åŠ ä¸€ä¸ªåˆ°nodeidçš„é“¾æ¥ 
-	, double weight)//è¯¥é“¾æ¥çš„æƒé‡
+//Ôö¼Óµ½nodeid½ÚµãµÄÁ´½Ó
+int node::addLinkToNode(int nodeid //Îªµ±Ç°½ÚµãÔö¼ÓÒ»¸öµ½nodeidµÄÁ´½Ó 
+	, double weight)//¸ÃÁ´½ÓµÄÈ¨ÖØ
 {
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œè®©èŠ‚ç‚¹ " << nodeid << " è¿æ¥åˆ°è‡ªå·±äº†ï¼" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-        #endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÈÃ½Úµã " << nodeid << " Á¬½Óµ½×Ô¼ºÁË£¡" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
 
 	map<int,double>::iterator it;
 
-	//æ£€æŸ¥æ˜¯å¦æ˜¯å¤šä½™çš„é“¾æ¥
+	//¼ì²éÊÇ·ñÊÇ¶àÓàµÄÁ´½Ó
 	it = adjOut.find(nodeid);
 	if (it != adjOut.end())
 	{
 		int error = REDUNDANTLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œ" << id << " -->> " << nodeid << " çš„é“¾æ¥å·²ç»å»ºç«‹ã€‚" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó£¬" << id << " -->> " << nodeid << " µÄÁ´½ÓÒÑ¾­½¨Á¢¡£" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
 
 
 
-	//ä¸ºç›¸å…³å®¹å™¨å¢åŠ é‚»å±…èŠ‚ç‚¹ä¿¡æ¯ï¼ŒåªåŒ…æ‹¬å‡ºåº¦ï¼Œå…¥åº¦éƒ¨åˆ†åœ¨networkå®ç°
+	//ÎªÏà¹ØÈİÆ÷Ôö¼ÓÁÚ¾Ó½ÚµãĞÅÏ¢£¬Ö»°üÀ¨³ö¶È£¬Èë¶È²¿·ÖÔÚnetworkÊµÏÖ
 	//adjOut.insert(map<int, double>::value_type(nodeid,weight));
 	adjOut.insert(make_pair(nodeid, weight));
 	
-	//é‚»å±…æ•°é‡å¢åŠ ä¸€
+	//ÁÚ¾ÓÊıÁ¿Ôö¼ÓÒ»
 	numAdjOut++;
 
 	return 0;
 }
 
-//åˆ é™¤ä»è¯¥èŠ‚ç‚¹åˆ°nodeidçš„é“¾æ¥ï¼Œå³åˆ é™¤å‡ºåº¦
+//É¾³ı´Ó¸Ã½Úµãµ½nodeidµÄÁ´½Ó£¬¼´É¾³ı³ö¶È
 int node::delLinkFromNode(int nodeid) 
 {
-	//æ£€æŸ¥æ˜¯å¦æ˜¯åˆ é™¤è‡ªèº«
+	//¼ì²éÊÇ·ñÊÇÉ¾³ı×ÔÉí
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œä¸èƒ½åˆ é™¤èŠ‚ç‚¹è‡ªèº«ï¼" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó£¬²»ÄÜÉ¾³ı½Úµã×ÔÉí£¡" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
 
 	map <int, double>::iterator it;
 
-	//æ£€æŸ¥æ˜¯å¦æœ‰é“¾æ¥
+	//¼ì²éÊÇ·ñÓĞÁ´½Ó
 
 	it = adjOut.find(nodeid);
 	if (it != adjOut.end())
 	{
-		adjOut.erase(it);	//åˆ é™¤å…ƒç´ 
-		numAdjOut--;		//é‚»æ¥æ•°é‡å‡å°‘1
+		adjOut.erase(it);	//É¾³ıÔªËØ
+		numAdjOut--;		//ÁÚ½ÓÊıÁ¿¼õÉÙ1
 	}
 	else
 	{
 		int error = NOLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,"<<id<<" -->> "<<nodeid<<" çš„è¿æ¥æ ¹æœ¬ä¸å­˜åœ¨ï¼" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó,"<<id<<" -->> "<<nodeid<<" µÄÁ¬½Ó¸ù±¾²»´æÔÚ£¡" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
@@ -218,24 +185,20 @@ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 
 
 }
 
-//å¢åŠ ä»nodeidå…¥åº¦çš„é“¾æ¥ä¿¡æ¯
-int node::addLinkFromNode(int nodeid		//ä»ç¼–å·ä¸ºnodeidçš„èŠ‚ç‚¹å…¥åº¦
-						, double weight)	//è¯¥é“¾æ¥çš„æƒé‡
+//Ôö¼Ó´ÓnodeidÈë¶ÈµÄÁ´½ÓĞÅÏ¢
+int node::addLinkFromNode(int nodeid		//´Ó±àºÅÎªnodeidµÄ½ÚµãÈë¶È
+						, double weight)	//¸ÃÁ´½ÓµÄÈ¨ÖØ
 {
-	//æ£€æŸ¥é“¾æ¥æ˜¯å¦æŒ‡å‘è‡ªå·±
+	//¼ì²éÁ´½ÓÊÇ·ñÖ¸Ïò×Ô¼º
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œè®©èŠ‚ç‚¹ " << nodeid << " è¢«è‡ªå·±æŒ‡å‘äº†ï¼" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÈÃ½Úµã " << nodeid << " ±»×Ô¼ºÖ¸ÏòÁË£¡" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
@@ -246,15 +209,11 @@ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 
 	{
 		int error = REDUNDANTLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œ" << id << " <<-- " << nodeid << " çš„å…¥åº¦é“¾æ¥å·²ç»å»ºç«‹ã€‚" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó£¬" << id << " <<-- " << nodeid << " µÄÈë¶ÈÁ´½ÓÒÑ¾­½¨Á¢¡£" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
@@ -264,51 +223,43 @@ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 
 	return 0;
 }
 
-//åˆ é™¤ä»nodeidåˆ°è¯¥èŠ‚ç‚¹çš„é“¾æ¥ï¼Œå³åˆ é™¤å…¥åº¦
+//É¾³ı´Ónodeidµ½¸Ã½ÚµãµÄÁ´½Ó£¬¼´É¾³ıÈë¶È
 int node::delLinkToNode(int nodeid)
 {
-	//æ£€æŸ¥æ˜¯å¦æ˜¯åˆ é™¤è‡ªèº«
+	//¼ì²éÊÇ·ñÊÇÉ¾³ı×ÔÉí
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œä¸èƒ½åˆ é™¤èŠ‚ç‚¹è‡ªèº«ï¼" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó£¬²»ÄÜÉ¾³ı½Úµã×ÔÉí£¡" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
 
 	map <int, double>::iterator it;
 
-	//æ£€æŸ¥æ˜¯å¦æœ‰é“¾æ¥
+	//¼ì²éÊÇ·ñÓĞÁ´½Ó
 
 	it = adjIn.find(nodeid);
 	if (it != adjIn.end())
 	{
-		adjIn.erase(it);	//åˆ é™¤å…ƒç´ 
-		numAdjIn--;		//é‚»æ¥æ•°é‡å‡å°‘1
+		adjIn.erase(it);	//É¾³ıÔªËØ
+		numAdjIn--;		//ÁÚ½ÓÊıÁ¿¼õÉÙ1
 	}
 	else
 	{
 		int error = NOLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æ— æ³•åˆ é™¤ " << id << " -->> " << nodeid << " ï¼Œé“¾æ¥ä¸å­˜åœ¨ã€‚" << endl;
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó,ÎŞ·¨É¾³ı " << id << " -->> " << nodeid << " £¬Á´½Ó²»´æÔÚ¡£" << endl;
 
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
@@ -317,40 +268,36 @@ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 
 
 }
 
-//å¢åŠ åˆ°netidç½‘ç»œçš„nodeidèŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³å¢åŠ å¤šç½‘ç»œå‡ºåº¦
-int node::addLinkToNodeMulti(int netid			//ç›®æ ‡ç½‘ç»œID
-				, int nodeid , double weight)	//ä¸ºå½“å‰èŠ‚ç‚¹å¢åŠ ä¸€ä¸ªåˆ°nodeidçš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œæƒå€¼ä¸ºweightï¼Œå‡ºåº¦ 
+//Ôö¼Óµ½netidÍøÂçµÄnodeid½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´Ôö¼Ó¶àÍøÂç³ö¶È
+int node::addLinkToNodeMulti(int netid			//Ä¿±êÍøÂçID
+				, int nodeid , double weight)	//Îªµ±Ç°½ÚµãÔö¼ÓÒ»¸öµ½nodeidµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬È¨ÖµÎªweight£¬³ö¶È 
 {
-	//æ£€æŸ¥æ˜¯å¦æœ‰æŒ‡å‘netidç½‘ç»œçš„æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åˆ™å»ºç«‹
+	//¼ì²éÊÇ·ñÓĞÖ¸ÏònetidÍøÂçµÄÊı¾İ£¬Èç¹ûÃ»ÓĞÔò½¨Á¢
 	auto it1 = adjMultiOut.find(netid);
 	if (it1 == adjMultiOut.end())
 	{
-		map<int,double> temp;						//ä¸´æ—¶ç©ºmapå®¹å™¨
-		adjMultiOut.insert(make_pair(netid,temp));	//åˆå§‹åŒ–æŒ‡å‘netidçš„è®°å½•
+		map<int,double> temp;						//ÁÙÊ±¿ÕmapÈİÆ÷
+		adjMultiOut.insert(make_pair(netid,temp));	//³õÊ¼»¯Ö¸ÏònetidµÄ¼ÇÂ¼
 	}
 
-	//æ£€æŸ¥æŒ‡å‘netidç½‘ç»œçš„nodeidèŠ‚ç‚¹çš„æ•°æ®æ˜¯å¦å­˜åœ¨
+	//¼ì²éÖ¸ÏònetidÍøÂçµÄnodeid½ÚµãµÄÊı¾İÊÇ·ñ´æÔÚ
 
 	auto it = adjMultiOut[netid].find(nodeid);
 	if (it != adjMultiOut[netid].end())
 	{
 		int error = REDUNDANTLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œæœ¬èŠ‚ç‚¹ -->> ç½‘ç»œ "<<netid<<" çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥å·²ç»å»ºç«‹ã€‚" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó£¬±¾½Úµã -->> ÍøÂç "<<netid<<" µÄ½Úµã " << nodeid << " µÄÁ´½ÓÒÑ¾­½¨Á¢¡£" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
 	else
 	{
-		//å¦‚æœä¸å­˜åœ¨ï¼Œåˆ™æ·»åŠ è®°å½•
+		//Èç¹û²»´æÔÚ£¬ÔòÌí¼Ó¼ÇÂ¼
 		adjMultiOut[netid].insert(make_pair(nodeid, weight));
 		numAdjMultiOut++;
 	}
@@ -358,35 +305,31 @@ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 
 
 }
 
-//åˆ é™¤åˆ°netidç½‘ç»œçš„nodeidèŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³åˆ é™¤å¤šç½‘ç»œå‡ºåº¦
-int node::delLinkToNodeMulti(int netid				//ç›®æ ‡ç½‘ç»œID
-					, int nodeid)					//åˆ é™¤å½“å‰èŠ‚ç‚¹åˆ°nodeidçš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³åˆ é™¤å‡ºåº¦
+//É¾³ıµ½netidÍøÂçµÄnodeid½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´É¾³ı¶àÍøÂç³ö¶È
+int node::delLinkToNodeMulti(int netid				//Ä¿±êÍøÂçID
+					, int nodeid)					//É¾³ıµ±Ç°½Úµãµ½nodeidµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´É¾³ı³ö¶È
 {
-	//æ£€æŸ¥æ˜¯å¦æœ‰æŒ‡å‘netidç½‘ç»œçš„æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åˆ™è¿”å›é”™è¯¯
+	//¼ì²éÊÇ·ñÓĞÖ¸ÏònetidÍøÂçµÄÊı¾İ£¬Èç¹ûÃ»ÓĞÔò·µ»Ø´íÎó
 	auto it1 = adjMultiOut.find(netid);
 	if (it1 == adjMultiOut.end())
 	{
 		int error = NOLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æœ¬èŠ‚ç‚¹ -->> ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥ä¸å­˜åœ¨ï¼æ— æ³•åˆ é™¤ã€‚" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó,±¾½Úµã -->> ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½Ó²»´æÔÚ£¡ÎŞ·¨É¾³ı¡£" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
 
-	//æ£€æŸ¥æŒ‡å‘netidç½‘ç»œçš„nodeidèŠ‚ç‚¹çš„æ•°æ®æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨åˆ™æ— æ³•åˆ é™¤ï¼Œè¿”å›é”™è¯¯
+	//¼ì²éÖ¸ÏònetidÍøÂçµÄnodeid½ÚµãµÄÊı¾İÊÇ·ñ´æÔÚ£¬²»´æÔÚÔòÎŞ·¨É¾³ı£¬·µ»Ø´íÎó
 
 	auto it = adjMultiOut[netid].find(nodeid);
 	if (it != adjMultiOut[netid].end())
 	{
-		//å¦‚æœæ‰¾åˆ°è®°å½•ï¼Œåˆ™åˆ é™¤è®°å½•
+		//Èç¹ûÕÒµ½¼ÇÂ¼£¬ÔòÉ¾³ı¼ÇÂ¼
 		adjMultiOut[netid].erase(it);
 		numAdjMultiOut--;
 	}
@@ -394,86 +337,74 @@ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 
 	{
 		int error = NOLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æœ¬èŠ‚ç‚¹ -->> ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥ä¸å­˜åœ¨ï¼æ— æ³•åˆ é™¤ã€‚" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó,±¾½Úµã -->> ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½Ó²»´æÔÚ£¡ÎŞ·¨É¾³ı¡£" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
 	return 0;
 }
 
-//å¢åŠ ä»netidç½‘ç»œçš„nodeidèŠ‚ç‚¹åˆ°å½“å‰èŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³å¢åŠ å¤šç½‘ç»œå…¥åº¦
-int node::addLinkFromNodeMulti(int netid			//ç›®æ ‡ç½‘ç»œID
-					, int nodeid, double weight)	//å¢åŠ ä¸€ä¸ªä»nodeidåˆ°å½“å‰èŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œæƒå€¼ä¸ºweightï¼Œå…¥åº¦ 
+//Ôö¼Ó´ÓnetidÍøÂçµÄnodeid½Úµãµ½µ±Ç°½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´Ôö¼Ó¶àÍøÂçÈë¶È
+int node::addLinkFromNodeMulti(int netid			//Ä¿±êÍøÂçID
+					, int nodeid, double weight)	//Ôö¼ÓÒ»¸ö´Ónodeidµ½µ±Ç°½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬È¨ÖµÎªweight£¬Èë¶È 
 {
-	//æ£€æŸ¥æ˜¯å¦æœ‰ä»netidç½‘ç»œæ¥çš„æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åˆ™è¿”å›é”™è¯¯
+	//¼ì²éÊÇ·ñÓĞ´ÓnetidÍøÂçÀ´µÄÊı¾İ£¬Èç¹ûÃ»ÓĞÔò·µ»Ø´íÎó
 	auto it1 = adjMultiIn.find(netid);
 	if (it1 == adjMultiIn.end())
 	{
-		map<int, double> temp;						//ä¸´æ—¶ç©ºmapå®¹å™¨
-		adjMultiIn.insert(make_pair(netid, temp));	//åˆå§‹åŒ–æŒ‡å‘netidçš„è®°å½•
+		map<int, double> temp;						//ÁÙÊ±¿ÕmapÈİÆ÷
+		adjMultiIn.insert(make_pair(netid, temp));	//³õÊ¼»¯Ö¸ÏònetidµÄ¼ÇÂ¼
 	}
-	//æ£€æŸ¥ä»netidç½‘ç»œçš„nodeidèŠ‚ç‚¹æ¥çš„æ•°æ®æ˜¯å¦å­˜åœ¨ï¼Œå¦‚æœå­˜åœ¨åˆ™è¿”å›é”™è¯¯
+	//¼ì²é´ÓnetidÍøÂçµÄnodeid½ÚµãÀ´µÄÊı¾İÊÇ·ñ´æÔÚ£¬Èç¹û´æÔÚÔò·µ»Ø´íÎó
 	auto it = adjMultiIn[netid].find(nodeid);
 	if (it != adjMultiIn[netid].end())
 	{
 		int error = REDUNDANTLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œ æœ¬èŠ‚ç‚¹ <<-- ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥å·²ç»å»ºç«‹ã€‚" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó£¬ ±¾½Úµã <<-- ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½ÓÒÑ¾­½¨Á¢¡£" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
 	else
 	{
-		//å¦‚æœä¸å­˜åœ¨ï¼Œåˆ™æ·»åŠ è®°å½•
+		//Èç¹û²»´æÔÚ£¬ÔòÌí¼Ó¼ÇÂ¼
 		adjMultiIn[netid].insert(make_pair(nodeid, weight));
 		numAdjMultiIn++;
 	}
 	return 0;
 }
 
-//åˆ é™¤ä»netidç½‘ç»œçš„nodeidèŠ‚ç‚¹åˆ°å½“å‰èŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³åˆ é™¤å¤šç½‘ç»œå…¥åº¦
-int node::delLinkFromNodeMulti(int netid			//ç›®æ ‡ç½‘ç»œID
-							, int nodeid)			//åˆ é™¤ä»nodeidåˆ°å½“å‰èŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³åˆ é™¤å…¥åº¦
+//É¾³ı´ÓnetidÍøÂçµÄnodeid½Úµãµ½µ±Ç°½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´É¾³ı¶àÍøÂçÈë¶È
+int node::delLinkFromNodeMulti(int netid			//Ä¿±êÍøÂçID
+							, int nodeid)			//É¾³ı´Ónodeidµ½µ±Ç°½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´É¾³ıÈë¶È
 {
-	//æ£€æŸ¥æ˜¯å¦æœ‰ä»netidç½‘ç»œæ¥çš„æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åˆ™è¿”å›é”™è¯¯
+	//¼ì²éÊÇ·ñÓĞ´ÓnetidÍøÂçÀ´µÄÊı¾İ£¬Èç¹ûÃ»ÓĞÔò·µ»Ø´íÎó
 	auto it1 = adjMultiIn.find(netid);
 	if (it1 == adjMultiIn.end())
 	{
 		int error = NOLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æœ¬èŠ‚ç‚¹ <<-- ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥ä¸å­˜åœ¨ï¼æ— æ³•åˆ é™¤ã€‚" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó,±¾½Úµã <<-- ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½Ó²»´æÔÚ£¡ÎŞ·¨É¾³ı¡£" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
-	//æ£€æŸ¥ä»netidç½‘ç»œçš„nodeidèŠ‚ç‚¹æ¥çš„æ•°æ®æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨åˆ™è¿”å›é”™è¯¯
+	//¼ì²é´ÓnetidÍøÂçµÄnodeid½ÚµãÀ´µÄÊı¾İÊÇ·ñ´æÔÚ£¬²»´æÔÚÔò·µ»Ø´íÎó
 	auto it = adjMultiIn[netid].find(nodeid);
 	if (it != adjMultiIn[netid].end())
 	{
-		//å¦‚æœæ‰¾åˆ°è®°å½•ï¼Œåˆ™åˆ é™¤è®°å½•
+		//Èç¹ûÕÒµ½¼ÇÂ¼£¬ÔòÉ¾³ı¼ÇÂ¼
 		adjMultiIn[netid].erase(it);
 		numAdjMultiIn--;
 	}
@@ -481,15 +412,11 @@ SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | 
 	{
 		int error = NOLINK;
 
-		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
-#endif
-		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æœ¬èŠ‚ç‚¹ <<-- ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥ä¸å­˜åœ¨ï¼æ— æ³•åˆ é™¤ã€‚" << endl;
-		//è®¾ç½®é»˜è®¤å­—ä½“
-		#ifdef _WIN32
-SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
-#endif
+		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		cout << "·¢ÉúÒ»¸ö´íÎó,±¾½Úµã <<-- ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½Ó²»´æÔÚ£¡ÎŞ·¨É¾³ı¡£" << endl;
+		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
 		return error;
 	}
