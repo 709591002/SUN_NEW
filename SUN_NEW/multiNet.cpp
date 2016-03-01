@@ -88,9 +88,9 @@ multiNet::multiNet(string in,int fileNum)
 {
 	if (in.empty())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "目录不允许为空，已自动返回原始多网络。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		new (this) multiNet();
 	}
 
@@ -99,18 +99,18 @@ multiNet::multiNet(string in,int fileNum)
 	//小于2说明不满足最低条件
 	if (fileNum < 2)
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "目录没有所需文件，请修改路径名称重试，已自动返回原始多网络。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		new (this) multiNet();
 	}
 
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout << "正在读取多网络信息文件群，路径为： " << in.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 	//满足条件
 	linkNum = 0;				//初始化链接数量
@@ -139,20 +139,20 @@ multiNet::multiNet(string in,int fileNum)
 	/*
 	if (error)
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "目录文件信息有误，请确认信息无误后重试，已自动返回原始多网络。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		new (this) multiNet();
 		return;
 	}
 	*/
 
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout << endl << "流程执行完毕，请检查上面的读取信息，路径为： " << in.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 }
 
@@ -181,10 +181,10 @@ int multiNet::addLinkBetweenNets(int net1,int node1,int net2,int node2,double we
 		int error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法添加多网络链接，网络 " << net1<<" 或 网络 "<<net2<<" 越界。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -204,10 +204,10 @@ int multiNet::addLinkBetweenNets(int net1,int node1,int net2,int node2,double we
 		int error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法添加 网络"<<net1<<"的 节点 " << node1 << " -->> " << "网络"<<net2<<"的 节点"<< node2 << "，因为越界。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -236,10 +236,10 @@ int multiNet::delLinkBetweenNets(int net1, int node1, int net2, int node2)
 		int error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法删除多网络链接，网络 " << net1 << " 或 网络 " << net2 << " 越界。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -259,10 +259,10 @@ int multiNet::delLinkBetweenNets(int net1, int node1, int net2, int node2)
 		int error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法删除多网络链接，节点 " << node1 << " 或 节点 " << node2 << " 越界。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -290,10 +290,10 @@ int multiNet::delNodeFromMultiNet(int netid, int nodeid)
 		int error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法删除多网络节点，网络 " << netid <<" 越界。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -304,10 +304,10 @@ int multiNet::delNodeFromMultiNet(int netid, int nodeid)
 		int error = BEYONDLIMIT;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法删除多网络节点，节点 " << nodeid << " 越界。" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -384,10 +384,10 @@ int multiNet::addNetworkToMulti(network n1)
 	{
 		int error = 1;
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "发生一个错误 ，无法添加空网络到多网络"<< endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return error;
 	}
@@ -413,9 +413,9 @@ void multiNet::outputLinksFromMulti(string out)
 {
 	if (out.empty())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "路径不允许为空，已自动返回。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return;
 	}
 
@@ -433,19 +433,19 @@ void multiNet::outputLinksFromMulti(string out)
 	{
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "创建文件路径错误： " << out.c_str() << " ，请检查路径是否正确！" << endl;
 		//改变字体颜色为普通
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 
 		return;
 	}
 
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout << "正在创建普通格式的多网络链接信息文件： " << out.c_str() << endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 	//开始写入文件
 	file << nodeNum << " " << type << endl;
@@ -475,9 +475,9 @@ int multiNet::inputLinksToMulti(string in)
 {
 	if (in.empty())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "路径不允许为空，已自动返回。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return 2;
 	}
 
@@ -487,17 +487,17 @@ int multiNet::inputLinksToMulti(string in)
 	//检查文件是否读取失败
 	if (file.fail())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "读取多网络链接文件失败，路径为： " << in.c_str() << "，已自动返回错误。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return 2;
 	}
 	//文件没有读取失败，正常进行
 	else
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+		CCol(0,1);
 		cout << "读取多网络链接文件成功，路径为： " << in.c_str() << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		string line;				//储存临时一行
 
 		int tempNodeNum = 0;
@@ -543,9 +543,9 @@ int multiNet::inputLinksToMulti(string in)
 
 	if (error_return)
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "读取多网络链接文件完毕，但部分信息有误，路径为： " << in.c_str() << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 	}
 
 	return error_return;
@@ -555,9 +555,9 @@ void multiNet::outputMultiNet(string out)
 {
 	if (out.empty())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "目录不允许为空，已自动返回。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return;
 	}
 
@@ -571,19 +571,19 @@ void multiNet::outputMultiNet(string out)
 	//创建目录
 	if (CreatDir(temp) == -1)
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "目录创建失败，路径为： " << out << "，已自动返回。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return;
 	}
 	*/
 
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout << "正在创建普通格式的多网络信息文件群，路径为： " << out.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 	//开始输出网络文件，到out路径
 	for (auto it : nets)
@@ -602,11 +602,11 @@ void multiNet::outputMultiNet(string out)
 	outputLinksFromMulti(out + "/links.txt");
 
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout <<endl<< "所有文件创建完毕，请检查上面的创建信息，路径为： " << out.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 
 
@@ -616,9 +616,9 @@ void multiNet::outputMultiNet_pajek(string out)
 {
 	if (out.empty())
 	{
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		CCol(0,2);
 		cout << "目录不允许为空，已自动返回。" << endl;
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		CCol(0,0);
 		return;
 	}
 
@@ -629,11 +629,11 @@ void multiNet::outputMultiNet_pajek(string out)
 	strcpy(temp, out.c_str());
 
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout << "正在创建pajek格式的多网络信息文件群，路径为： " << out.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 	//开始输出网络文件，到out路径
 	for (auto it : nets)
@@ -652,10 +652,10 @@ void multiNet::outputMultiNet_pajek(string out)
 	outputLinksFromMulti(out + "/links.txt");
 
 	//改变字体颜色为红
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+	CCol(0,1);
 	cout << endl << "流程执行完毕，请检查上面的创建信息，路径为： " << out.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0,0);
 
 }
