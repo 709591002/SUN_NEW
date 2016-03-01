@@ -30,7 +30,7 @@
 
 /* Begin PBXFileReference section */
 		8B84C1AE1C85426C004BCF93 /* SUN_NEW */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SUN_NEW; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B84C1B11C85426C004BCF93 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = main.cpp; sourceTree = "<group>"; };
+		8B84C1B11C85426C004BCF93 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = main.cpp; sourceTree = "<group>"; };
 		8BFE64611C8543F200A046CF /* error.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = error.h; sourceTree = "<group>"; };
 		8BFE64621C8543F200A046CF /* model.cpp */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = model.cpp; sourceTree = "<group>"; };
 		8BFE64631C8543F200A046CF /* model.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = model.h; sourceTree = "<group>"; };
