@@ -23,8 +23,10 @@ int main()
 		n1.addLinkToNetwork(i, i + 1, 0.999);
 	}
 
-	n1.outputNetwork("aaa/sss.txt");
-
+	//n1.outputNetwork("aaa/sss.txt");
+    
+    n1.showNetwork();
+    
 	//结束计时
 	time(&end);
 	cout << "程序整体运行了：" << (end - start) << "秒" << endl;
