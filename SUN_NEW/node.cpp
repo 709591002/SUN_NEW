@@ -38,10 +38,16 @@ void node::showNode()
 	if (numAdjOut != 0)
 	{
 		cout << endl;
+        
+        #ifdef _WIN32
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		//map迭代器，备用
 		//map <int, double>::iterator it;
+        #endif
+        
 		cout <<" "<<numAdjOut<< " 个出度：" << endl;
 		for (auto it:adjOut)
 			cout<<id << "  -->>  " << it.first << " ,权重：" << it.second << endl;
@@ -52,7 +58,9 @@ void node::showNode()
 	{
 		cout << endl;
 		//改变字体颜色为绿
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_GREEN);
+#endif
 		//map迭代器，备用
 		//map <int, double>::iterator it;
 
@@ -66,8 +74,12 @@ void node::showNode()
 	{
 		cout << endl;
 		//改变字体颜色为红
+        
+        #ifdef _WIN32
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | FOREGROUND_RED);
-		//map迭代器，备用
+        #endif
+        
+        //map迭代器，备用
 		//map <int, double>::iterator it;
 		cout << " " << numAdjMultiOut << " 个多网络出度：" << endl;
 		for (auto it : adjMultiOut)
@@ -80,7 +92,10 @@ void node::showNode()
 	{
 		cout << endl;
 		//改变字体颜色为绿
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | FOREGROUND_BLUE);
+        
+		#ifdef _WIN32
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | FOREGROUND_BLUE);
+        #endif
 		//map迭代器，备用
 		//map <int, double>::iterator it;
 
@@ -91,7 +106,9 @@ void node::showNode()
 	}
 
 	//改变字体颜色为普通
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 }
 
@@ -104,10 +121,14 @@ int node::addLinkToNode(int nodeid //为当前节点增加一个到nodeid的链�
 		int error = LINKITSELF;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误，让节点 " << nodeid << " 连接到自己了！" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+        #endif
 
 		return error;
 	}
@@ -121,10 +142,14 @@ int node::addLinkToNode(int nodeid //为当前节点增加一个到nodeid的链�
 		int error = REDUNDANTLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误，" << id << " -->> " << nodeid << " 的链接已经建立。" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -150,10 +175,14 @@ int node::delLinkFromNode(int nodeid)
 		int error = LINKITSELF;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误，不能删除节点自身！" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -173,10 +202,14 @@ int node::delLinkFromNode(int nodeid)
 		int error = NOLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误,"<<id<<" -->> "<<nodeid<<" 的连接根本不存在！" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -195,10 +228,14 @@ int node::addLinkFromNode(int nodeid		//从编号为nodeid的节点入度
 		int error = LINKITSELF;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误，让节点 " << nodeid << " 被自己指向了！" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -210,10 +247,14 @@ int node::addLinkFromNode(int nodeid		//从编号为nodeid的节点入度
 		int error = REDUNDANTLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误，" << id << " <<-- " << nodeid << " 的入度链接已经建立。" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -232,10 +273,14 @@ int node::delLinkToNode(int nodeid)
 		int error = LINKITSELF;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误，不能删除节点自身！" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -255,11 +300,15 @@ int node::delLinkToNode(int nodeid)
 		int error = NOLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误,无法删除 " << id << " -->> " << nodeid << " ，链接不存在。" << endl;
 
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -288,10 +337,14 @@ int node::addLinkToNodeMulti(int netid			//目标网络ID
 		int error = REDUNDANTLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误，本节点 -->> 网络 "<<netid<<" 的节点 " << nodeid << " 的链接已经建立。" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -316,10 +369,14 @@ int node::delLinkToNodeMulti(int netid				//目标网络ID
 		int error = NOLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误,本节点 -->> 网络 " << netid << " 的节点 " << nodeid << " 的链接不存在！无法删除。" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -338,10 +395,14 @@ int node::delLinkToNodeMulti(int netid				//目标网络ID
 		int error = NOLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误,本节点 -->> 网络 " << netid << " 的节点 " << nodeid << " 的链接不存在！无法删除。" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -366,10 +427,14 @@ int node::addLinkFromNodeMulti(int netid			//目标网络ID
 		int error = REDUNDANTLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误， 本节点 <<-- 网络 " << netid << " 的节点 " << nodeid << " 的链接已经建立。" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -393,10 +458,14 @@ int node::delLinkFromNodeMulti(int netid			//目标网络ID
 		int error = NOLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误,本节点 <<-- 网络 " << netid << " 的节点 " << nodeid << " 的链接不存在！无法删除。" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}
@@ -413,10 +482,14 @@ int node::delLinkFromNodeMulti(int netid			//目标网络ID
 		int error = NOLINK;
 
 		//改变字体颜色为红
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_RED);
+#endif
 		cout << "发生一个错误,本节点 <<-- 网络 " << netid << " 的节点 " << nodeid << " 的链接不存在！无法删除。" << endl;
 		//设置默认字体
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+		#ifdef _WIN32
+SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+#endif
 
 		return error;
 	}

@@ -1,12 +1,16 @@
 #pragma once
 
+#ifdef _WIN32
+#include "windows.h"
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
 #include <map>
 #include <iostream>
 #include "error.h"
-#include "windows.h"
+
 using namespace std;
 
 //节点状态

@@ -9,8 +9,10 @@ int main()
 	time_t start = 0, end = 0;
 	time(&start);
 
+    #ifdef _WIN32
 	//设置默认字体
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+    #endif
 
 	network n1(100000,DIRECT_WITH_WEIGHT);
 
