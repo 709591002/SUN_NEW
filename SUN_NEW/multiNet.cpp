@@ -1,138 +1,138 @@
-#include "multiNet.h"
+ï»¿#include "multiNet.h"
 
-//¹¹Ôì¿ÕÍøÂç
+//æ„é€ ç©ºç½‘ç»œ
 multiNet::multiNet()
 {
-	linkNum = 0;				//³õÊ¼»¯Á´½ÓÊıÁ¿
-	nodeNum = 0;				//³õÊ¼»¯½ÚµãÊıÁ¿
+	linkNum = 0;				//åˆå§‹åŒ–é“¾æ¥æ•°é‡
+	nodeNum = 0;				//åˆå§‹åŒ–èŠ‚ç‚¹æ•°é‡
 	netNum = 0;
 	network n(10, UN_DIRECT_UN_WEIGHT);
 	nets.insert(nets.begin(),n);
 	type = MULTI;
 }
 
-//Ë«ÍøÂç¹¹Ôìº¯Êı
-multiNet::multiNet(network A,network B				//Á½¸öÍøÂç
-					,multiType type)				//ÍøÂçÀàĞÍ
+//åŒç½‘ç»œæ„é€ å‡½æ•°
+multiNet::multiNet(network A,network B				//ä¸¤ä¸ªç½‘ç»œ
+					,multiType type)				//ç½‘ç»œç±»å‹
 {
-	netNum=2;										//³õÊ¼»¯×ÓÍøÂçÊıÁ¿
-	A.netid = 1;									//ÍøÂçID0
-	B.netid = 2;									//ÍøÂçID1
+	netNum=2;										//åˆå§‹åŒ–å­ç½‘ç»œæ•°é‡
+	A.netid = 1;									//ç½‘ç»œID0
+	B.netid = 2;									//ç½‘ç»œID1
 	
 	nets.clear();
 
-	//³õÊ¼»¯×ÓÍøÂçÈİÆ÷
+	//åˆå§‹åŒ–å­ç½‘ç»œå®¹å™¨
 	nets.insert(nets.end(),A);
 	nets.insert(nets.end(),B);
 
-	nodeNum=nets[0].nodeNum+ nets[1].nodeNum;		//³õÊ¼»¯½ÚµãÊıÁ¿
-	linkNum = nets[0].linkNum + nets[1].linkNum;	//³õÊ¼»¯±ßµÄÊıÁ¿
-	this->type=type;								//³õÊ¼»¯ÍøÂçÀàĞÍ
+	nodeNum=nets[0].nodeNum+ nets[1].nodeNum;		//åˆå§‹åŒ–èŠ‚ç‚¹æ•°é‡
+	linkNum = nets[0].linkNum + nets[1].linkNum;	//åˆå§‹åŒ–è¾¹çš„æ•°é‡
+	this->type=type;								//åˆå§‹åŒ–ç½‘ç»œç±»å‹
 }
 
 
-//¸´ÖÆN¸öÍøÂç×é³É¶àÍøÂç£¬¹¹Ôìº¯Êı
-multiNet::multiNet(int N			//×ÓÍøÂçÊıÁ¿
-				, network n1		//Òª¸´ÖÆµÄÍøÂç¶ÔÏó
-				, multiType type)	//ÍøÂçÀàĞÍ
+//å¤åˆ¶Nä¸ªç½‘ç»œç»„æˆå¤šç½‘ç»œï¼Œæ„é€ å‡½æ•°
+multiNet::multiNet(int N			//å­ç½‘ç»œæ•°é‡
+				, network n1		//è¦å¤åˆ¶çš„ç½‘ç»œå¯¹è±¡
+				, multiType type)	//ç½‘ç»œç±»å‹
 {
-	netNum = N;										//³õÊ¼»¯×ÓÍøÂçÊıÁ¿
+	netNum = N;										//åˆå§‹åŒ–å­ç½‘ç»œæ•°é‡
 	nodeNum = 0;
 	linkNum = 0;
 	this->type = 0;
 	
-	//³õÊ¼»¯×ÓÍøÂçÈİÆ÷£¬×ÓÍøÂçÊıÁ¿ÎªN
+	//åˆå§‹åŒ–å­ç½‘ç»œå®¹å™¨ï¼Œå­ç½‘ç»œæ•°é‡ä¸ºN
 	for (int i = 1; i <= netNum; i++)
 	{
 		n1.netid = i;
 		nets.insert(nets.end(),n1);
 	}
 
-	//³õÊ¼»¯×ÓÍøÂçÁ´½ÓÊıºÍ½ÚµãÊı
+	//åˆå§‹åŒ–å­ç½‘ç»œé“¾æ¥æ•°å’ŒèŠ‚ç‚¹æ•°
 	for (auto it : nets)
 	{
 		nodeNum += it.nodeNum;
 		linkNum += it.linkNum;
 	}
-	this->type=type;								//³õÊ¼»¯ÍøÂçÀàĞÍ
+	this->type=type;								//åˆå§‹åŒ–ç½‘ç»œç±»å‹
 }
 
-//¶ÁÈ¡ÍøÂçÈİÆ÷À´¹¹Ôì¶àÍøÂç
-multiNet::multiNet(vector<network> temp				//ÍøÂçÈİÆ÷
-					, multiType type)				//ÍøÂçÀàĞÍ
+//è¯»å–ç½‘ç»œå®¹å™¨æ¥æ„é€ å¤šç½‘ç»œ
+multiNet::multiNet(vector<network> temp				//ç½‘ç»œå®¹å™¨
+					, multiType type)				//ç½‘ç»œç±»å‹
 {
-	//³õÊ¼»¯ÍøÂçÈİÆ÷
+	//åˆå§‹åŒ–ç½‘ç»œå®¹å™¨
 	nets.clear();
 	netNum = 0;
 
-	//³õÊ¼»¯Á´½ÓºÍ½ÚµãĞÅÏ¢
+	//åˆå§‹åŒ–é“¾æ¥å’ŒèŠ‚ç‚¹ä¿¡æ¯
 	nodeNum = 0;
 	linkNum = 0;
 
 	for (auto it : temp)
 	{
 		
-		netNum++;								//Ôö¼Ó½ÚµãĞÅÏ¢
-		it.netid = netNum;						//·ÖÅäÍøÂç±àºÅ
-		nets.insert(nets.begin()+ netNum,it);	//²åÈë½Úµã
+		netNum++;								//å¢åŠ èŠ‚ç‚¹ä¿¡æ¯
+		it.netid = netNum;						//åˆ†é…ç½‘ç»œç¼–å·
+		nets.insert(nets.begin()+ netNum,it);	//æ’å…¥èŠ‚ç‚¹
 		
-		//Ã¿²åÈëÒ»¸ö½Úµã£¬Ôö¼ÓÏà¹ØĞÅÏ¢
+		//æ¯æ’å…¥ä¸€ä¸ªèŠ‚ç‚¹ï¼Œå¢åŠ ç›¸å…³ä¿¡æ¯
 		nodeNum += it.nodeNum;
 		linkNum += it.linkNum;
 	}
 	this->type = type;
 }
 
-//¶ÁÈ¡Ä¿Â¼ÖĞµÄÎÄ¼şÈºÀ´¹¹Ôì¶àÍøÂç¶ÔÏó£¬¸ñÊ½Îª	net1.txt	net2.txt	......	links.txt
+//è¯»å–ç›®å½•ä¸­çš„æ–‡ä»¶ç¾¤æ¥æ„é€ å¤šç½‘ç»œå¯¹è±¡ï¼Œæ ¼å¼ä¸º	net1.txt	net2.txt	......	links.txt
 multiNet::multiNet(string in,int fileNum)
 {
 	if (in.empty())
 	{
 		CCol(0,2);
-		cout << "Ä¿Â¼²»ÔÊĞíÎª¿Õ£¬ÒÑ×Ô¶¯·µ»ØÔ­Ê¼¶àÍøÂç¡£" << endl;
+		cout << "ç›®å½•ä¸å…è®¸ä¸ºç©ºï¼Œå·²è‡ªåŠ¨è¿”å›åŸå§‹å¤šç½‘ç»œã€‚" << endl;
 		CCol(0,0);
 		new (this) multiNet();
 	}
 
 
 	
-	//Ğ¡ÓÚ2ËµÃ÷²»Âú×ã×îµÍÌõ¼ş
+	//å°äº2è¯´æ˜ä¸æ»¡è¶³æœ€ä½æ¡ä»¶
 	if (fileNum < 2)
 	{
 		CCol(0,2);
-		cout << "Ä¿Â¼Ã»ÓĞËùĞèÎÄ¼ş£¬ÇëĞŞ¸ÄÂ·¾¶Ãû³ÆÖØÊÔ£¬ÒÑ×Ô¶¯·µ»ØÔ­Ê¼¶àÍøÂç¡£" << endl;
+		cout << "ç›®å½•æ²¡æœ‰æ‰€éœ€æ–‡ä»¶ï¼Œè¯·ä¿®æ”¹è·¯å¾„åç§°é‡è¯•ï¼Œå·²è‡ªåŠ¨è¿”å›åŸå§‹å¤šç½‘ç»œã€‚" << endl;
 		CCol(0,0);
 		new (this) multiNet();
 	}
 
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout << "ÕıÔÚ¶ÁÈ¡¶àÍøÂçĞÅÏ¢ÎÄ¼şÈº£¬Â·¾¶Îª£º " << in.c_str() << endl;
+	cout << "æ­£åœ¨è¯»å–å¤šç½‘ç»œä¿¡æ¯æ–‡ä»¶ç¾¤ï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
-	//Âú×ãÌõ¼ş
-	linkNum = 0;				//³õÊ¼»¯Á´½ÓÊıÁ¿
-	nodeNum = 0;				//³õÊ¼»¯½ÚµãÊıÁ¿
+	//æ»¡è¶³æ¡ä»¶
+	linkNum = 0;				//åˆå§‹åŒ–é“¾æ¥æ•°é‡
+	nodeNum = 0;				//åˆå§‹åŒ–èŠ‚ç‚¹æ•°é‡
 	netNum = 0;
 
-	//Ñ­»·fileNum - 1´Î£¬ÏÈ°ÑÍøÂçĞ´Èë
+	//å¾ªç¯fileNum - 1æ¬¡ï¼Œå…ˆæŠŠç½‘ç»œå†™å…¥
 	for (int i = 1; i < fileNum; i++)
 	{
-		//½«int×ª»»Îªstring
+		//å°†intè½¬æ¢ä¸ºstring
 		stringstream ss;
 		string tempNum;
 		ss << i;
 		ss >> tempNum;
 
-		//´Ónetx.txtÎÄ¼ş´´½¨ÁÙÊ±ÍøÂç¶ÔÏó£¬²¢²åÈë¶àÍøÂç
+		//ä»netx.txtæ–‡ä»¶åˆ›å»ºä¸´æ—¶ç½‘ç»œå¯¹è±¡ï¼Œå¹¶æ’å…¥å¤šç½‘ç»œ
 		network temp(in + "/net" + tempNum + ".txt");
 		temp.netid=i;
 		addNetworkToMulti(temp);
 	}
 
-	//×îºóÒ»´ÎĞ´Èë¶àÍøÂçÁ´½Ó
+	//æœ€åä¸€æ¬¡å†™å…¥å¤šç½‘ç»œé“¾æ¥
 	int error=inputLinksToMulti(in + "/links.txt");
 
 	//
@@ -140,56 +140,56 @@ multiNet::multiNet(string in,int fileNum)
 	if (error)
 	{
 		CCol(0,2);
-		cout << "Ä¿Â¼ÎÄ¼şĞÅÏ¢ÓĞÎó£¬ÇëÈ·ÈÏĞÅÏ¢ÎŞÎóºóÖØÊÔ£¬ÒÑ×Ô¶¯·µ»ØÔ­Ê¼¶àÍøÂç¡£" << endl;
+		cout << "ç›®å½•æ–‡ä»¶ä¿¡æ¯æœ‰è¯¯ï¼Œè¯·ç¡®è®¤ä¿¡æ¯æ— è¯¯åé‡è¯•ï¼Œå·²è‡ªåŠ¨è¿”å›åŸå§‹å¤šç½‘ç»œã€‚" << endl;
 		CCol(0,0);
 		new (this) multiNet();
 		return;
 	}
 	*/
 
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout << endl << "Á÷³ÌÖ´ĞĞÍê±Ï£¬Çë¼ì²éÉÏÃæµÄ¶ÁÈ¡ĞÅÏ¢£¬Â·¾¶Îª£º " << in.c_str() << endl;
+	cout << endl << "æµç¨‹æ‰§è¡Œå®Œæ¯•ï¼Œè¯·æ£€æŸ¥ä¸Šé¢çš„è¯»å–ä¿¡æ¯ï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
 }
 
-//Îö¹¹º¯Êı
+//ææ„å‡½æ•°
 multiNet::~multiNet()
 {
-	//¶¼ÊÇ×Ô¶¯µÄ
+	//éƒ½æ˜¯è‡ªåŠ¨çš„
 }
 
-//ÏÔÊ¾ÍøÂç
+//æ˜¾ç¤ºç½‘ç»œ
 void multiNet::showMultiNet()
 {
-	cout << "¸Ã¶àÍøÂç°üº¬×ÓÍøÂç "<<netNum<<" ¸ö£¬½ÚµãÊı " <<nodeNum<<" ¸ö£¬Á´½ÓÊı "<<linkNum<<" ¸ö¡£"<< endl;
+	cout << "è¯¥å¤šç½‘ç»œåŒ…å«å­ç½‘ç»œ "<<netNum<<" ä¸ªï¼ŒèŠ‚ç‚¹æ•° " <<nodeNum<<" ä¸ªï¼Œé“¾æ¥æ•° "<<linkNum<<" ä¸ªã€‚"<< endl;
 	for (auto it : nets)
 	{
 		it.showNetwork();
 	}
 }
 
-//Ìí¼Ó²»Í¬ÍøÂçÖ®¼äµÄÁ´½Ó£¬Ò²¿ÉÒÔÌí¼Ó±¾ÍøÂçÖ®¼äµÄÁ¬½Ó
+//æ·»åŠ ä¸åŒç½‘ç»œä¹‹é—´çš„é“¾æ¥ï¼Œä¹Ÿå¯ä»¥æ·»åŠ æœ¬ç½‘ç»œä¹‹é—´çš„è¿æ¥
 int multiNet::addLinkBetweenNets(int net1,int node1,int net2,int node2,double weight)
 {
-	//ÅĞ¶Ïnet1ºÍnet2Ã»ÓĞÔ½½ç
+	//åˆ¤æ–­net1å’Œnet2æ²¡æœ‰è¶Šç•Œ
 	if (net1 > netNum || net2 > netNum || net1<=0||net2<=0)
 	{
 		int error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨Ìí¼Ó¶àÍøÂçÁ´½Ó£¬ÍøÂç " << net1<<" »ò ÍøÂç "<<net2<<" Ô½½ç¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•æ·»åŠ å¤šç½‘ç»œé“¾æ¥ï¼Œç½‘ç»œ " << net1<<" æˆ– ç½‘ç»œ "<<net2<<" è¶Šç•Œã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//ÅĞ¶ÏÊÇ·ñÊÇÍ¬Ò»ÍøÂçÖ®¼äµÄÁ´½Ó
+	//åˆ¤æ–­æ˜¯å¦æ˜¯åŒä¸€ç½‘ç»œä¹‹é—´çš„é“¾æ¥
 	if (net1 == net2)
 	{
 		int error=0;
@@ -198,28 +198,28 @@ int multiNet::addLinkBetweenNets(int net1,int node1,int net2,int node2,double we
 		return error;
 	}
 
-	//²é¿´node1ºÍnode2ÊÇ·ñÔ½½ç
+	//æŸ¥çœ‹node1å’Œnode2æ˜¯å¦è¶Šç•Œ
 	if (node1 > nets[net1-1].nodeNum || node2 > nets[net2-1].nodeNum|| node1<=0||node2<=0)
 	{
 		int error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨Ìí¼Ó ÍøÂç"<<net1<<"µÄ ½Úµã " << node1 << " -->> " << "ÍøÂç"<<net2<<"µÄ ½Úµã"<< node2 << "£¬ÒòÎªÔ½½ç¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•æ·»åŠ  ç½‘ç»œ"<<net1<<"çš„ èŠ‚ç‚¹ " << node1 << " -->> " << "ç½‘ç»œ"<<net2<<"çš„ èŠ‚ç‚¹"<< node2 << "ï¼Œå› ä¸ºè¶Šç•Œã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//¿ªÊ¼Ìí¼ÓÁ´½Ó
+	//å¼€å§‹æ·»åŠ é“¾æ¥
 	int error=0;
 
-	//ÔÚnode1Ôö¼Ónode1µ½node2µÄ³ö¶ÈÁ´½Ó
+	//åœ¨node1å¢åŠ node1åˆ°node2çš„å‡ºåº¦é“¾æ¥
 	error=nets[net1-1].nodes[node1-1].addLinkToNodeMulti(net2, node2, weight);
 	error=nets[net1-1].linkNum++;
 	
-	//ÔÚnode2Ôö¼Ónode1µ½node2µÄÈë¶ÈÁ´½Ó
+	//åœ¨node2å¢åŠ node1åˆ°node2çš„å…¥åº¦é“¾æ¥
 	error=nets[net2-1].nodes[node2-1].addLinkFromNodeMulti(net1, node1, weight);
 	
 	linkNum++;
@@ -227,24 +227,24 @@ int multiNet::addLinkBetweenNets(int net1,int node1,int net2,int node2,double we
 }
 
 
-//É¾³ı²»Í¬ÍøÂçÖ®¼äµÄÁ´½Ó£¬Ò²¿ÉÒÔÉ¾³ı±¾ÍøÂçÖ®¼äµÄÁ¬½Ó
+//åˆ é™¤ä¸åŒç½‘ç»œä¹‹é—´çš„é“¾æ¥ï¼Œä¹Ÿå¯ä»¥åˆ é™¤æœ¬ç½‘ç»œä¹‹é—´çš„è¿æ¥
 int multiNet::delLinkBetweenNets(int net1, int node1, int net2, int node2)
 {
-	//ÅĞ¶Ïnet1ºÍnet2Ã»ÓĞÔ½½ç
+	//åˆ¤æ–­net1å’Œnet2æ²¡æœ‰è¶Šç•Œ
 	if (net1 > netNum || net2 > netNum || net1<=0 || net2<=0)
 	{
 		int error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨É¾³ı¶àÍøÂçÁ´½Ó£¬ÍøÂç " << net1 << " »ò ÍøÂç " << net2 << " Ô½½ç¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•åˆ é™¤å¤šç½‘ç»œé“¾æ¥ï¼Œç½‘ç»œ " << net1 << " æˆ– ç½‘ç»œ " << net2 << " è¶Šç•Œã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//ÅĞ¶ÏÊÇ·ñÊÇÍ¬Ò»ÍøÂçÖ®¼äµÄÁ´½Ó
+	//åˆ¤æ–­æ˜¯å¦æ˜¯åŒä¸€ç½‘ç»œä¹‹é—´çš„é“¾æ¥
 	if (net1 == net2)
 	{
 		int error=0;
@@ -253,120 +253,120 @@ int multiNet::delLinkBetweenNets(int net1, int node1, int net2, int node2)
 		return error;
 	}
 
-	//²é¿´node1ºÍnode2ÊÇ·ñÔ½½ç
+	//æŸ¥çœ‹node1å’Œnode2æ˜¯å¦è¶Šç•Œ
 	if (node1 > nets[net1-1].nodeNum || node2 > nets[net2-1].nodeNum|| node1<=0|| node2<=0)
 	{
 		int error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨É¾³ı¶àÍøÂçÁ´½Ó£¬½Úµã " << node1 << " »ò ½Úµã " << node2 << " Ô½½ç¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•åˆ é™¤å¤šç½‘ç»œé“¾æ¥ï¼ŒèŠ‚ç‚¹ " << node1 << " æˆ– èŠ‚ç‚¹ " << node2 << " è¶Šç•Œã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//¿ªÊ¼É¾³ıÁ´½Ó
+	//å¼€å§‹åˆ é™¤é“¾æ¥
 	int error=0;
 
-	//ÔÚnode1Ôö¼Ónode1µ½node2µÄ³ö¶ÈÁ´½Ó
+	//åœ¨node1å¢åŠ node1åˆ°node2çš„å‡ºåº¦é“¾æ¥
 	error = nets[net1-1].nodes[node1].delLinkToNodeMulti(net2, node2);
 	error = nets[net1-1].linkNum--;
 
-	//ÔÚnode2Ôö¼Ónode1µ½node2µÄÈë¶ÈÁ´½Ó
+	//åœ¨node2å¢åŠ node1åˆ°node2çš„å…¥åº¦é“¾æ¥
 	error = nets[net2-1].nodes[node2].delLinkFromNodeMulti(net1, node1);
 
 	linkNum--;
 	return error;
 }
 
-//É¾³ı¶àÍøÂç½Úµã
+//åˆ é™¤å¤šç½‘ç»œèŠ‚ç‚¹
 int multiNet::delNodeFromMultiNet(int netid, int nodeid)
 {
-	//ÅĞ¶ÏnetidÊÇ·ñÔ½½ç
+	//åˆ¤æ–­netidæ˜¯å¦è¶Šç•Œ
 	if (netid > netNum|| netid<=0 )
 	{
 		int error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨É¾³ı¶àÍøÂç½Úµã£¬ÍøÂç " << netid <<" Ô½½ç¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•åˆ é™¤å¤šç½‘ç»œèŠ‚ç‚¹ï¼Œç½‘ç»œ " << netid <<" è¶Šç•Œã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//²é¿´nodeidÊÇ·ñÔ½½ç
+	//æŸ¥çœ‹nodeidæ˜¯å¦è¶Šç•Œ
 	if (nodeid > nets[netid-1].nodeNum||nodeid<=0)
 	{
 		int error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨É¾³ı¶àÍøÂç½Úµã£¬½Úµã " << nodeid << " Ô½½ç¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•åˆ é™¤å¤šç½‘ç»œèŠ‚ç‚¹ï¼ŒèŠ‚ç‚¹ " << nodeid << " è¶Šç•Œã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//¿ªÊ¼É¾³ı½Úµã
+	//å¼€å§‹åˆ é™¤èŠ‚ç‚¹
 
-	//Èç¹û¸Ã½Úµã´æÁô¶àÍøÂçÁ´½Ó¹ØÁª£¬ÔòÈ«²¿É¾³ı
+	//å¦‚æœè¯¥èŠ‚ç‚¹å­˜ç•™å¤šç½‘ç»œé“¾æ¥å…³è”ï¼Œåˆ™å…¨éƒ¨åˆ é™¤
 	
-	//Çå³ı¶àÍøÂç³ö¶È
+	//æ¸…é™¤å¤šç½‘ç»œå‡ºåº¦
 	if (nets[netid-1].nodes[nodeid-1].numAdjMultiOut > 0)
 	{
 		for (auto it : nets[netid - 1].nodes[nodeid - 1].adjMultiOut)
 			for (auto it2 : it.second)
 			{
 				nets[it.first - 1].nodes[it2.first - 1].delLinkFromNodeMulti(netid, nodeid);
-				//É¾³ı£¬ÍøÂçit.firstµÄ½Úµãit2.first <<-- ÍøÂçnetidµÄ½Úµãnodeid
-				//Ö¸Ïò¸Ã½ÚµãÁ´½ÓµÄÆğµãËùÔÚÍøÂçÁ´½ÓÊıÁ¿¼õÉÙ
+				//åˆ é™¤ï¼Œç½‘ç»œit.firstçš„èŠ‚ç‚¹it2.first <<-- ç½‘ç»œnetidçš„èŠ‚ç‚¹nodeid
+				//æŒ‡å‘è¯¥èŠ‚ç‚¹é“¾æ¥çš„èµ·ç‚¹æ‰€åœ¨ç½‘ç»œé“¾æ¥æ•°é‡å‡å°‘
 				nets[it.first - 1].linkNum--;
 				nets[netid - 1].nodes[nodeid - 1].numAdjMultiOut--;
 
-				//¶àÍøÂçÁ´½Ó×ÜÊıÁ¿¼õÉÙ
+				//å¤šç½‘ç»œé“¾æ¥æ€»æ•°é‡å‡å°‘
 				linkNum--;
 			}
-		//¼ì²éÊÇ·ñÇåÀí¸É¾»
+		//æ£€æŸ¥æ˜¯å¦æ¸…ç†å¹²å‡€
 		if (nets[netid - 1].nodes[nodeid - 1].numAdjMultiOut == 0)
 		{
-			//³ö¶ÈÇåÀí¸É¾»ÁË
+			//å‡ºåº¦æ¸…ç†å¹²å‡€äº†
 			nets[netid - 1].nodes[nodeid - 1].adjMultiOut.clear();
 		}
 	}
 
-	//Çå³ı¶àÍøÂçÈë¶È
+	//æ¸…é™¤å¤šç½‘ç»œå…¥åº¦
 	if (nets[netid-1].nodes[nodeid-1].numAdjMultiIn > 0)
 	{
 		for(auto it: nets[netid-1].nodes[nodeid-1].adjMultiIn)
 			for (auto it2 : it.second)
 			{
 				nets[it.first-1].nodes[it2.first-1].delLinkToNodeMulti(netid, nodeid);
-				//É¾³ı£¬ÍøÂçit.firstµÄ½Úµãit2.first -->> ÍøÂçnetidµÄ½Úµãnodeid
-				//Ö¸Ïò¸Ã½ÚµãÁ´½ÓµÄÆğµãËùÔÚÍøÂçÁ´½ÓÊıÁ¿¼õÉÙ
+				//åˆ é™¤ï¼Œç½‘ç»œit.firstçš„èŠ‚ç‚¹it2.first -->> ç½‘ç»œnetidçš„èŠ‚ç‚¹nodeid
+				//æŒ‡å‘è¯¥èŠ‚ç‚¹é“¾æ¥çš„èµ·ç‚¹æ‰€åœ¨ç½‘ç»œé“¾æ¥æ•°é‡å‡å°‘
 				nets[it.first-1].linkNum--;
 				nets[netid-1].nodes[nodeid-1].numAdjMultiIn--;
 
-				//¶àÍøÂçÁ´½Ó×ÜÊıÁ¿¼õÉÙ
+				//å¤šç½‘ç»œé“¾æ¥æ€»æ•°é‡å‡å°‘
 				linkNum--;
 			}
-		//¼ì²éÊÇ·ñÇåÀí¸É¾»
+		//æ£€æŸ¥æ˜¯å¦æ¸…ç†å¹²å‡€
 		if (nets[netid-1].nodes[nodeid-1].numAdjMultiIn == 0)
 		{
-			//Èë¶ÈÇåÀí¸É¾»ÁË
+			//å…¥åº¦æ¸…ç†å¹²å‡€äº†
 			nets[netid-1].nodes[nodeid-1].adjMultiIn.clear();
 		}
 	}
 
 
-	//Èë¶ÈºÍ³ö¶ÈÇå³ıÍê±Ï£¬¿ªÊ¼´ÓÍøÂç²ãÃæÇå³ı½Úµã
+	//å…¥åº¦å’Œå‡ºåº¦æ¸…é™¤å®Œæ¯•ï¼Œå¼€å§‹ä»ç½‘ç»œå±‚é¢æ¸…é™¤èŠ‚ç‚¹
 	int error = nets[netid-1].delNodeFromNetwork(nodeid);
 
-	//¶àÍøÂç×ÜÁ´½ÓÊı¼õÉÙÊıÁ¿£¬µÈÓÚ¸Ã½ÚµãËùÓĞÁ´½ÓÊıÁ¿×ÜºÍ
+	//å¤šç½‘ç»œæ€»é“¾æ¥æ•°å‡å°‘æ•°é‡ï¼Œç­‰äºè¯¥èŠ‚ç‚¹æ‰€æœ‰é“¾æ¥æ•°é‡æ€»å’Œ
 	linkNum -= +nets[netid-1].nodes[nodeid-1].numAdjOut + nets[netid-1].nodes[nodeid-1].numAdjIn;
 
 	if (!error)
@@ -377,106 +377,106 @@ int multiNet::delNodeFromMultiNet(int netid, int nodeid)
 	return error;
 }
 
-//Ìí¼ÓÒ»¸öÍøÂçµ½¶àÍøÂç
+//æ·»åŠ ä¸€ä¸ªç½‘ç»œåˆ°å¤šç½‘ç»œ
 int multiNet::addNetworkToMulti(network n1)
 {
 	if (n1.nodeNum == 0)
 	{
 		int error = 1;
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨Ìí¼Ó¿ÕÍøÂçµ½¶àÍøÂç"<< endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•æ·»åŠ ç©ºç½‘ç»œåˆ°å¤šç½‘ç»œ"<< endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//ÍøÂçÊıÁ¿¼ÓÒ»
+	//ç½‘ç»œæ•°é‡åŠ ä¸€
 	netNum++;
 
-	//Ôö¼Ó×ÜÌå½ÚµãºÍÁ´½ÓÊıÁ¿
+	//å¢åŠ æ€»ä½“èŠ‚ç‚¹å’Œé“¾æ¥æ•°é‡
 	linkNum += n1.linkNum;
 	nodeNum += n1.nodeNum;
 
-	//¸Ä±änetid
+	//æ”¹å˜netid
 	n1.netid = netNum;
 
-	//netsÈİÆ÷ÖĞÌí¼ÓÍøÂç
+	//netså®¹å™¨ä¸­æ·»åŠ ç½‘ç»œ
 	nets.insert(nets.end(),n1);
 	
 	return 0;
 }
 
-//Êä³ö¶àÍøÂçÁ´½Óµ½txtÎÄ¼ş£¬¸ñÊ½Îª ÍøÂç1 ½Úµã1 ÍøÂç2 ½Úµã2
+//è¾“å‡ºå¤šç½‘ç»œé“¾æ¥åˆ°txtæ–‡ä»¶ï¼Œæ ¼å¼ä¸º ç½‘ç»œ1 èŠ‚ç‚¹1 ç½‘ç»œ2 èŠ‚ç‚¹2
 void multiNet::outputLinksFromMulti(string out)
 {
 	if (out.empty())
 	{
 		CCol(0,2);
-		cout << "Â·¾¶²»ÔÊĞíÎª¿Õ£¬ÒÑ×Ô¶¯·µ»Ø¡£" << endl;
+		cout << "è·¯å¾„ä¸å…è®¸ä¸ºç©ºï¼Œå·²è‡ªåŠ¨è¿”å›ã€‚" << endl;
 		CCol(0,0);
 		return;
 	}
 
-	//¼ì²éÊÇ·ñÎª¶à¼¶Ä¿Â¼
+	//æ£€æŸ¥æ˜¯å¦ä¸ºå¤šçº§ç›®å½•
 	if (out.find('/') < out.length())
 	{
-		GetDirAndCreate(out);	//Êä³öÄ¿Â¼Ãû³Æ 
+		GetDirAndCreate(out);	//è¾“å‡ºç›®å½•åç§° 
 	}
 
 
-	//´´½¨Êı¾İÁ÷
+	//åˆ›å»ºæ•°æ®æµ
 	ofstream  file(out, std::ios_base::ate);
 
 	if (file.fail())
 	{
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "´´½¨ÎÄ¼şÂ·¾¶´íÎó£º " << out.c_str() << " £¬Çë¼ì²éÂ·¾¶ÊÇ·ñÕıÈ·£¡" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "åˆ›å»ºæ–‡ä»¶è·¯å¾„é”™è¯¯ï¼š " << out.c_str() << " ï¼Œè¯·æ£€æŸ¥è·¯å¾„æ˜¯å¦æ­£ç¡®ï¼" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return;
 	}
 
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout << "ÕıÔÚ´´½¨ÆÕÍ¨¸ñÊ½µÄ¶àÍøÂçÁ´½ÓĞÅÏ¢ÎÄ¼ş£º " << out.c_str() << endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	cout << "æ­£åœ¨åˆ›å»ºæ™®é€šæ ¼å¼çš„å¤šç½‘ç»œé“¾æ¥ä¿¡æ¯æ–‡ä»¶ï¼š " << out.c_str() << endl;
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
-	//¿ªÊ¼Ğ´ÈëÎÄ¼ş
+	//å¼€å§‹å†™å…¥æ–‡ä»¶
 	file << nodeNum << " " << type << endl;
 
 	for(auto it:nets)
 		for (auto it1 : it.nodes)
 		{
-			//it.netid	ÍøÂç1
-			//it1.id	½Úµã1
+			//it.netid	ç½‘ç»œ1
+			//it1.id	èŠ‚ç‚¹1
 			for (auto it2 : it1.adjMultiOut)
 			{
-				//it2.first	ÍøÂç2
+				//it2.first	ç½‘ç»œ2
 				for (auto it3 : it2.second)
 				{
-					//it3.first		½Úµã2
-					//it3.second	È¨Öµ
+					//it3.first		èŠ‚ç‚¹2
+					//it3.second	æƒå€¼
 
-					//weight»á±£ÁôÁ½Î»Ğ¡Êıµã
+					//weightä¼šä¿ç•™ä¸¤ä½å°æ•°ç‚¹
 					file << it.netid << " " << it1.id << " " << it2.first << " " << it3.first << " " << setiosflags(ios::fixed) << setprecision(2) << it3.second << endl;
 				}
 			}
 		}
 }
 
-//¶ÁÈ¡¶àÍøÂçÁ´½ÓtxtÎÄ¼ş£¬Ìí¼Óµ½µ±Ç°¶àÍøÂç
+//è¯»å–å¤šç½‘ç»œé“¾æ¥txtæ–‡ä»¶ï¼Œæ·»åŠ åˆ°å½“å‰å¤šç½‘ç»œ
 int multiNet::inputLinksToMulti(string in)
 {
 	if (in.empty())
 	{
 		CCol(0,2);
-		cout << "Â·¾¶²»ÔÊĞíÎª¿Õ£¬ÒÑ×Ô¶¯·µ»Ø¡£" << endl;
+		cout << "è·¯å¾„ä¸å…è®¸ä¸ºç©ºï¼Œå·²è‡ªåŠ¨è¿”å›ã€‚" << endl;
 		CCol(0,0);
 		return 2;
 	}
@@ -484,35 +484,35 @@ int multiNet::inputLinksToMulti(string in)
 	int error_return = 0;
 	ifstream file(in.data(), ios::in);
 
-	//¼ì²éÎÄ¼şÊÇ·ñ¶ÁÈ¡Ê§°Ü
+	//æ£€æŸ¥æ–‡ä»¶æ˜¯å¦è¯»å–å¤±è´¥
 	if (file.fail())
 	{
 		CCol(0,2);
-		cout << "¶ÁÈ¡¶àÍøÂçÁ´½ÓÎÄ¼şÊ§°Ü£¬Â·¾¶Îª£º " << in.c_str() << "£¬ÒÑ×Ô¶¯·µ»Ø´íÎó¡£" << endl;
+		cout << "è¯»å–å¤šç½‘ç»œé“¾æ¥æ–‡ä»¶å¤±è´¥ï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str() << "ï¼Œå·²è‡ªåŠ¨è¿”å›é”™è¯¯ã€‚" << endl;
 		CCol(0,0);
 		return 2;
 	}
-	//ÎÄ¼şÃ»ÓĞ¶ÁÈ¡Ê§°Ü£¬Õı³£½øĞĞ
+	//æ–‡ä»¶æ²¡æœ‰è¯»å–å¤±è´¥ï¼Œæ­£å¸¸è¿›è¡Œ
 	else
 	{
 		CCol(0,1);
-		cout << "¶ÁÈ¡¶àÍøÂçÁ´½ÓÎÄ¼ş³É¹¦£¬Â·¾¶Îª£º " << in.c_str() << endl;
+		cout << "è¯»å–å¤šç½‘ç»œé“¾æ¥æ–‡ä»¶æˆåŠŸï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str() << endl;
 		CCol(0,0);
-		string line;				//´¢´æÁÙÊ±Ò»ĞĞ
+		string line;				//å‚¨å­˜ä¸´æ—¶ä¸€è¡Œ
 
 		int tempNodeNum = 0;
 
-		getline(file, line);		//¿ªÊ¼¶ÁÈ¡½ÚµãĞÅÏ¢£¬¼´µÚÒ»ĞĞ
-		stringstream stream(line);	//´¦ÀíÒ»ĞĞĞÅÏ¢£¬ÒÔ¿Õ¸ñÎª·Ö¸ô·û
-		stream >> tempNodeNum;		//»ñÈ¡¶àÍøÂçÁ´½ÓÊıÁ¿
-		stream >> type;				//»ñÈ¡¶àÍøÀàĞÍ
+		getline(file, line);		//å¼€å§‹è¯»å–èŠ‚ç‚¹ä¿¡æ¯ï¼Œå³ç¬¬ä¸€è¡Œ
+		stringstream stream(line);	//å¤„ç†ä¸€è¡Œä¿¡æ¯ï¼Œä»¥ç©ºæ ¼ä¸ºåˆ†éš”ç¬¦
+		stream >> tempNodeNum;		//è·å–å¤šç½‘ç»œé“¾æ¥æ•°é‡
+		stream >> type;				//è·å–å¤šç½‘ç±»å‹
 
-		//ÏÂÃæ¿ªÊ¼Ìí¼Ó¶àÍøÂçÁ´½Ó
+		//ä¸‹é¢å¼€å§‹æ·»åŠ å¤šç½‘ç»œé“¾æ¥
 		while (!file.eof())
 		{
 
-			getline(file, line);		//»ñÈ¡ÁÙÊ±Ò»ĞĞ
-			stringstream stream(line);	//´¦ÀíÒ»ĞĞĞÅÏ¢£¬ÒÔ¿Õ¸ñÎª·Ö¸ô·û
+			getline(file, line);		//è·å–ä¸´æ—¶ä¸€è¡Œ
+			stringstream stream(line);	//å¤„ç†ä¸€è¡Œä¿¡æ¯ï¼Œä»¥ç©ºæ ¼ä¸ºåˆ†éš”ç¬¦
 
 			if (file.fail()) {
 				break;
@@ -521,14 +521,14 @@ int multiNet::inputLinksToMulti(string in)
 			int net1, node1, net2, node2;
 			double weight;
 
-			//»ñÈ¡Á´½ÓĞÅÏ¢
+			//è·å–é“¾æ¥ä¿¡æ¯
 			stream >> net1;
 			stream >> node1;
 			stream >> net2;
 			stream >> node2;
 			stream >> weight;
 
-			//Ìí¼ÓÁ´½Ó£¬³É¹¦Ôò¶àÍøÂçÁ´½Ó¼ÓÒ»
+			//æ·»åŠ é“¾æ¥ï¼ŒæˆåŠŸåˆ™å¤šç½‘ç»œé“¾æ¥åŠ ä¸€
 			if (addLinkBetweenNets(net1, node1, net2, node2, weight) == 0)
 			{
 				linkNum++;
@@ -544,7 +544,7 @@ int multiNet::inputLinksToMulti(string in)
 	if (error_return)
 	{
 		CCol(0,2);
-		cout << "¶ÁÈ¡¶àÍøÂçÁ´½ÓÎÄ¼şÍê±Ï£¬µ«²¿·ÖĞÅÏ¢ÓĞÎó£¬Â·¾¶Îª£º " << in.c_str() << endl;
+		cout << "è¯»å–å¤šç½‘ç»œé“¾æ¥æ–‡ä»¶å®Œæ¯•ï¼Œä½†éƒ¨åˆ†ä¿¡æ¯æœ‰è¯¯ï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str() << endl;
 		CCol(0,0);
 	}
 
@@ -556,56 +556,56 @@ void multiNet::outputMultiNet(string out)
 	if (out.empty())
 	{
 		CCol(0,2);
-		cout << "Ä¿Â¼²»ÔÊĞíÎª¿Õ£¬ÒÑ×Ô¶¯·µ»Ø¡£" << endl;
+		cout << "ç›®å½•ä¸å…è®¸ä¸ºç©ºï¼Œå·²è‡ªåŠ¨è¿”å›ã€‚" << endl;
 		CCol(0,0);
 		return;
 	}
 
-	//×ª»»¶ÁÈ¡Ä¿Â¼µÄ¸ñÊ½
+	//è½¬æ¢è¯»å–ç›®å½•çš„æ ¼å¼
 	char* temp;
 	const int len = out.length();
 	temp = new char[len + 1];
 	strcpy(temp, out.c_str());
 
 	/*
-	//´´½¨Ä¿Â¼
+	//åˆ›å»ºç›®å½•
 	if (CreatDir(temp) == -1)
 	{
 		CCol(0,2);
-		cout << "Ä¿Â¼´´½¨Ê§°Ü£¬Â·¾¶Îª£º " << out << "£¬ÒÑ×Ô¶¯·µ»Ø¡£" << endl;
+		cout << "ç›®å½•åˆ›å»ºå¤±è´¥ï¼Œè·¯å¾„ä¸ºï¼š " << out << "ï¼Œå·²è‡ªåŠ¨è¿”å›ã€‚" << endl;
 		CCol(0,0);
 		return;
 	}
 	*/
 
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout << "ÕıÔÚ´´½¨ÆÕÍ¨¸ñÊ½µÄ¶àÍøÂçĞÅÏ¢ÎÄ¼şÈº£¬Â·¾¶Îª£º " << out.c_str() << endl;
+	cout << "æ­£åœ¨åˆ›å»ºæ™®é€šæ ¼å¼çš„å¤šç½‘ç»œä¿¡æ¯æ–‡ä»¶ç¾¤ï¼Œè·¯å¾„ä¸ºï¼š " << out.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
-	//¿ªÊ¼Êä³öÍøÂçÎÄ¼ş£¬µ½outÂ·¾¶
+	//å¼€å§‹è¾“å‡ºç½‘ç»œæ–‡ä»¶ï¼Œåˆ°outè·¯å¾„
 	for (auto it : nets)
 	{
-		//int×ª»»Îªstring
+		//intè½¬æ¢ä¸ºstring
 		stringstream ss;
 		string tempNum;
 		ss << it.netid;
 		ss >> tempNum;
 		
-		//¿ªÊ¼Êä³ö
+		//å¼€å§‹è¾“å‡º
 		it.outputNetwork(out + "/net" + tempNum+".txt");
 	}
 
-	//¿ªÊ¼Êä³ö¶àÍøÂçÁ´½ÓÎÄ¼ş
+	//å¼€å§‹è¾“å‡ºå¤šç½‘ç»œé“¾æ¥æ–‡ä»¶
 	outputLinksFromMulti(out + "/links.txt");
 
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout <<endl<< "ËùÓĞÎÄ¼ş´´½¨Íê±Ï£¬Çë¼ì²éÉÏÃæµÄ´´½¨ĞÅÏ¢£¬Â·¾¶Îª£º " << out.c_str() << endl;
+	cout <<endl<< "æ‰€æœ‰æ–‡ä»¶åˆ›å»ºå®Œæ¯•ï¼Œè¯·æ£€æŸ¥ä¸Šé¢çš„åˆ›å»ºä¿¡æ¯ï¼Œè·¯å¾„ä¸ºï¼š " << out.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
 
@@ -617,45 +617,45 @@ void multiNet::outputMultiNet_pajek(string out)
 	if (out.empty())
 	{
 		CCol(0,2);
-		cout << "Ä¿Â¼²»ÔÊĞíÎª¿Õ£¬ÒÑ×Ô¶¯·µ»Ø¡£" << endl;
+		cout << "ç›®å½•ä¸å…è®¸ä¸ºç©ºï¼Œå·²è‡ªåŠ¨è¿”å›ã€‚" << endl;
 		CCol(0,0);
 		return;
 	}
 
-	//×ª»»¶ÁÈ¡Ä¿Â¼µÄ¸ñÊ½
+	//è½¬æ¢è¯»å–ç›®å½•çš„æ ¼å¼
 	char* temp;
 	const int len = out.length();
 	temp = new char[len + 1];
 	strcpy(temp, out.c_str());
 
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout << "ÕıÔÚ´´½¨pajek¸ñÊ½µÄ¶àÍøÂçĞÅÏ¢ÎÄ¼şÈº£¬Â·¾¶Îª£º " << out.c_str() << endl;
+	cout << "æ­£åœ¨åˆ›å»ºpajekæ ¼å¼çš„å¤šç½‘ç»œä¿¡æ¯æ–‡ä»¶ç¾¤ï¼Œè·¯å¾„ä¸ºï¼š " << out.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
-	//¿ªÊ¼Êä³öÍøÂçÎÄ¼ş£¬µ½outÂ·¾¶
+	//å¼€å§‹è¾“å‡ºç½‘ç»œæ–‡ä»¶ï¼Œåˆ°outè·¯å¾„
 	for (auto it : nets)
 	{
-		//int×ª»»Îªstring
+		//intè½¬æ¢ä¸ºstring
 		stringstream ss;
 		string tempNum;
 		ss << it.netid;
 		ss >> tempNum;
 
-		//¿ªÊ¼Êä³ö
+		//å¼€å§‹è¾“å‡º
 		it.outputNetwork_pajek(out + "/net" + tempNum + ".txt");
 	}
 
-	//¿ªÊ¼Êä³ö¶àÍøÂçÁ´½ÓÎÄ¼ş
+	//å¼€å§‹è¾“å‡ºå¤šç½‘ç»œé“¾æ¥æ–‡ä»¶
 	outputLinksFromMulti(out + "/links.txt");
 
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout << endl << "Á÷³ÌÖ´ĞĞÍê±Ï£¬Çë¼ì²éÉÏÃæµÄ´´½¨ĞÅÏ¢£¬Â·¾¶Îª£º " << out.c_str() << endl;
+	cout << endl << "æµç¨‹æ‰§è¡Œå®Œæ¯•ï¼Œè¯·æ£€æŸ¥ä¸Šé¢çš„åˆ›å»ºä¿¡æ¯ï¼Œè·¯å¾„ä¸ºï¼š " << out.c_str() << endl;
 	cout << "----------------------------------------------------------------------------------------" << endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
 }

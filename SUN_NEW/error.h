@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 /*
 definition of different types of errors
 */

@@ -1,6 +1,6 @@
-#include "other.h"
+ï»¿#include "other.h"
 
-//´´½¨Ä¿Â¼£¬Ö§³Ölinux
+//åˆ›å»ºç›®å½•ï¼Œæ”¯æŒlinux
 int CreatDir(char *pDir)
 {
 	int i = 0;
@@ -16,14 +16,14 @@ int CreatDir(char *pDir)
 	pszDir = strdup(pDir);
 	iLen = strlen(pszDir);
 
-	// ´´½¨ÖĞ¼äÄ¿Â¼  
+	// åˆ›å»ºä¸­é—´ç›®å½•  
 	for (i = 0; i < iLen; i++)
 	{
 		if (pszDir[i] == '\\' || pszDir[i] == '/')
 		{
 			pszDir[i] = '\0';
 
-			//Èç¹û²»´æÔÚ,´´½¨  
+			//å¦‚æœä¸å­˜åœ¨,åˆ›å»º  
 			iRet = ACCESS(pszDir, 0);
 			if (iRet != 0)
 			{
@@ -33,7 +33,7 @@ int CreatDir(char *pDir)
 					return -1;
 				}
 			}
-			//Ö§³Ölinux,½«ËùÓĞ\»»³É/  
+			//æ”¯æŒlinux,å°†æ‰€æœ‰\æ¢æˆ/  
 			pszDir[i] = '/';
 		}
 	}
@@ -43,24 +43,24 @@ int CreatDir(char *pDir)
 	return iRet;
 }
 
-//´ÓÎÄ¼şÃûÖĞ»ñÈ¡Â·¾¶Ãû£¬²¢´´½¨Â·¾¶
+//ä»æ–‡ä»¶åä¸­è·å–è·¯å¾„åï¼Œå¹¶åˆ›å»ºè·¯å¾„
 void GetDirAndCreate(string FullName)
 {
-	//»ñÈ¡Ä¿Â¼dir
+	//è·å–ç›®å½•dir
 	FullName = FullName.substr(0, FullName.find_last_of("/"));
 
-	//×ª»»¶ÁÈ¡Ä¿Â¼µÄ¸ñÊ½
+	//è½¬æ¢è¯»å–ç›®å½•çš„æ ¼å¼
 	char* temp;
 	const int len = FullName.length();
 	temp = new char[len + 1];
 	strcpy(temp, FullName.c_str());
 
-	//´´½¨Ä¿Â¼
+	//åˆ›å»ºç›®å½•
 	CreatDir(temp);
 
 }
 
-//ÅĞ¶ÏÒ»¸ö×Ö·û´®ÊÇ·ñÎªÊı×Ö£¨¶ÁÈ¡ÎÄ¼şÅĞ¶ÏÓÃ£©
+//åˆ¤æ–­ä¸€ä¸ªå­—ç¬¦ä¸²æ˜¯å¦ä¸ºæ•°å­—ï¼ˆè¯»å–æ–‡ä»¶åˆ¤æ–­ç”¨ï¼‰
 bool isNum(string str)
 {
 	stringstream sin(str);
@@ -73,9 +73,9 @@ bool isNum(string str)
 	return true;
 }
 
-//ĞŞ¸Ä¿ØÖÆÌ¨ÑÕÉ«
-//±³¾°£º0=ÎŞ£¬1=ÓĞ
-//ÆÕÍ¨=0£¬ÂÌÉ«=1£¬ºìÉ«=2£¬À¶É«=3
+//ä¿®æ”¹æ§åˆ¶å°é¢œè‰²
+//èƒŒæ™¯ï¼š0=æ— ï¼Œ1=æœ‰
+//æ™®é€š=0ï¼Œç»¿è‰²=1ï¼Œçº¢è‰²=2ï¼Œè“è‰²=3
 void CCol(int back, int col)
 {
 #ifdef _WIN32 
