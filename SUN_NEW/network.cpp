@@ -1,11 +1,11 @@
 #include "network.h"
 
 
-//¹¹Ôìº¯Êı
-network::network(int N		//½ÚµãµÄÊıÁ¿
-				,netType type)  //ÍøÂçÀàĞÍ
+//æ„é€ å‡½æ•°
+network::network(int N		//èŠ‚ç‚¹çš„æ•°é‡
+				,netType type)  //ç½‘ç»œç±»å‹
 {
-	//Èç¹û¹æ¶¨½ÚµãÊı´óÓÚ0
+	//å¦‚æœè§„å®šèŠ‚ç‚¹æ•°å¤§äº0
 	if (N>0)
 	{
 		nodeNum = N;
@@ -14,124 +14,124 @@ network::network(int N		//½ÚµãµÄÊıÁ¿
 			nodes.insert(nodes.end(),i);
 		}
 	}
-	//Èç¹û½Úµã¸öÊıÎª0
+	//å¦‚æœèŠ‚ç‚¹ä¸ªæ•°ä¸º0
 	else 
 	{
 		nodeNum = 0;
 	}
 	linkNum = 0;
-	netid = 0;			//Ä¬ÈÏÍøÂç±àºÅÎª0
+	netid = 0;			//é»˜è®¤ç½‘ç»œç¼–å·ä¸º0
 	this->type = type;
 
 }
 
-//¹¹Ôìº¯Êı£¬´øÍøÂç±àºÅ
+//æ„é€ å‡½æ•°ï¼Œå¸¦ç½‘ç»œç¼–å·
 network::network(int N, netType type, int netid)
 {
 
-	//µ÷ÓÃÄ¬ÈÏ¹¹Ôìº¯Êı
+	//è°ƒç”¨é»˜è®¤æ„é€ å‡½æ•°
 	new (this) network(N, DIRECT_WITH_WEIGHT);
 
-	//¸ÄĞ´ÍøÂç±àºÅ
+	//æ”¹å†™ç½‘ç»œç¼–å·
 	this->netid = netid;
 }
 
 
-//¶ÁÈ¡ÎÄ¼ş¹¹Ôìº¯Êı£¬×Ô¶¯Ê¶±ğÆÕÍ¨¸ñÊ½ºÍpajek¸ñÊ½
+//è¯»å–æ–‡ä»¶æ„é€ å‡½æ•°ï¼Œè‡ªåŠ¨è¯†åˆ«æ™®é€šæ ¼å¼å’Œpajekæ ¼å¼
 network::network(string in)
 {
-	linkNum = 0;				//³õÊ¼»¯Á´½ÓÊıÁ¿
-	netid = 0;					//Ä¬ÈÏÍøÂç±àºÅÎª0
+	linkNum = 0;				//åˆå§‹åŒ–é“¾æ¥æ•°é‡
+	netid = 0;					//é»˜è®¤ç½‘ç»œç¼–å·ä¸º0
 	ifstream file(in.data(), ios::in);
 
-	//¼ì²éÎÄ¼şÊÇ·ñ¶ÁÈ¡Ê§°Ü
+	//æ£€æŸ¥æ–‡ä»¶æ˜¯å¦è¯»å–å¤±è´¥
 	if (file.fail())
 	{
 		CCol(0,2);
-		cout << "¶ÁÈ¡ÎÄ¼şÊ§°Ü£¬Â·¾¶Îª£º " << in.c_str() << "£¬ÒÑ×Ô¶¯½«±¾¶ÔÏóÌæ»»Îª ¿ÕÍøÂç¡£" << endl;
+		cout << "è¯»å–æ–‡ä»¶å¤±è´¥ï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str() << "ï¼Œå·²è‡ªåŠ¨å°†æœ¬å¯¹è±¡æ›¿æ¢ä¸º ç©ºç½‘ç»œã€‚" << endl;
 		CCol(0,0);
 		new (this) network(1, DIRECT_WITH_WEIGHT);
 	}
-	//ÎÄ¼şÃ»ÓĞ¶ÁÈ¡Ê§°Ü£¬Õı³£½øĞĞ
+	//æ–‡ä»¶æ²¡æœ‰è¯»å–å¤±è´¥ï¼Œæ­£å¸¸è¿›è¡Œ
 	else 
 	{
-		int error = 0;				//´íÎó±ê¼Ç
+		int error = 0;				//é”™è¯¯æ ‡è®°
 		CCol(0,1);
-		cout << "¶ÁÈ¡ÎÄ¼ş³É¹¦£¬Â·¾¶Îª£º " << in.c_str()  << endl;
+		cout << "è¯»å–æ–‡ä»¶æˆåŠŸï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str()  << endl;
 		CCol(0,0);
-		string line;				//´¢´æÁÙÊ±Ò»ĞĞ
+		string line;				//å‚¨å­˜ä¸´æ—¶ä¸€è¡Œ
 		
-		getline(file, line);		//¿ªÊ¼¶ÁÈ¡½ÚµãĞÅÏ¢£¬¼´µÚÒ»ĞĞ
-		stringstream stream(line);	//´¦ÀíÒ»ĞĞĞÅÏ¢£¬ÒÔ¿Õ¸ñÎª·Ö¸ô·û
+		getline(file, line);		//å¼€å§‹è¯»å–èŠ‚ç‚¹ä¿¡æ¯ï¼Œå³ç¬¬ä¸€è¡Œ
+		stringstream stream(line);	//å¤„ç†ä¸€è¡Œä¿¡æ¯ï¼Œä»¥ç©ºæ ¼ä¸ºåˆ†éš”ç¬¦
 		
 		string tempNum;
-		stream >> tempNum;			//»ñÈ¡ÍøÂç½ÚµãÊıÁ¿
+		stream >> tempNum;			//è·å–ç½‘ç»œèŠ‚ç‚¹æ•°é‡
 		
-		//ÅĞ¶ÏÊÇ·ñÎªpajek¸ñÊ½
+		//åˆ¤æ–­æ˜¯å¦ä¸ºpajekæ ¼å¼
 		if (isNum(tempNum))
 		{
-			stream >> type;						//»ñÈ¡ÍøÂçÀàĞÍ
-			nodeNum= atoi(tempNum.c_str());		//´¢´æÍøÂç½ÚµãÊı£¬°üº¬string×ª»»ÎªintµÄ¹ı³Ì
+			stream >> type;						//è·å–ç½‘ç»œç±»å‹
+			nodeNum= atoi(tempNum.c_str());		//å‚¨å­˜ç½‘ç»œèŠ‚ç‚¹æ•°ï¼ŒåŒ…å«stringè½¬æ¢ä¸ºintçš„è¿‡ç¨‹
 			
-			//¿ªÊ¼¸ù¾İ½ÚµãÊıÁ¿Ôö¼Ó½ÚµãÈİÆ÷
+			//å¼€å§‹æ ¹æ®èŠ‚ç‚¹æ•°é‡å¢åŠ èŠ‚ç‚¹å®¹å™¨
 			for (int i = 1; i <= nodeNum; i++)
 			{
 				nodes.insert(nodes.end(), i);
 			}
 
-			//¿ªÊ¼¶ÁÈ¡Á´½ÓÎÄ¼şĞÅÏ¢£¬Ñ­»·¡°½ÚµãÊıÁ¿¡±´Î
+			//å¼€å§‹è¯»å–é“¾æ¥æ–‡ä»¶ä¿¡æ¯ï¼Œå¾ªç¯â€œèŠ‚ç‚¹æ•°é‡â€æ¬¡
 			for (int i = 1; i <= nodeNum;i++)
 			{
-				getline(file, line);		//»ñÈ¡ÁÙÊ±Ò»ĞĞ
-				stringstream stream(line);	//´¦ÀíÒ»ĞĞĞÅÏ¢£¬ÒÔ¿Õ¸ñÎª·Ö¸ô·û
+				getline(file, line);		//è·å–ä¸´æ—¶ä¸€è¡Œ
+				stringstream stream(line);	//å¤„ç†ä¸€è¡Œä¿¡æ¯ï¼Œä»¥ç©ºæ ¼ä¸ºåˆ†éš”ç¬¦
 			
-				int id;						//´¢´æÁÙÊ±½ÚµãidºÅĞÅÏ¢
-				int adjNumOut;				//´¢´æÁÙÊ±½Úµã³ö¶ÈĞÅÏ¢
+				int id;						//å‚¨å­˜ä¸´æ—¶èŠ‚ç‚¹idå·ä¿¡æ¯
+				int adjNumOut;				//å‚¨å­˜ä¸´æ—¶èŠ‚ç‚¹å‡ºåº¦ä¿¡æ¯
 
-				stream >> id;				//»ñÈ¡½ÚµãidºÅĞÅÏ¢
-				stream >> adjNumOut;		//»ñÈ¡ÁÙÊ±½Úµã³ö¶ÈĞÅÏ¢
+				stream >> id;				//è·å–èŠ‚ç‚¹idå·ä¿¡æ¯
+				stream >> adjNumOut;		//è·å–ä¸´æ—¶èŠ‚ç‚¹å‡ºåº¦ä¿¡æ¯
 			
-				//¼ì²éÊÇ·ñ³ö´í
+				//æ£€æŸ¥æ˜¯å¦å‡ºé”™
 				if (id != i)
 				{
 					error = 1;
 					break;
 				}
-				//¿ªÊ¼¼ÓÈëÁ´½Ó£¬Ñ­»·¡°ÁÚ¾ÓÊıÁ¿¡±´Î
+				//å¼€å§‹åŠ å…¥é“¾æ¥ï¼Œå¾ªç¯â€œé‚»å±…æ•°é‡â€æ¬¡
 				for (int i = 0; i < adjNumOut;i++)
 				{
-					//»ñÈ¡ÁÚ¾ÓºÍÈ¨ÖØ
+					//è·å–é‚»å±…å’Œæƒé‡
 					int neighbor;
 					double weight;
 					stream >> neighbor;
 					stream >> weight;
 
-					//¿ªÊ¼¼ÓÁ´½Ó
+					//å¼€å§‹åŠ é“¾æ¥
 					addLinkToNetwork(id, neighbor, weight);
 					linkNum++;
 				}
 
 		}
 			CCol(0,1);
-			cout << "ÆÕÍ¨¸ñÊ½ÎÄ¼ş¶ÁÈ¡Íê±Ï£¬Â·¾¶Îª£º " << in.c_str() << endl;
+			cout << "æ™®é€šæ ¼å¼æ–‡ä»¶è¯»å–å®Œæ¯•ï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str() << endl;
 			CCol(0,0);
 		}
-		//ÅĞ¶ÏÎªpajek¸ñÊ½³É¹¦
+		//åˆ¤æ–­ä¸ºpajekæ ¼å¼æˆåŠŸ
 		else if(tempNum == "*vertices")
 		{
-			stream >> nodeNum; //¶ÁÈ¡½Úµã¸öÊı
+			stream >> nodeNum; //è¯»å–èŠ‚ç‚¹ä¸ªæ•°
 
-			//¿ªÊ¼¸ù¾İ½ÚµãÊıÁ¿Ôö¼Ó½ÚµãÈİÆ÷
+			//å¼€å§‹æ ¹æ®èŠ‚ç‚¹æ•°é‡å¢åŠ èŠ‚ç‚¹å®¹å™¨
 			for (int i = 1; i <= nodeNum; i++)
 			{
 				nodes.insert(nodes.end(), i);
 			}
 
-			//Ñ­»·µ½*arcs³öÏÖ£¬²¢ÅĞ¶Ï¸ñÊ½ÊÇ·ñºÏ·¨
+			//å¾ªç¯åˆ°*arcså‡ºç°ï¼Œå¹¶åˆ¤æ–­æ ¼å¼æ˜¯å¦åˆæ³•
 			for (int i = 1; i <= nodeNum; i++)
 			{
-				getline(file, line);		//»ñÈ¡ÁÙÊ±Ò»ĞĞ
-				stringstream stream(line);	//´¦ÀíÒ»ĞĞĞÅÏ¢£¬ÒÔ¿Õ¸ñÎª·Ö¸ô·û
+				getline(file, line);		//è·å–ä¸´æ—¶ä¸€è¡Œ
+				stringstream stream(line);	//å¤„ç†ä¸€è¡Œä¿¡æ¯ï¼Œä»¥ç©ºæ ¼ä¸ºåˆ†éš”ç¬¦
 				int tempNum;
 				stream >> tempNum;
 				if (tempNum != i)
@@ -140,30 +140,30 @@ network::network(string in)
 					break;
 				}
 			}
-			//Èç¹û»¹Ã»±¨´í£¬Ôò¼ÌĞø
+			//å¦‚æœè¿˜æ²¡æŠ¥é”™ï¼Œåˆ™ç»§ç»­
 			if (!error)
 			{
-				getline(file, line);		//»ñÈ¡ÁÙÊ±Ò»ĞĞ
-				stringstream stream(line);	//´¦ÀíÒ»ĞĞĞÅÏ¢£¬ÒÔ¿Õ¸ñÎª·Ö¸ô·û
+				getline(file, line);		//è·å–ä¸´æ—¶ä¸€è¡Œ
+				stringstream stream(line);	//å¤„ç†ä¸€è¡Œä¿¡æ¯ï¼Œä»¥ç©ºæ ¼ä¸ºåˆ†éš”ç¬¦
 				
-				string tempNum;				//¶ÁÈ¡Ò»ÏÂ£¬¿´¿´ÊÇ²»ÊÇ"*arcs"£¬
+				string tempNum;				//è¯»å–ä¸€ä¸‹ï¼Œçœ‹çœ‹æ˜¯ä¸æ˜¯"*arcs"ï¼Œ
 				stream >> tempNum;
 
-				//Èç¹û²»ÊÇËµÃ÷¸ñÊ½´íÎó
+				//å¦‚æœä¸æ˜¯è¯´æ˜æ ¼å¼é”™è¯¯
 				if (tempNum == "*arcs")
 				{
-					//¿ªÊ¼¶ÁÈ¡Á´½ÓĞÅÏ¢
+					//å¼€å§‹è¯»å–é“¾æ¥ä¿¡æ¯
 					while (!file.eof())
 					{
-						getline(file, line);		//»ñÈ¡ÁÙÊ±Ò»ĞĞ
-						stringstream stream(line);	//´¦ÀíÒ»ĞĞĞÅÏ¢£¬ÒÔ¿Õ¸ñÎª·Ö¸ô·û
+						getline(file, line);		//è·å–ä¸´æ—¶ä¸€è¡Œ
+						stringstream stream(line);	//å¤„ç†ä¸€è¡Œä¿¡æ¯ï¼Œä»¥ç©ºæ ¼ä¸ºåˆ†éš”ç¬¦
 
 						if (file.fail()) {
 							break;
 						}
 
-						int from, to;				//´¢´æÆğÖ¹½Úµã
-						double weight;				//´¢´æÈ¨ÖµĞÅÏ¢
+						int from, to;				//å‚¨å­˜èµ·æ­¢èŠ‚ç‚¹
+						double weight;				//å‚¨å­˜æƒå€¼ä¿¡æ¯
 						stream >> from;
 						stream >> to;
 						stream >> weight;
@@ -181,14 +181,14 @@ network::network(string in)
 
 			}
 			
-			type = DIRECT_WITH_WEIGHT;		//Ä¬ÈÏÍøÂçÀàĞÍ
+			type = DIRECT_WITH_WEIGHT;		//é»˜è®¤ç½‘ç»œç±»å‹
 
 			CCol(0,1);
-			cout << "pajek¸ñÊ½ÎÄ¼ş¶ÁÈ¡Íê±Ï£¬Â·¾¶Îª£º " << in.c_str() << endl;
+			cout << "pajekæ ¼å¼æ–‡ä»¶è¯»å–å®Œæ¯•ï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str() << endl;
 			CCol(0,0);
 
 		}
-		//Ê²Ã´¸ñÊ½¶¼²»ÊÇ£¬·µ»Ø´íÎó
+		//ä»€ä¹ˆæ ¼å¼éƒ½ä¸æ˜¯ï¼Œè¿”å›é”™è¯¯
 		else 
 		{
 			error = 1;
@@ -197,9 +197,9 @@ network::network(string in)
 		if (error)
 		{
 			CCol(0,2);
-			cout << "ÎÄ¼ş¸ñÊ½´íÎó£¬Â·¾¶Îª£º " << in.c_str() << "£¬ÒÑ×Ô¶¯½«±¾¶ÔÏóÌæ»»Îª ¿ÕÍøÂç¡£" << endl;
+			cout << "æ–‡ä»¶æ ¼å¼é”™è¯¯ï¼Œè·¯å¾„ä¸ºï¼š " << in.c_str() << "ï¼Œå·²è‡ªåŠ¨å°†æœ¬å¯¹è±¡æ›¿æ¢ä¸º ç©ºç½‘ç»œã€‚" << endl;
 			CCol(0,0);
-			nodes.clear();		//Çå¿Õ½ÚµãĞÅÏ¢
+			nodes.clear();		//æ¸…ç©ºèŠ‚ç‚¹ä¿¡æ¯
 			new (this) network(0, UN_DIRECT_WITH_WEIGHT);
 		}
 		
@@ -208,44 +208,44 @@ network::network(string in)
 
 }
 
-//¶ÁÈ¡ÎÄ¼ş¹¹Ôìº¯Êı£¬×Ô¶¯Ê¶±ğÆÕÍ¨¸ñÊ½ºÍpajek¸ñÊ½£¬´øÍøÂç±àºÅ
+//è¯»å–æ–‡ä»¶æ„é€ å‡½æ•°ï¼Œè‡ªåŠ¨è¯†åˆ«æ™®é€šæ ¼å¼å’Œpajekæ ¼å¼ï¼Œå¸¦ç½‘ç»œç¼–å·
 network::network(string in, int netid)
 {
 
-	//µ÷ÓÃÄ¬ÈÏ¶ÁÈ¡ÎÄ¼ş¹¹Ôìº¯Êı
+	//è°ƒç”¨é»˜è®¤è¯»å–æ–‡ä»¶æ„é€ å‡½æ•°
 	new (this) network(in);
 
-	//¸ÄĞ´ÍøÂç±àºÅ
+	//æ”¹å†™ç½‘ç»œç¼–å·
 	this->netid = netid;
 
 }
 
 /*
-//¿½±´¹¹Ôìº¯Êı
-//³ı·ÇÌØÊâĞèÒª£¬ÓÃÏµÍ³Ä¬ÈÏµÄ¼´¿É£¨vectorÈİÆ÷ÒªÇó£©
+//æ‹·è´æ„é€ å‡½æ•°
+//é™¤éç‰¹æ®Šéœ€è¦ï¼Œç”¨ç³»ç»Ÿé»˜è®¤çš„å³å¯ï¼ˆvectorå®¹å™¨è¦æ±‚ï¼‰
 network::network(network &n2)
 {
-	nodes.assign(n2.nodes.begin(), n2.nodes.end());	//¿½±´½ÚµãÈİÆ÷
-	nodeNum=n2.nodeNum;								//¿½±´½ÚµãÊıÁ¿
-	linkNum=n2.linkNum;								//¿½±´±ßµÄÊıÁ¿
-	type=n2.type;									//¿½±´ÍøÂçÀàĞÍ
-	netid = n2.netid;								//¿½±´ÍøÂç±àºÅ
+	nodes.assign(n2.nodes.begin(), n2.nodes.end());	//æ‹·è´èŠ‚ç‚¹å®¹å™¨
+	nodeNum=n2.nodeNum;								//æ‹·è´èŠ‚ç‚¹æ•°é‡
+	linkNum=n2.linkNum;								//æ‹·è´è¾¹çš„æ•°é‡
+	type=n2.type;									//æ‹·è´ç½‘ç»œç±»å‹
+	netid = n2.netid;								//æ‹·è´ç½‘ç»œç¼–å·
 }
 */
 
-//Îö¹¹º¯Êı
+//ææ„å‡½æ•°
 network::~network()
 {
-	//¶¼ÊÇÈİÆ÷£¬Ã»ÓĞnew£¬Ã»ÓĞÊ²Ã´¿ÉÒÔÊÍ·ÅµÄ
+	//éƒ½æ˜¯å®¹å™¨ï¼Œæ²¡æœ‰newï¼Œæ²¡æœ‰ä»€ä¹ˆå¯ä»¥é‡Šæ”¾çš„
 }
 
-//ÏÔÊ¾ÍøÂç
+//æ˜¾ç¤ºç½‘ç»œ
 void network::showNetwork() 
 {
 	cout << "=====================================================" << endl;
-	cout <<"ÍøÂç±àºÅ£º"<<netid <<" ,¹²ÓĞ½Úµã "<<nodeNum<<" ¸ö£¬Á´½Ó  "<<linkNum<<" Ìõ¡£"<< endl;
+	cout <<"ç½‘ç»œç¼–å·ï¼š"<<netid <<" ,å…±æœ‰èŠ‚ç‚¹ "<<nodeNum<<" ä¸ªï¼Œé“¾æ¥  "<<linkNum<<" æ¡ã€‚"<< endl;
 	
-	//±éÀúËùÓĞ½Úµã
+	//éå†æ‰€æœ‰èŠ‚ç‚¹
 	for (auto it:nodes)
 	{
 		if (it.status != NODE_DEAD)
@@ -255,55 +255,55 @@ void network::showNetwork()
 	}
 }
 
-//Ìí¼ÓÍøÂçÁ´½Ó
-int network::addLinkToNetwork(int from, int to //´Ófromµ½toÔö¼ÓÁ´½Ó
-	, double weight)   //Ôö¼ÓÁ´½ÓµÄÈ¨ÖØ
+//æ·»åŠ ç½‘ç»œé“¾æ¥
+int network::addLinkToNetwork(int from, int to //ä»fromåˆ°toå¢åŠ é“¾æ¥
+	, double weight)   //å¢åŠ é“¾æ¥çš„æƒé‡
 {
 	int error;
 
-	//¼ì²éfromµ½toÊÇ·ñÔ½½ç
+	//æ£€æŸ¥fromåˆ°toæ˜¯å¦è¶Šç•Œ
 	if (from>nodeNum || from <= 0 || to>nodeNum || to <= 0)
 	{
 		error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÎŞ·¨Îª ÍøÂç"<<netid<<" Ìí¼Ó´Ó " << from << " -->> " << to << " µÄÁ´½Ó£¬ÒòÎªÔ½½çÁË¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œæ— æ³•ä¸º ç½‘ç»œ"<<netid<<" æ·»åŠ ä» " << from << " -->> " << to << " çš„é“¾æ¥ï¼Œå› ä¸ºè¶Šç•Œäº†ã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 		
 		return error;
 	}
 
-	//Ìí¼Ó½ÚµãÁ´½Ó
-	error = nodes[from-1].addLinkToNode(to, weight);	//ÔÚfromÌí¼Ó³ö¶ÈĞÅÏ¢
-	error = nodes[to-1].addLinkFromNode(from, weight);//ÔÚtoÌí¼ÓÈë¶ÈĞÅÏ¢
+	//æ·»åŠ èŠ‚ç‚¹é“¾æ¥
+	error = nodes[from-1].addLinkToNode(to, weight);	//åœ¨fromæ·»åŠ å‡ºåº¦ä¿¡æ¯
+	error = nodes[to-1].addLinkFromNode(from, weight);//åœ¨toæ·»åŠ å…¥åº¦ä¿¡æ¯
 
-	//Èç¹ûÌí¼Ó½Úµã³ö´í£¬Ôò·µ»Ø´íÎóĞÅÏ¢
+	//å¦‚æœæ·»åŠ èŠ‚ç‚¹å‡ºé”™ï¼Œåˆ™è¿”å›é”™è¯¯ä¿¡æ¯
 	if (error)
 	{
 		return error;
 	}
 
-	//ÍøÂçÁ´½ÓÊı£¬¼ÓÒ»
+	//ç½‘ç»œé“¾æ¥æ•°ï¼ŒåŠ ä¸€
 	linkNum++;
 	return 0;
 }
 
-//É¾³ıÍøÂçÁ´½Ó
-int network::delLinkFromNetwork(int from, int to)//´Ófromµ½toÉ¾³ıÁ´½Ó
+//åˆ é™¤ç½‘ç»œé“¾æ¥
+int network::delLinkFromNetwork(int from, int to)//ä»fromåˆ°toåˆ é™¤é“¾æ¥
 {
 	int error=0;
 	
-	//¼ì²éfromµ½toÊÇ·ñÔ½½ç
+	//æ£€æŸ¥fromåˆ°toæ˜¯å¦è¶Šç•Œ
 	if (from>nodeNum || from <= 0 || to>nodeNum || to <= 0)
 	{
 		error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨É¾³ı ÍøÂç "<<netid<<"µÄ " << from << " --> " << to << " µÄÁ´½Ó£¬ÒòÎªÔ½½çÁË¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•åˆ é™¤ ç½‘ç»œ "<<netid<<"çš„ " << from << " --> " << to << " çš„é“¾æ¥ï¼Œå› ä¸ºè¶Šç•Œäº†ã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 		
 		return error;
@@ -311,23 +311,23 @@ int network::delLinkFromNetwork(int from, int to)//´Ófromµ½toÉ¾³ıÁ´½Ó
 	
 	if(isValidLink(from,to))
 	{ 
-	//É¾³ı½ÚµãÖ®¼äÁ´½Ó£¬£¨×¢Òâ£ºÊı×é±àºÅºÍ½Úµã±àºÅ²î1£©
-	error = nodes[from-1].delLinkFromNode(to);	//É¾³ıfromµÄ³ö¶ÈĞÅÏ¢
-	error = nodes[to-1].delLinkToNode(from);	//É¾³ıtoµÄÈë¶ÈĞÅÏ¢
+	//åˆ é™¤èŠ‚ç‚¹ä¹‹é—´é“¾æ¥ï¼Œï¼ˆæ³¨æ„ï¼šæ•°ç»„ç¼–å·å’ŒèŠ‚ç‚¹ç¼–å·å·®1ï¼‰
+	error = nodes[from-1].delLinkFromNode(to);	//åˆ é™¤fromçš„å‡ºåº¦ä¿¡æ¯
+	error = nodes[to-1].delLinkToNode(from);	//åˆ é™¤toçš„å…¥åº¦ä¿¡æ¯
 	}
 	else
 	{
 		error = NOLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨É¾³ı´Ó " << from << " --> " << to << " µÄÁ´½Ó£¬ÒòÎªÃ»ÓĞÁ´½Ó¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•åˆ é™¤ä» " << from << " --> " << to << " çš„é“¾æ¥ï¼Œå› ä¸ºæ²¡æœ‰é“¾æ¥ã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
-	//Èç¹ûÃ»ÓĞ´íÎó£¬Á´½ÓÊı¼õÒ»
+	//å¦‚æœæ²¡æœ‰é”™è¯¯ï¼Œé“¾æ¥æ•°å‡ä¸€
 	if (error == 0) 
 	{
 		linkNum--;
@@ -336,129 +336,129 @@ int network::delLinkFromNetwork(int from, int to)//´Ófromµ½toÉ¾³ıÁ´½Ó
 	return error;
 }
 
-//ÎªÍøÂçÔö¼Ó½Úµã£¬Ö»Ôö¼Ó½Úµã£¬²»Ôö¼ÓÁ´½Ó
-int network::addNodesToNetwork(int N)//ÎªÍøÂçÔö¼ÓN¸ö½Úµã
+//ä¸ºç½‘ç»œå¢åŠ èŠ‚ç‚¹ï¼Œåªå¢åŠ èŠ‚ç‚¹ï¼Œä¸å¢åŠ é“¾æ¥
+int network::addNodesToNetwork(int N)//ä¸ºç½‘ç»œå¢åŠ Nä¸ªèŠ‚ç‚¹
 {
 	if (N <= 0)
 	{
 		int error=1;
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨Îª ÍøÂç "<<netid<<" Ôö¼Ó " << N << " ¸ö½Úµã¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•ä¸º ç½‘ç»œ "<<netid<<" å¢åŠ  " << N << " ä¸ªèŠ‚ç‚¹ã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
-	//´ÓÔ­ÓĞ½ÚµãÊınodeNum£¬Ôö¼ÓN¸ö£¬×Ü½áµãÊıÎªnodeNum + N
+	//ä»åŸæœ‰èŠ‚ç‚¹æ•°nodeNumï¼Œå¢åŠ Nä¸ªï¼Œæ€»ç»“ç‚¹æ•°ä¸ºnodeNum + N
 	for (int i = nodeNum; i < nodeNum + N; i++)
 	{
 		nodes.insert(nodes.end(), i+1);
 	}
 
-	//Ôö¼Ó½ÚµãÊı
+	//å¢åŠ èŠ‚ç‚¹æ•°
 	nodeNum += N;
 	return 0;
 }
 
-//´ÓÍøÂçÖĞÉ¾³ı½Úµã
-int network::delNodeFromNetwork(int nodeid) //ÒªÉ¾³ı½Úµã±àºÅ
+//ä»ç½‘ç»œä¸­åˆ é™¤èŠ‚ç‚¹
+int network::delNodeFromNetwork(int nodeid) //è¦åˆ é™¤èŠ‚ç‚¹ç¼–å·
 {
 	int error = 0;
 
-	//ÅĞ¶ÏÊÇ·ñºÍÆäËüÍøÂçÓĞÁªÏµ£¬Èç¹ûÓĞ£¬ÔòÎŞ·¨É¾³ı
+	//åˆ¤æ–­æ˜¯å¦å’Œå…¶å®ƒç½‘ç»œæœ‰è”ç³»ï¼Œå¦‚æœæœ‰ï¼Œåˆ™æ— æ³•åˆ é™¤
 	if (nodes[nodeid-1].numAdjMultiIn!=0|| nodes[nodeid-1].numAdjMultiOut!=0)
 	{
 		error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨É¾³ı ÍøÂç"<<netid<<" µÄ ½Úµã"<<nodeid<<" £¬Ëü»¹´æÔÚ¶àÍøÂçÁ´½Ó " << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•åˆ é™¤ ç½‘ç»œ"<<netid<<" çš„ èŠ‚ç‚¹"<<nodeid<<" ï¼Œå®ƒè¿˜å­˜åœ¨å¤šç½‘ç»œé“¾æ¥ " << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//¼ì²énodeidÊÇ·ñÔ½½ç
+	//æ£€æŸ¥nodeidæ˜¯å¦è¶Šç•Œ
 	if (nodeid>nodeNum || nodeid <= 0)
 	{
 		error = BEYONDLIMIT;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨É¾³ı½Úµã " << nodeid <<"ÒòÎªËüÔ½½çÁË"<< endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•åˆ é™¤èŠ‚ç‚¹ " << nodeid <<"å› ä¸ºå®ƒè¶Šç•Œäº†"<< endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//È·±£ËüÃ»ÓĞ"DEAD"
+	//ç¡®ä¿å®ƒæ²¡æœ‰"DEAD"
 	if (nodes[nodeid-1].status == NODE_DEAD)
 	{
 		error = REDUNDANTLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó £¬ÎŞ·¨ÔÙ´ÎÉ¾³ıÒÑÉ¾³ıµÄ½Úµã " << nodeid << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ ï¼Œæ— æ³•å†æ¬¡åˆ é™¤å·²åˆ é™¤çš„èŠ‚ç‚¹ " << nodeid << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//mapµü´úÆ÷£¬±¸ÓÃ
+	//mapè¿­ä»£å™¨ï¼Œå¤‡ç”¨
 	//map <int, double>::iterator it;
 
-	//É¾³ıËùÓĞÖ¸ÏònodeidµÄÁ´½Ó£¬¼´É¾³ınodeidµÄËùÓĞÈë¶È
+	//åˆ é™¤æ‰€æœ‰æŒ‡å‘nodeidçš„é“¾æ¥ï¼Œå³åˆ é™¤nodeidçš„æ‰€æœ‰å…¥åº¦
 	for (auto it : nodes[nodeid-1].adjIn)
 	{
-		//·ÃÎÊnodeidµÄÈë¶È±íÀïµÄÃ¿Ò»¸ö½Úµã£¬½«ËùÓĞÓĞ¹ØnodeidĞÅÏ¢É¾³ı
+		//è®¿é—®nodeidçš„å…¥åº¦è¡¨é‡Œçš„æ¯ä¸€ä¸ªèŠ‚ç‚¹ï¼Œå°†æ‰€æœ‰æœ‰å…³nodeidä¿¡æ¯åˆ é™¤
 		nodes[it.first-1].delLinkFromNode(nodeid);	
 	}
 
-	//±éÀúËùÓĞ´ÓnodeidÖ¸ÏòµÄ½ÚµãµÄÈë¶ÈĞÅÏ¢£¬ÈÃnodeid²»ÔÙÖ¸ÏòËüÃÇ
+	//éå†æ‰€æœ‰ä»nodeidæŒ‡å‘çš„èŠ‚ç‚¹çš„å…¥åº¦ä¿¡æ¯ï¼Œè®©nodeidä¸å†æŒ‡å‘å®ƒä»¬
 	for (auto it : nodes[nodeid-1].adjOut)
 	{
 		nodes[it.first-1].delLinkToNode(nodeid);
 	}
 
-	//ÍøÂçÁ´½ÓÊı¼õÉÙ£¬²îÖµÎª±»É¾³ı½ÚµãµÄÁÚ¾ÓÊıºÍ
+	//ç½‘ç»œé“¾æ¥æ•°å‡å°‘ï¼Œå·®å€¼ä¸ºè¢«åˆ é™¤èŠ‚ç‚¹çš„é‚»å±…æ•°å’Œ
 	linkNum -= nodes[nodeid-1].numAdjOut + nodes[nodeid-1].numAdjIn;
 
-	//É¾³ıËùÓĞÔÚnodeid±£´æµÄ³ö¶ÈºÍÈë¶ÈµÄÁ´½Ó
+	//åˆ é™¤æ‰€æœ‰åœ¨nodeidä¿å­˜çš„å‡ºåº¦å’Œå…¥åº¦çš„é“¾æ¥
 	nodes[nodeid-1].adjOut.clear();
 	nodes[nodeid-1].adjIn.clear();
 
-	//¼õÉÙÍøÂç½ÚµãÊı
+	//å‡å°‘ç½‘ç»œèŠ‚ç‚¹æ•°
 	nodeNum--;
 
-	//½«½ÚµãÊôĞÔ¸ÄĞ´Îª"DEAD"
+	//å°†èŠ‚ç‚¹å±æ€§æ”¹å†™ä¸º"DEAD"
 	nodes[nodeid-1].status = NODE_DEAD;
 	return 0;
 }
 
-//ÑéÖ¤ÊÇ·ñÓĞ´Ófromµ½toµÄÁ´½Ó
+//éªŒè¯æ˜¯å¦æœ‰ä»fromåˆ°toçš„é“¾æ¥
 int network::isValidLink(int from, int to)
 {
 
-	//ÑéÖ¤ÊÇ·ñÏàÍ¬£¬Èç¹ûÏàÍ¬¾Í·µ»Ø0
+	//éªŒè¯æ˜¯å¦ç›¸åŒï¼Œå¦‚æœç›¸åŒå°±è¿”å›0
 	if (from == to)
 	{
 		return 0;
 	}
 
-	//Èç¹ûform»òto³¬³ö·¶Î§£¬Ôò·µ»Ø0
+	//å¦‚æœformæˆ–toè¶…å‡ºèŒƒå›´ï¼Œåˆ™è¿”å›0
 	if (from>nodeNum || from <= 0 || to>nodeNum || to <= 0)
 	{
 		return 0;
 	}
 
-	//¿´¿´ÄÜ²»ÄÜÕÒµ½
+	//çœ‹çœ‹èƒ½ä¸èƒ½æ‰¾åˆ°
 	auto it=nodes[from-1].adjOut.find(to);
 	
-	//Èç¹ûÕÒµ½ÁË¾Í·µ»Ø1
+	//å¦‚æœæ‰¾åˆ°äº†å°±è¿”å›1
 	if (it != nodes[from-1].adjOut.end())
 	{
 		return 1;
@@ -466,22 +466,22 @@ int network::isValidLink(int from, int to)
 	return 0;
 }
 
-//ÉèÖÃ´Ófromµ½toµÄÈ¨ÖµÎªweight
+//è®¾ç½®ä»fromåˆ°toçš„æƒå€¼ä¸ºweight
 int network::setLinkWeight(int from, int to, double weight)
 {
-	//Èç¹ûËÑË÷Ô½½ç£¬ÔòÏÔÊ¾´íÎóĞÅÏ¢
+	//å¦‚æœæœç´¢è¶Šç•Œï¼Œåˆ™æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
 	if (from>nodeNum || from <= 0 || to>nodeNum || to <= 0)
 	{
 		int error = BEYONDLIMIT;
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÎŞ·¨ÉèÖÃ ÍøÂç" <<netid<< " µÄ " << from << " -->> " << to << " µÄÈ¨Öµ£¬ÒòÎªÔ½½ç¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œæ— æ³•è®¾ç½® ç½‘ç»œ" <<netid<< " çš„ " << from << " -->> " << to << " çš„æƒå€¼ï¼Œå› ä¸ºè¶Šç•Œã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 		return error;
 	}
 
-	//³¢ÊÔÔÚfromµÄ³ö¶ÈÁĞ±íÑ°ÕÒ´Ófromµ½toµÄÁ´½Ó
+	//å°è¯•åœ¨fromçš„å‡ºåº¦åˆ—è¡¨å¯»æ‰¾ä»fromåˆ°toçš„é“¾æ¥
 	auto it = nodes[from-1].adjOut.find(to);
 	if (it != nodes[from-1].adjOut.end())
 	{
@@ -491,16 +491,16 @@ int network::setLinkWeight(int from, int to, double weight)
 	{
 		int error = NOLINK;
 		
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÎŞ·¨ÉèÖÃ ÍøÂç"<<netid<<" µÄ " << from << " -->> " << to << " µÄÈ¨Öµ£¬ÒòÎª³ö¶ÈĞÅÏ¢²»´æÔÚ¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œæ— æ³•è®¾ç½® ç½‘ç»œ"<<netid<<" çš„ " << from << " -->> " << to << " çš„æƒå€¼ï¼Œå› ä¸ºå‡ºåº¦ä¿¡æ¯ä¸å­˜åœ¨ã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 
-	//³¢ÊÔÔÚtoµÄÈë¶ÈÁĞ±íÑ°ÕÒ´Ófromµ½toµÄÁ´½Ó
+	//å°è¯•åœ¨toçš„å…¥åº¦åˆ—è¡¨å¯»æ‰¾ä»fromåˆ°toçš„é“¾æ¥
 	it = nodes[to-1].adjIn.find(from);
 	if (it != nodes[to-1].adjIn.end())
 	{
@@ -510,10 +510,10 @@ int network::setLinkWeight(int from, int to, double weight)
 	{
 		int error = NOLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÎŞ·¨ÉèÖÃ ÍøÂç" << netid << " µÄ " << from << " -->> " << to << " µÄÈ¨Öµ£¬ÒòÎªÈë¶ÈĞÅÏ¢²»´æÔÚ¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œæ— æ³•è®¾ç½® ç½‘ç»œ" << netid << " çš„ " << from << " -->> " << to << " çš„æƒå€¼ï¼Œå› ä¸ºå…¥åº¦ä¿¡æ¯ä¸å­˜åœ¨ã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
@@ -521,17 +521,17 @@ int network::setLinkWeight(int from, int to, double weight)
 	return 0;
 }
 
-//»ñÈ¡´Ófromµ½toµÄÍøÂçÁ´½ÓÈ¨Öµ
+//è·å–ä»fromåˆ°toçš„ç½‘ç»œé“¾æ¥æƒå€¼
 double network::getLinkWeight(int from, int to)
 {
-	//Èç¹ûËÑË÷Ô½½ç£¬ÔòÏÔÊ¾´íÎóĞÅÏ¢
+	//å¦‚æœæœç´¢è¶Šç•Œï¼Œåˆ™æ˜¾ç¤ºé”™è¯¯ä¿¡æ¯
 	if (from>nodeNum || from <= 0 || to>nodeNum || to <= 0)
 	{
 		int error = BEYONDLIMIT;
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÎŞ·¨»ñÈ¡´Ó ÍøÂç" << netid << " µÄ " << from << " -->> " << to << " µÄÈ¨Öµ£¬ÒòÎªÔ½½çÁË¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œæ— æ³•è·å–ä» ç½‘ç»œ" << netid << " çš„ " << from << " -->> " << to << " çš„æƒå€¼ï¼Œå› ä¸ºè¶Šç•Œäº†ã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 		return error;
 	}
@@ -545,56 +545,56 @@ double network::getLinkWeight(int from, int to)
 	{
 		int error = NOLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÎŞ·¨»ñÈ¡´Ó ÍøÂç" << netid << " µÄ " << from << " -->> " << to << " µÄÈ¨Öµ£¬ÒòÎªÃ»ÓĞÁ´½ÓÁË¡£" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œæ— æ³•è·å–ä» ç½‘ç»œ" << netid << " çš„ " << from << " -->> " << to << " çš„æƒå€¼ï¼Œå› ä¸ºæ²¡æœ‰é“¾æ¥äº†ã€‚" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return error;
 	}
 }
 
-//ÍøÂç¶ÔÏóÊä³öÎªÆÕÍ¨ÎÄ¼ş¸ñÊ½£¬Ö§³Ö×Ô¶¯´´½¨Â·¾¶(¸ñÊ½Îª XX/XX/XXX/XXX.txt)
-void network::outputNetwork(string out) //Êä³öÁ÷
+//ç½‘ç»œå¯¹è±¡è¾“å‡ºä¸ºæ™®é€šæ–‡ä»¶æ ¼å¼ï¼Œæ”¯æŒè‡ªåŠ¨åˆ›å»ºè·¯å¾„(æ ¼å¼ä¸º XX/XX/XXX/XXX.txt)
+void network::outputNetwork(string out) //è¾“å‡ºæµ
 {
 	if (out.empty())
 	{
 		CCol(0,2);
-		cout << "Â·¾¶²»ÔÊĞíÎª¿Õ£¬ÒÑ×Ô¶¯·µ»Ø¡£" << endl;
+		cout << "è·¯å¾„ä¸å…è®¸ä¸ºç©ºï¼Œå·²è‡ªåŠ¨è¿”å›ã€‚" << endl;
 		CCol(0,0);
 		return;
 	}
 
-	//¼ì²éÊÇ·ñÎª¶à¼¶Ä¿Â¼
+	//æ£€æŸ¥æ˜¯å¦ä¸ºå¤šçº§ç›®å½•
 	if (out.find('/') < out.length())
 	{
-		GetDirAndCreate(out);	//Êä³öÄ¿Â¼Ãû³Æ 
+		GetDirAndCreate(out);	//è¾“å‡ºç›®å½•åç§° 
 	}
 	
 
-	//´´½¨Êı¾İÁ÷
+	//åˆ›å»ºæ•°æ®æµ
 	ofstream  file(out,std::ios_base::ate);
 
 	if (file.fail())
 	{
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "´´½¨ÎÄ¼şÂ·¾¶´íÎó£º " << out.c_str() <<" £¬Çë¼ì²éÂ·¾¶ÊÇ·ñÕıÈ·£¡"<< endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "åˆ›å»ºæ–‡ä»¶è·¯å¾„é”™è¯¯ï¼š " << out.c_str() <<" ï¼Œè¯·æ£€æŸ¥è·¯å¾„æ˜¯å¦æ­£ç¡®ï¼"<< endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 
 		return;
 	}
 
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout << "ÕıÔÚ´´½¨ÆÕÍ¨¸ñÊ½µÄÍøÂçĞÅÏ¢ÎÄ¼ş£º " << out.c_str() <<  endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	cout << "æ­£åœ¨åˆ›å»ºæ™®é€šæ ¼å¼çš„ç½‘ç»œä¿¡æ¯æ–‡ä»¶ï¼š " << out.c_str() <<  endl;
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
-	//¿ªÊ¼Ğ´ÈëÎÄ¼ş
+	//å¼€å§‹å†™å…¥æ–‡ä»¶
 	file << nodeNum <<" "<< type << endl;
 
 	for (auto it1:nodes)
@@ -602,7 +602,7 @@ void network::outputNetwork(string out) //Êä³öÁ÷
 		file<<it1.id<<" "<< it1.numAdjOut<<" ";
 		for (auto it2:it1.adjOut)
 		{
-			//weight»á±£ÁôÁ½Î»Ğ¡Êıµã
+			//weightä¼šä¿ç•™ä¸¤ä½å°æ•°ç‚¹
 			file << it2.first << " " << setiosflags(ios::fixed) << setprecision(2) << it2.second << " ";
 		}
 		file << endl;
@@ -610,44 +610,44 @@ void network::outputNetwork(string out) //Êä³öÁ÷
 
 }
 
-//ÍøÂç¶ÔÏóÊä³öÎªÆÕÍ¨pajekÎÄ¼ş¸ñÊ½£¬Ö§³Ö×Ô¶¯´´½¨Â·¾¶(¸ñÊ½Îª XX/XX/XXX/XXX.txt)
+//ç½‘ç»œå¯¹è±¡è¾“å‡ºä¸ºæ™®é€špajekæ–‡ä»¶æ ¼å¼ï¼Œæ”¯æŒè‡ªåŠ¨åˆ›å»ºè·¯å¾„(æ ¼å¼ä¸º XX/XX/XXX/XXX.txt)
 void network::outputNetwork_pajek(string out)
 {
 	if (out.empty())
 	{
 		CCol(0,2);
-		cout << "Â·¾¶²»ÔÊĞíÎª¿Õ£¬ÒÑ×Ô¶¯·µ»Ø¡£" << endl;
+		cout << "è·¯å¾„ä¸å…è®¸ä¸ºç©ºï¼Œå·²è‡ªåŠ¨è¿”å›ã€‚" << endl;
 		CCol(0,0);
 		return;
 	}
 
-	//¼ì²éÊÇ·ñÎª¶à¼¶Ä¿Â¼
+	//æ£€æŸ¥æ˜¯å¦ä¸ºå¤šçº§ç›®å½•
 	if (out.find('/') < out.length())
 	{
-		GetDirAndCreate(out);	//Êä³öÄ¿Â¼Ãû³Æ 
+		GetDirAndCreate(out);	//è¾“å‡ºç›®å½•åç§° 
 	}
 
 
-	//´´½¨Êı¾İÁ÷
+	//åˆ›å»ºæ•°æ®æµ
 	ofstream  file(out, std::ios_base::ate);
 
 	if (file.fail())
 	{
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "´´½¨ÎÄ¼şÂ·¾¶´íÎó£º " << out.c_str() << " £¬Çë¼ì²éÂ·¾¶ÊÇ·ñÕıÈ·£¡" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "åˆ›å»ºæ–‡ä»¶è·¯å¾„é”™è¯¯ï¼š " << out.c_str() << " ï¼Œè¯·æ£€æŸ¥è·¯å¾„æ˜¯å¦æ­£ç¡®ï¼" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 		return;
 	}
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout << "ÕıÔÚ´´½¨ÆÕÍ¨Pajek¸ñÊ½µÄÍøÂçĞÅÏ¢ÎÄ¼ş£º " << out.c_str() << endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	cout << "æ­£åœ¨åˆ›å»ºæ™®é€šPajekæ ¼å¼çš„ç½‘ç»œä¿¡æ¯æ–‡ä»¶ï¼š " << out.c_str() << endl;
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
-	//¿ªÊ¼Ğ´ÈëÎÄ¼ş
+	//å¼€å§‹å†™å…¥æ–‡ä»¶
 	file << "*vertices "<< nodeNum<<" " << endl;
 	for (auto it:nodes)
 	{
@@ -658,14 +658,14 @@ void network::outputNetwork_pajek(string out)
 	{
 		for (auto it2:it1.adjOut)
 		{
-			//weight±£ÁôÈıÎ»Ğ¡Êıµã
+			//weightä¿ç•™ä¸‰ä½å°æ•°ç‚¹
 			file << it1.id << " " << it2.first << " " << setiosflags(ios::fixed) << setprecision(3) << it2.second<<endl;
 		}
 	}
 
 }
 
-/* ¸ß¼¶pajek¸ñÊ½ĞÅÏ¢ÈçÏÂ£º
+/* é«˜çº§pajekæ ¼å¼ä¿¡æ¯å¦‚ä¸‹ï¼š
 output the information of a network to a *.net file, so it can be used as
 an input file of pajek
 
@@ -681,44 +681,44 @@ p q v_{pq}                         // the edge from p to q has value v_{pq}
 
 */
 
-//ÍøÂç¶ÔÏóÊä³öÎª´øÑÕÉ«µÄpajekÎÄ¼ş¸ñÊ½£¬Ö§³Ö×Ô¶¯´´½¨Â·¾¶(¸ñÊ½Îª XX/XX/XXX/XXX.txt)
+//ç½‘ç»œå¯¹è±¡è¾“å‡ºä¸ºå¸¦é¢œè‰²çš„pajekæ–‡ä»¶æ ¼å¼ï¼Œæ”¯æŒè‡ªåŠ¨åˆ›å»ºè·¯å¾„(æ ¼å¼ä¸º XX/XX/XXX/XXX.txt)
 void network::outputNetwork_pajek_frac(string out)
 {
 	if (out.empty())
 	{
 		CCol(0,2);
-		cout << "Â·¾¶²»ÔÊĞíÎª¿Õ£¬ÒÑ×Ô¶¯·µ»Ø¡£" << endl;
+		cout << "è·¯å¾„ä¸å…è®¸ä¸ºç©ºï¼Œå·²è‡ªåŠ¨è¿”å›ã€‚" << endl;
 		CCol(0,0);
 		return;
 	}
 
-	//¼ì²éÊÇ·ñÎª¶à¼¶Ä¿Â¼
+	//æ£€æŸ¥æ˜¯å¦ä¸ºå¤šçº§ç›®å½•
 	if (out.find('/') < out.length())
 	{
-		GetDirAndCreate(out);	//Êä³öÄ¿Â¼Ãû³Æ 
+		GetDirAndCreate(out);	//è¾“å‡ºç›®å½•åç§° 
 	}
 
 
-	//´´½¨Êı¾İÁ÷
+	//åˆ›å»ºæ•°æ®æµ
 	ofstream  file(out, std::ios_base::ate);
 
 	if (file.fail())
 	{
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "´´½¨ÎÄ¼şÂ·¾¶´íÎó£º " << out.c_str() << " £¬Çë¼ì²éÂ·¾¶ÊÇ·ñÕıÈ·£¡" << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+		cout << "åˆ›å»ºæ–‡ä»¶è·¯å¾„é”™è¯¯ï¼š " << out.c_str() << " ï¼Œè¯·æ£€æŸ¥è·¯å¾„æ˜¯å¦æ­£ç¡®ï¼" << endl;
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 		CCol(0,0);
 		return;
 	}
-	//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 	CCol(0,1);
-	cout << "ÕıÔÚ´´¸ß¼¶Pajek¸ñÊ½µÄÍøÂçĞÅÏ¢ÎÄ¼ş£º " << out.c_str() << endl;
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	cout << "æ­£åœ¨åˆ›é«˜çº§Pajekæ ¼å¼çš„ç½‘ç»œä¿¡æ¯æ–‡ä»¶ï¼š " << out.c_str() << endl;
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
-	//¿ªÊ¼Ğ´ÈëÎÄ¼ş
+	//å¼€å§‹å†™å…¥æ–‡ä»¶
 	file << "*vertices " << nodeNum << " " << endl;
 	for (auto it : nodes)
 	{
@@ -731,10 +731,10 @@ void network::outputNetwork_pajek_frac(string out)
 	{
 		for (auto it2 : it1.adjOut)
 		{
-			//»ñÈ¡ÁÚ¾Ó±àºÅ
+			//è·å–é‚»å±…ç¼–å·
 			int neighbor = it2.first;
 
-			//Èç¹û¸Ã½Úµã³ö¶È ºÍ ÁÚ¾ÓµÄ³ö¶È ÏàÍ¬£¬Ôòblack £¬·ñÔò gray
+			//å¦‚æœè¯¥èŠ‚ç‚¹å‡ºåº¦ å’Œ é‚»å±…çš„å‡ºåº¦ ç›¸åŒï¼Œåˆ™black ï¼Œå¦åˆ™ gray
 			if (it1.numAdjOut == nodes[neighbor-1].numAdjOut)
 			{
 				file << it1.id<<" "<< neighbor <<"  1 c black"<<endl;

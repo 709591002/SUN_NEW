@@ -1,113 +1,113 @@
 #include "node.h"
 #include "other.h"
 
-//½ÚµãÀà¹¹Ôìº¯Êı
+//èŠ‚ç‚¹ç±»æ„é€ å‡½æ•°
 node::node(int id)
 {
-	adjOut.clear();			//³õÊ¼»¯³ö¶ÈÁÚ½ÓÈİÆ÷
-	numAdjOut = 0;			//³õÊ¼»¯³ö¶ÈÁÚ¾ÓÊıÁ¿
-	adjIn.clear();			//³õÊ¼»¯Èë¶ÈÁÚ½ÓÈİÆ÷
-	numAdjIn = 0;			//³õÊ¼»¯Èë¶ÈÁÚ¾ÓÊıÁ¿
+	adjOut.clear();			//åˆå§‹åŒ–å‡ºåº¦é‚»æ¥å®¹å™¨
+	numAdjOut = 0;			//åˆå§‹åŒ–å‡ºåº¦é‚»å±…æ•°é‡
+	adjIn.clear();			//åˆå§‹åŒ–å…¥åº¦é‚»æ¥å®¹å™¨
+	numAdjIn = 0;			//åˆå§‹åŒ–å…¥åº¦é‚»å±…æ•°é‡
 
-	adjMultiOut.clear();	//³õÊ¼»¯¶àÍøÂç³ö¶ÈÁÚ½Ó½ÚµãĞÅÏ¢
-	numAdjMultiOut=0;		//³õÊ¼»¯¶àÍøÂç³ö¶ÈÁÚ¾Ó½Úµã¸öÊı
-	adjMultiIn.clear();		//³õÊ¼»¯¶àÍøÂçÈë¶ÈÁÚ½Ó½ÚµãĞÅÏ¢
-	numAdjMultiIn=0;		//³õÊ¼»¯¶àÍøÂçÈë¶ÈÁÚ¾Ó½Úµã¸öÊı
+	adjMultiOut.clear();	//åˆå§‹åŒ–å¤šç½‘ç»œå‡ºåº¦é‚»æ¥èŠ‚ç‚¹ä¿¡æ¯
+	numAdjMultiOut=0;		//åˆå§‹åŒ–å¤šç½‘ç»œå‡ºåº¦é‚»å±…èŠ‚ç‚¹ä¸ªæ•°
+	adjMultiIn.clear();		//åˆå§‹åŒ–å¤šç½‘ç»œå…¥åº¦é‚»æ¥èŠ‚ç‚¹ä¿¡æ¯
+	numAdjMultiIn=0;		//åˆå§‹åŒ–å¤šç½‘ç»œå…¥åº¦é‚»å±…èŠ‚ç‚¹ä¸ªæ•°
 
-	strength = 0.0;			//³õÊ¼»¯½ÚµãÈ¨ÖØ
-	this->id = id;			//³õÊ¼»¯½ÚµãIDºÅ
-	status = NODE_ACTIVE;	//¼¤»î¸Ã½Úµã
+	strength = 0.0;			//åˆå§‹åŒ–èŠ‚ç‚¹æƒé‡
+	this->id = id;			//åˆå§‹åŒ–èŠ‚ç‚¹IDå·
+	status = NODE_ACTIVE;	//æ¿€æ´»è¯¥èŠ‚ç‚¹
 }
 
-//½ÚµãÀàÎö¹¹º¯Êı
+//èŠ‚ç‚¹ç±»ææ„å‡½æ•°
 node::~node()
 {
-	adjOut.clear();		//Çå¿ÕÁÚ½ÓÈİÆ÷
+	adjOut.clear();		//æ¸…ç©ºé‚»æ¥å®¹å™¨
 }
 
-//´òÓ¡ĞÅÏ¢
+//æ‰“å°ä¿¡æ¯
 void node::showNode()
 {
 	cout << endl;
 	cout << "---------------------------------------" << endl;
-	//´òÓ¡¸Ã½Úµã»ù´¡ĞÅÏ¢
+	//æ‰“å°è¯¥èŠ‚ç‚¹åŸºç¡€ä¿¡æ¯
 
-	//´òÓ¡½Úµã»ù±¾ĞÅÏ¢
-	cout <<"½Úµã±àºÅ£º"<< id<<" ,½ÚµãÈ¨ÖØ£º"<< strength << endl;
+	//æ‰“å°èŠ‚ç‚¹åŸºæœ¬ä¿¡æ¯
+	cout <<"èŠ‚ç‚¹ç¼–å·ï¼š"<< id<<" ,èŠ‚ç‚¹æƒé‡ï¼š"<< strength << endl;
 	
-	//´òÓ¡³ö¶È
+	//æ‰“å°å‡ºåº¦
 	if (numAdjOut != 0)
 	{
 		cout << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		//mapµü´úÆ÷£¬±¸ÓÃ
+		//mapè¿­ä»£å™¨ï¼Œå¤‡ç”¨
 		//map <int, double>::iterator it;
-		cout <<" "<<numAdjOut<< " ¸ö³ö¶È£º" << endl;
+		cout <<" "<<numAdjOut<< " ä¸ªå‡ºåº¦ï¼š" << endl;
 		for (auto it:adjOut)
-			cout<<id << "  -->>  " << it.first << " ,È¨ÖØ£º" << it.second << endl;
+			cout<<id << "  -->>  " << it.first << " ,æƒé‡ï¼š" << it.second << endl;
 	}
 	
-	//´òÓ¡Èë¶È
+	//æ‰“å°å…¥åº¦
 	if (numAdjIn != 0)
 	{
 		cout << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÂÌ
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºç»¿
 		CCol(0,1);
-		//mapµü´úÆ÷£¬±¸ÓÃ
+		//mapè¿­ä»£å™¨ï¼Œå¤‡ç”¨
 		//map <int, double>::iterator it;
 
-		cout << " " <<numAdjIn<< " ¸öÈë¶È£º" << endl;
+		cout << " " <<numAdjIn<< " ä¸ªå…¥åº¦ï¼š" << endl;
 		for (auto it : adjIn)
-			cout <<id<< "  <<--  " << it.first << " ,È¨ÖØ£º" << it.second << endl;
+			cout <<id<< "  <<--  " << it.first << " ,æƒé‡ï¼š" << it.second << endl;
 	}
 
-	//´òÓ¡¶àÍøÂç³ö¶È
+	//æ‰“å°å¤šç½‘ç»œå‡ºåº¦
 	if (numAdjMultiOut != 0)
 	{
 		cout << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(1,2);
-		//mapµü´úÆ÷£¬±¸ÓÃ
+		//mapè¿­ä»£å™¨ï¼Œå¤‡ç”¨
 		//map <int, double>::iterator it;
-		cout << " " << numAdjMultiOut << " ¸ö¶àÍøÂç³ö¶È£º" << endl;
+		cout << " " << numAdjMultiOut << " ä¸ªå¤šç½‘ç»œå‡ºåº¦ï¼š" << endl;
 		for (auto it : adjMultiOut)
 			for(auto it2 : it.second)
-			cout << "  -->>  "<<" ÍøÂç "<<it.first <<" µÄ "<< it2.first << " ,È¨ÖØ£º" << it2.second << endl;
+			cout << "  -->>  "<<" ç½‘ç»œ "<<it.first <<" çš„ "<< it2.first << " ,æƒé‡ï¼š" << it2.second << endl;
 	}
 
-	//´òÓ¡¶àÍøÂçÈë¶È
+	//æ‰“å°å¤šç½‘ç»œå…¥åº¦
 	if (numAdjMultiIn != 0)
 	{
 		cout << endl;
-		//¸Ä±ä×ÖÌåÑÕÉ«ÎªÂÌ
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºç»¿
 		CCol(1,2);
-		//mapµü´úÆ÷£¬±¸ÓÃ
+		//mapè¿­ä»£å™¨ï¼Œå¤‡ç”¨
 		//map <int, double>::iterator it;
 
-		cout << " " << numAdjMultiIn << " ¸ö¶àÍøÂçÈë¶È£º" << endl;
+		cout << " " << numAdjMultiIn << " ä¸ªå¤šç½‘ç»œå…¥åº¦ï¼š" << endl;
 		for (auto it : adjMultiIn)
 			for (auto it2 : it.second)
-			cout << "  <<--  " << " ÍøÂç " << it.first << " µÄ " << it2.first << " ,È¨ÖØ£º" << it2.second << endl;
+			cout << "  <<--  " << " ç½‘ç»œ " << it.first << " çš„ " << it2.first << " ,æƒé‡ï¼š" << it2.second << endl;
 	}
 
-	//¸Ä±ä×ÖÌåÑÕÉ«ÎªÆÕÍ¨
+	//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºæ™®é€š
 	CCol(0,0);
 
 }
 
-//Ôö¼Óµ½nodeid½ÚµãµÄÁ´½Ó
-int node::addLinkToNode(int nodeid //Îªµ±Ç°½ÚµãÔö¼ÓÒ»¸öµ½nodeidµÄÁ´½Ó 
-	, double weight)//¸ÃÁ´½ÓµÄÈ¨ÖØ
+//å¢åŠ åˆ°nodeidèŠ‚ç‚¹çš„é“¾æ¥
+int node::addLinkToNode(int nodeid //ä¸ºå½“å‰èŠ‚ç‚¹å¢åŠ ä¸€ä¸ªåˆ°nodeidçš„é“¾æ¥ 
+	, double weight)//è¯¥é“¾æ¥çš„æƒé‡
 {
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÈÃ½Úµã " << nodeid << " Á¬½Óµ½×Ô¼ºÁË£¡" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œè®©èŠ‚ç‚¹ " << nodeid << " è¿æ¥åˆ°è‡ªå·±äº†ï¼" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
@@ -115,16 +115,16 @@ int node::addLinkToNode(int nodeid //Îªµ±Ç°½ÚµãÔö¼ÓÒ»¸öµ½nodeidµÄÁ´½Ó
 
 	map<int,double>::iterator it;
 
-	//¼ì²éÊÇ·ñÊÇ¶àÓàµÄÁ´½Ó
+	//æ£€æŸ¥æ˜¯å¦æ˜¯å¤šä½™çš„é“¾æ¥
 	it = adjOut.find(nodeid);
 	if (it != adjOut.end())
 	{
 		int error = REDUNDANTLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬" << id << " -->> " << nodeid << " µÄÁ´½ÓÒÑ¾­½¨Á¢¡£" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œ" << id << " -->> " << nodeid << " çš„é“¾æ¥å·²ç»å»ºç«‹ã€‚" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
@@ -132,28 +132,28 @@ int node::addLinkToNode(int nodeid //Îªµ±Ç°½ÚµãÔö¼ÓÒ»¸öµ½nodeidµÄÁ´½Ó
 
 
 
-	//ÎªÏà¹ØÈİÆ÷Ôö¼ÓÁÚ¾Ó½ÚµãĞÅÏ¢£¬Ö»°üÀ¨³ö¶È£¬Èë¶È²¿·ÖÔÚnetworkÊµÏÖ
+	//ä¸ºç›¸å…³å®¹å™¨å¢åŠ é‚»å±…èŠ‚ç‚¹ä¿¡æ¯ï¼ŒåªåŒ…æ‹¬å‡ºåº¦ï¼Œå…¥åº¦éƒ¨åˆ†åœ¨networkå®ç°
 	//adjOut.insert(map<int, double>::value_type(nodeid,weight));
 	adjOut.insert(make_pair(nodeid, weight));
 	
-	//ÁÚ¾ÓÊıÁ¿Ôö¼ÓÒ»
+	//é‚»å±…æ•°é‡å¢åŠ ä¸€
 	numAdjOut++;
 
 	return 0;
 }
 
-//É¾³ı´Ó¸Ã½Úµãµ½nodeidµÄÁ´½Ó£¬¼´É¾³ı³ö¶È
+//åˆ é™¤ä»è¯¥èŠ‚ç‚¹åˆ°nodeidçš„é“¾æ¥ï¼Œå³åˆ é™¤å‡ºåº¦
 int node::delLinkFromNode(int nodeid) 
 {
-	//¼ì²éÊÇ·ñÊÇÉ¾³ı×ÔÉí
+	//æ£€æŸ¥æ˜¯å¦æ˜¯åˆ é™¤è‡ªèº«
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬²»ÄÜÉ¾³ı½Úµã×ÔÉí£¡" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œä¸èƒ½åˆ é™¤èŠ‚ç‚¹è‡ªèº«ï¼" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
@@ -161,22 +161,22 @@ int node::delLinkFromNode(int nodeid)
 
 	map <int, double>::iterator it;
 
-	//¼ì²éÊÇ·ñÓĞÁ´½Ó
+	//æ£€æŸ¥æ˜¯å¦æœ‰é“¾æ¥
 
 	it = adjOut.find(nodeid);
 	if (it != adjOut.end())
 	{
-		adjOut.erase(it);	//É¾³ıÔªËØ
-		numAdjOut--;		//ÁÚ½ÓÊıÁ¿¼õÉÙ1
+		adjOut.erase(it);	//åˆ é™¤å…ƒç´ 
+		numAdjOut--;		//é‚»æ¥æ•°é‡å‡å°‘1
 	}
 	else
 	{
 		int error = NOLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó,"<<id<<" -->> "<<nodeid<<" µÄÁ¬½Ó¸ù±¾²»´æÔÚ£¡" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,"<<id<<" -->> "<<nodeid<<" çš„è¿æ¥æ ¹æœ¬ä¸å­˜åœ¨ï¼" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
@@ -186,19 +186,19 @@ int node::delLinkFromNode(int nodeid)
 
 }
 
-//Ôö¼Ó´ÓnodeidÈë¶ÈµÄÁ´½ÓĞÅÏ¢
-int node::addLinkFromNode(int nodeid		//´Ó±àºÅÎªnodeidµÄ½ÚµãÈë¶È
-						, double weight)	//¸ÃÁ´½ÓµÄÈ¨ÖØ
+//å¢åŠ ä»nodeidå…¥åº¦çš„é“¾æ¥ä¿¡æ¯
+int node::addLinkFromNode(int nodeid		//ä»ç¼–å·ä¸ºnodeidçš„èŠ‚ç‚¹å…¥åº¦
+						, double weight)	//è¯¥é“¾æ¥çš„æƒé‡
 {
-	//¼ì²éÁ´½ÓÊÇ·ñÖ¸Ïò×Ô¼º
+	//æ£€æŸ¥é“¾æ¥æ˜¯å¦æŒ‡å‘è‡ªå·±
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬ÈÃ½Úµã " << nodeid << " ±»×Ô¼ºÖ¸ÏòÁË£¡" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œè®©èŠ‚ç‚¹ " << nodeid << " è¢«è‡ªå·±æŒ‡å‘äº†ï¼" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
@@ -210,10 +210,10 @@ int node::addLinkFromNode(int nodeid		//´Ó±àºÅÎªnodeidµÄ½ÚµãÈë¶È
 	{
 		int error = REDUNDANTLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬" << id << " <<-- " << nodeid << " µÄÈë¶ÈÁ´½ÓÒÑ¾­½¨Á¢¡£" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œ" << id << " <<-- " << nodeid << " çš„å…¥åº¦é“¾æ¥å·²ç»å»ºç«‹ã€‚" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
@@ -224,18 +224,18 @@ int node::addLinkFromNode(int nodeid		//´Ó±àºÅÎªnodeidµÄ½ÚµãÈë¶È
 	return 0;
 }
 
-//É¾³ı´Ónodeidµ½¸Ã½ÚµãµÄÁ´½Ó£¬¼´É¾³ıÈë¶È
+//åˆ é™¤ä»nodeidåˆ°è¯¥èŠ‚ç‚¹çš„é“¾æ¥ï¼Œå³åˆ é™¤å…¥åº¦
 int node::delLinkToNode(int nodeid)
 {
-	//¼ì²éÊÇ·ñÊÇÉ¾³ı×ÔÉí
+	//æ£€æŸ¥æ˜¯å¦æ˜¯åˆ é™¤è‡ªèº«
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬²»ÄÜÉ¾³ı½Úµã×ÔÉí£¡" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œä¸èƒ½åˆ é™¤èŠ‚ç‚¹è‡ªèº«ï¼" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
@@ -243,23 +243,23 @@ int node::delLinkToNode(int nodeid)
 
 	map <int, double>::iterator it;
 
-	//¼ì²éÊÇ·ñÓĞÁ´½Ó
+	//æ£€æŸ¥æ˜¯å¦æœ‰é“¾æ¥
 
 	it = adjIn.find(nodeid);
 	if (it != adjIn.end())
 	{
-		adjIn.erase(it);	//É¾³ıÔªËØ
-		numAdjIn--;		//ÁÚ½ÓÊıÁ¿¼õÉÙ1
+		adjIn.erase(it);	//åˆ é™¤å…ƒç´ 
+		numAdjIn--;		//é‚»æ¥æ•°é‡å‡å°‘1
 	}
 	else
 	{
 		int error = NOLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó,ÎŞ·¨É¾³ı " << id << " -->> " << nodeid << " £¬Á´½Ó²»´æÔÚ¡£" << endl;
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æ— æ³•åˆ é™¤ " << id << " -->> " << nodeid << " ï¼Œé“¾æ¥ä¸å­˜åœ¨ã€‚" << endl;
 
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
@@ -269,36 +269,36 @@ int node::delLinkToNode(int nodeid)
 
 }
 
-//Ôö¼Óµ½netidÍøÂçµÄnodeid½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´Ôö¼Ó¶àÍøÂç³ö¶È
-int node::addLinkToNodeMulti(int netid			//Ä¿±êÍøÂçID
-				, int nodeid , double weight)	//Îªµ±Ç°½ÚµãÔö¼ÓÒ»¸öµ½nodeidµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬È¨ÖµÎªweight£¬³ö¶È 
+//å¢åŠ åˆ°netidç½‘ç»œçš„nodeidèŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³å¢åŠ å¤šç½‘ç»œå‡ºåº¦
+int node::addLinkToNodeMulti(int netid			//ç›®æ ‡ç½‘ç»œID
+				, int nodeid , double weight)	//ä¸ºå½“å‰èŠ‚ç‚¹å¢åŠ ä¸€ä¸ªåˆ°nodeidçš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œæƒå€¼ä¸ºweightï¼Œå‡ºåº¦ 
 {
-	//¼ì²éÊÇ·ñÓĞÖ¸ÏònetidÍøÂçµÄÊı¾İ£¬Èç¹ûÃ»ÓĞÔò½¨Á¢
+	//æ£€æŸ¥æ˜¯å¦æœ‰æŒ‡å‘netidç½‘ç»œçš„æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åˆ™å»ºç«‹
 	auto it1 = adjMultiOut.find(netid);
 	if (it1 == adjMultiOut.end())
 	{
-		map<int,double> temp;						//ÁÙÊ±¿ÕmapÈİÆ÷
-		adjMultiOut.insert(make_pair(netid,temp));	//³õÊ¼»¯Ö¸ÏònetidµÄ¼ÇÂ¼
+		map<int,double> temp;						//ä¸´æ—¶ç©ºmapå®¹å™¨
+		adjMultiOut.insert(make_pair(netid,temp));	//åˆå§‹åŒ–æŒ‡å‘netidçš„è®°å½•
 	}
 
-	//¼ì²éÖ¸ÏònetidÍøÂçµÄnodeid½ÚµãµÄÊı¾İÊÇ·ñ´æÔÚ
+	//æ£€æŸ¥æŒ‡å‘netidç½‘ç»œçš„nodeidèŠ‚ç‚¹çš„æ•°æ®æ˜¯å¦å­˜åœ¨
 
 	auto it = adjMultiOut[netid].find(nodeid);
 	if (it != adjMultiOut[netid].end())
 	{
 		int error = REDUNDANTLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬±¾½Úµã -->> ÍøÂç "<<netid<<" µÄ½Úµã " << nodeid << " µÄÁ´½ÓÒÑ¾­½¨Á¢¡£" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œæœ¬èŠ‚ç‚¹ -->> ç½‘ç»œ "<<netid<<" çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥å·²ç»å»ºç«‹ã€‚" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
 	}
 	else
 	{
-		//Èç¹û²»´æÔÚ£¬ÔòÌí¼Ó¼ÇÂ¼
+		//å¦‚æœä¸å­˜åœ¨ï¼Œåˆ™æ·»åŠ è®°å½•
 		adjMultiOut[netid].insert(make_pair(nodeid, weight));
 		numAdjMultiOut++;
 	}
@@ -306,31 +306,31 @@ int node::addLinkToNodeMulti(int netid			//Ä¿±êÍøÂçID
 
 }
 
-//É¾³ıµ½netidÍøÂçµÄnodeid½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´É¾³ı¶àÍøÂç³ö¶È
-int node::delLinkToNodeMulti(int netid				//Ä¿±êÍøÂçID
-					, int nodeid)					//É¾³ıµ±Ç°½Úµãµ½nodeidµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´É¾³ı³ö¶È
+//åˆ é™¤åˆ°netidç½‘ç»œçš„nodeidèŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³åˆ é™¤å¤šç½‘ç»œå‡ºåº¦
+int node::delLinkToNodeMulti(int netid				//ç›®æ ‡ç½‘ç»œID
+					, int nodeid)					//åˆ é™¤å½“å‰èŠ‚ç‚¹åˆ°nodeidçš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³åˆ é™¤å‡ºåº¦
 {
-	//¼ì²éÊÇ·ñÓĞÖ¸ÏònetidÍøÂçµÄÊı¾İ£¬Èç¹ûÃ»ÓĞÔò·µ»Ø´íÎó
+	//æ£€æŸ¥æ˜¯å¦æœ‰æŒ‡å‘netidç½‘ç»œçš„æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åˆ™è¿”å›é”™è¯¯
 	auto it1 = adjMultiOut.find(netid);
 	if (it1 == adjMultiOut.end())
 	{
 		int error = NOLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó,±¾½Úµã -->> ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½Ó²»´æÔÚ£¡ÎŞ·¨É¾³ı¡£" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æœ¬èŠ‚ç‚¹ -->> ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥ä¸å­˜åœ¨ï¼æ— æ³•åˆ é™¤ã€‚" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
 	}
 
-	//¼ì²éÖ¸ÏònetidÍøÂçµÄnodeid½ÚµãµÄÊı¾İÊÇ·ñ´æÔÚ£¬²»´æÔÚÔòÎŞ·¨É¾³ı£¬·µ»Ø´íÎó
+	//æ£€æŸ¥æŒ‡å‘netidç½‘ç»œçš„nodeidèŠ‚ç‚¹çš„æ•°æ®æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨åˆ™æ— æ³•åˆ é™¤ï¼Œè¿”å›é”™è¯¯
 
 	auto it = adjMultiOut[netid].find(nodeid);
 	if (it != adjMultiOut[netid].end())
 	{
-		//Èç¹ûÕÒµ½¼ÇÂ¼£¬ÔòÉ¾³ı¼ÇÂ¼
+		//å¦‚æœæ‰¾åˆ°è®°å½•ï¼Œåˆ™åˆ é™¤è®°å½•
 		adjMultiOut[netid].erase(it);
 		numAdjMultiOut--;
 	}
@@ -338,10 +338,10 @@ int node::delLinkToNodeMulti(int netid				//Ä¿±êÍøÂçID
 	{
 		int error = NOLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó,±¾½Úµã -->> ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½Ó²»´æÔÚ£¡ÎŞ·¨É¾³ı¡£" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æœ¬èŠ‚ç‚¹ -->> ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥ä¸å­˜åœ¨ï¼æ— æ³•åˆ é™¤ã€‚" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
@@ -349,63 +349,63 @@ int node::delLinkToNodeMulti(int netid				//Ä¿±êÍøÂçID
 	return 0;
 }
 
-//Ôö¼Ó´ÓnetidÍøÂçµÄnodeid½Úµãµ½µ±Ç°½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´Ôö¼Ó¶àÍøÂçÈë¶È
-int node::addLinkFromNodeMulti(int netid			//Ä¿±êÍøÂçID
-					, int nodeid, double weight)	//Ôö¼ÓÒ»¸ö´Ónodeidµ½µ±Ç°½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬È¨ÖµÎªweight£¬Èë¶È 
+//å¢åŠ ä»netidç½‘ç»œçš„nodeidèŠ‚ç‚¹åˆ°å½“å‰èŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³å¢åŠ å¤šç½‘ç»œå…¥åº¦
+int node::addLinkFromNodeMulti(int netid			//ç›®æ ‡ç½‘ç»œID
+					, int nodeid, double weight)	//å¢åŠ ä¸€ä¸ªä»nodeidåˆ°å½“å‰èŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œæƒå€¼ä¸ºweightï¼Œå…¥åº¦ 
 {
-	//¼ì²éÊÇ·ñÓĞ´ÓnetidÍøÂçÀ´µÄÊı¾İ£¬Èç¹ûÃ»ÓĞÔò·µ»Ø´íÎó
+	//æ£€æŸ¥æ˜¯å¦æœ‰ä»netidç½‘ç»œæ¥çš„æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åˆ™è¿”å›é”™è¯¯
 	auto it1 = adjMultiIn.find(netid);
 	if (it1 == adjMultiIn.end())
 	{
-		map<int, double> temp;						//ÁÙÊ±¿ÕmapÈİÆ÷
-		adjMultiIn.insert(make_pair(netid, temp));	//³õÊ¼»¯Ö¸ÏònetidµÄ¼ÇÂ¼
+		map<int, double> temp;						//ä¸´æ—¶ç©ºmapå®¹å™¨
+		adjMultiIn.insert(make_pair(netid, temp));	//åˆå§‹åŒ–æŒ‡å‘netidçš„è®°å½•
 	}
-	//¼ì²é´ÓnetidÍøÂçµÄnodeid½ÚµãÀ´µÄÊı¾İÊÇ·ñ´æÔÚ£¬Èç¹û´æÔÚÔò·µ»Ø´íÎó
+	//æ£€æŸ¥ä»netidç½‘ç»œçš„nodeidèŠ‚ç‚¹æ¥çš„æ•°æ®æ˜¯å¦å­˜åœ¨ï¼Œå¦‚æœå­˜åœ¨åˆ™è¿”å›é”™è¯¯
 	auto it = adjMultiIn[netid].find(nodeid);
 	if (it != adjMultiIn[netid].end())
 	{
 		int error = REDUNDANTLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó£¬ ±¾½Úµã <<-- ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½ÓÒÑ¾­½¨Á¢¡£" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯ï¼Œ æœ¬èŠ‚ç‚¹ <<-- ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥å·²ç»å»ºç«‹ã€‚" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
 	}
 	else
 	{
-		//Èç¹û²»´æÔÚ£¬ÔòÌí¼Ó¼ÇÂ¼
+		//å¦‚æœä¸å­˜åœ¨ï¼Œåˆ™æ·»åŠ è®°å½•
 		adjMultiIn[netid].insert(make_pair(nodeid, weight));
 		numAdjMultiIn++;
 	}
 	return 0;
 }
 
-//É¾³ı´ÓnetidÍøÂçµÄnodeid½Úµãµ½µ±Ç°½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´É¾³ı¶àÍøÂçÈë¶È
-int node::delLinkFromNodeMulti(int netid			//Ä¿±êÍøÂçID
-							, int nodeid)			//É¾³ı´Ónodeidµ½µ±Ç°½ÚµãµÄ¶àÍøÂçÀàĞÍÁ´½Ó£¬¼´É¾³ıÈë¶È
+//åˆ é™¤ä»netidç½‘ç»œçš„nodeidèŠ‚ç‚¹åˆ°å½“å‰èŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³åˆ é™¤å¤šç½‘ç»œå…¥åº¦
+int node::delLinkFromNodeMulti(int netid			//ç›®æ ‡ç½‘ç»œID
+							, int nodeid)			//åˆ é™¤ä»nodeidåˆ°å½“å‰èŠ‚ç‚¹çš„å¤šç½‘ç»œç±»å‹é“¾æ¥ï¼Œå³åˆ é™¤å…¥åº¦
 {
-	//¼ì²éÊÇ·ñÓĞ´ÓnetidÍøÂçÀ´µÄÊı¾İ£¬Èç¹ûÃ»ÓĞÔò·µ»Ø´íÎó
+	//æ£€æŸ¥æ˜¯å¦æœ‰ä»netidç½‘ç»œæ¥çš„æ•°æ®ï¼Œå¦‚æœæ²¡æœ‰åˆ™è¿”å›é”™è¯¯
 	auto it1 = adjMultiIn.find(netid);
 	if (it1 == adjMultiIn.end())
 	{
 		int error = NOLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó,±¾½Úµã <<-- ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½Ó²»´æÔÚ£¡ÎŞ·¨É¾³ı¡£" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æœ¬èŠ‚ç‚¹ <<-- ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥ä¸å­˜åœ¨ï¼æ— æ³•åˆ é™¤ã€‚" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
 	}
-	//¼ì²é´ÓnetidÍøÂçµÄnodeid½ÚµãÀ´µÄÊı¾İÊÇ·ñ´æÔÚ£¬²»´æÔÚÔò·µ»Ø´íÎó
+	//æ£€æŸ¥ä»netidç½‘ç»œçš„nodeidèŠ‚ç‚¹æ¥çš„æ•°æ®æ˜¯å¦å­˜åœ¨ï¼Œä¸å­˜åœ¨åˆ™è¿”å›é”™è¯¯
 	auto it = adjMultiIn[netid].find(nodeid);
 	if (it != adjMultiIn[netid].end())
 	{
-		//Èç¹ûÕÒµ½¼ÇÂ¼£¬ÔòÉ¾³ı¼ÇÂ¼
+		//å¦‚æœæ‰¾åˆ°è®°å½•ï¼Œåˆ™åˆ é™¤è®°å½•
 		adjMultiIn[netid].erase(it);
 		numAdjMultiIn--;
 	}
@@ -413,10 +413,10 @@ int node::delLinkFromNodeMulti(int netid			//Ä¿±êÍøÂçID
 	{
 		int error = NOLINK;
 
-		//¸Ä±ä×ÖÌåÑÕÉ«Îªºì
+		//æ”¹å˜å­—ä½“é¢œè‰²ä¸ºçº¢
 		CCol(0,2);
-		cout << "·¢ÉúÒ»¸ö´íÎó,±¾½Úµã <<-- ÍøÂç " << netid << " µÄ½Úµã " << nodeid << " µÄÁ´½Ó²»´æÔÚ£¡ÎŞ·¨É¾³ı¡£" << endl;
-		//ÉèÖÃÄ¬ÈÏ×ÖÌå
+		cout << "å‘ç”Ÿä¸€ä¸ªé”™è¯¯,æœ¬èŠ‚ç‚¹ <<-- ç½‘ç»œ " << netid << " çš„èŠ‚ç‚¹ " << nodeid << " çš„é“¾æ¥ä¸å­˜åœ¨ï¼æ— æ³•åˆ é™¤ã€‚" << endl;
+		//è®¾ç½®é»˜è®¤å­—ä½“
 		CCol(0,0);
 
 		return error;
