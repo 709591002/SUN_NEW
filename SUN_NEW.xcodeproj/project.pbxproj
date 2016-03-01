@@ -31,21 +31,21 @@
 /* Begin PBXFileReference section */
 		8B84C1AE1C85426C004BCF93 /* SUN_NEW */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SUN_NEW; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B84C1B11C85426C004BCF93 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = main.cpp; sourceTree = "<group>"; };
-		8BFE64611C8543F200A046CF /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = error.h; sourceTree = "<group>"; };
-		8BFE64621C8543F200A046CF /* model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = model.cpp; sourceTree = "<group>"; };
-		8BFE64631C8543F200A046CF /* model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = model.h; sourceTree = "<group>"; };
-		8BFE64641C8543F200A046CF /* multiNet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = multiNet.cpp; sourceTree = "<group>"; };
-		8BFE64651C8543F200A046CF /* multiNet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = multiNet.h; sourceTree = "<group>"; };
-		8BFE64661C8543F200A046CF /* network.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = network.cpp; sourceTree = "<group>"; };
-		8BFE64671C8543F200A046CF /* network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = network.h; sourceTree = "<group>"; };
-		8BFE64681C8543F200A046CF /* node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = node.cpp; sourceTree = "<group>"; };
-		8BFE64691C8543F200A046CF /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = node.h; sourceTree = "<group>"; };
-		8BFE646A1C8543F200A046CF /* other.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = other.cpp; sourceTree = "<group>"; };
-		8BFE646B1C8543F200A046CF /* other.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = other.h; sourceTree = "<group>"; };
-		8BFE646C1C8543F200A046CF /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = resource.h; sourceTree = "<group>"; };
-		8BFE646D1C8543F200A046CF /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = stdafx.cpp; sourceTree = "<group>"; };
-		8BFE646E1C8543F200A046CF /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = stdafx.h; sourceTree = "<group>"; };
-		8BFE646F1C8543F200A046CF /* targetver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = targetver.h; sourceTree = "<group>"; };
+		8BFE64611C8543F200A046CF /* error.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = error.h; sourceTree = "<group>"; };
+		8BFE64621C8543F200A046CF /* model.cpp */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = model.cpp; sourceTree = "<group>"; };
+		8BFE64631C8543F200A046CF /* model.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = model.h; sourceTree = "<group>"; };
+		8BFE64641C8543F200A046CF /* multiNet.cpp */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = multiNet.cpp; sourceTree = "<group>"; };
+		8BFE64651C8543F200A046CF /* multiNet.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = multiNet.h; sourceTree = "<group>"; };
+		8BFE64661C8543F200A046CF /* network.cpp */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = network.cpp; sourceTree = "<group>"; };
+		8BFE64671C8543F200A046CF /* network.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = network.h; sourceTree = "<group>"; };
+		8BFE64681C8543F200A046CF /* node.cpp */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = node.cpp; sourceTree = "<group>"; };
+		8BFE64691C8543F200A046CF /* node.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = node.h; sourceTree = "<group>"; };
+		8BFE646A1C8543F200A046CF /* other.cpp */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = other.cpp; sourceTree = "<group>"; };
+		8BFE646B1C8543F200A046CF /* other.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = other.h; sourceTree = "<group>"; };
+		8BFE646C1C8543F200A046CF /* resource.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = resource.h; sourceTree = "<group>"; };
+		8BFE646D1C8543F200A046CF /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 2; path = stdafx.cpp; sourceTree = "<group>"; };
+		8BFE646E1C8543F200A046CF /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = stdafx.h; sourceTree = "<group>"; };
+		8BFE646F1C8543F200A046CF /* targetver.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; lineEnding = 2; path = targetver.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
