@@ -12,7 +12,7 @@ int main()
 	//设置默认字体
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
-	network n1(100000,DIRECT_WITH_WEIGHT);
+	network n1(1000,DIRECT_WITH_WEIGHT);
 
 	cout << "创建完毕" << endl;
 
