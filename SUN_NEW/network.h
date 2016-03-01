@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "stdafx.h"
 #include <stdlib.h>
@@ -15,41 +15,41 @@
 
 using namespace std;
 
-//ÍøÂçÀàĞÍÃ¶¾Ù
+//ç½‘ç»œç±»å‹æšä¸¾
 enum netType
 {
-	UN_DIRECT_UN_WEIGHT = 0,		//ÎŞÏòÎŞÈ¨Íø
-	UN_DIRECT_WITH_WEIGHT = 1,		//ÎŞÏò¼ÓÈ¨ÍøÂç
-	DIRECT_UN_WEIGHT = 2,			//ÓĞÏòÎŞÈ¨ÍøÂç
-	DIRECT_WITH_WEIGHT = 3			//ÓĞÏò¼ÓÈ¨ÍøÂç
+	UN_DIRECT_UN_WEIGHT = 0,		//æ— å‘æ— æƒç½‘
+	UN_DIRECT_WITH_WEIGHT = 1,		//æ— å‘åŠ æƒç½‘ç»œ
+	DIRECT_UN_WEIGHT = 2,			//æœ‰å‘æ— æƒç½‘ç»œ
+	DIRECT_WITH_WEIGHT = 3			//æœ‰å‘åŠ æƒç½‘ç»œ
 };
 
 class network
 {
 public:
-	int netid;					//ÍøÂç±àºÅ£¬Ä¬ÈÏÎª0
-	vector<node> nodes;			//½ÚµãÈİÆ÷
-	int  nodeNum;				//½ÚµãÊıÁ¿
-	int  linkNum;				//±ßµÄÊıÁ¿
-	int type;					//ÍøÂçÀàĞÍ
-	network(int N, netType type);	//Ä¬ÈÏ¹¹Ôìº¯Êı
-	network(string in);			//¶ÁÈ¡ÎÄ¼ş¹¹ÔìÍøÂç£¬Ö§³Ö×Ô¶¯Ê¶±ğtxt¸ñÊ½
+	int netid;					//ç½‘ç»œç¼–å·ï¼Œé»˜è®¤ä¸º0
+	vector<node> nodes;			//èŠ‚ç‚¹å®¹å™¨
+	int  nodeNum;				//èŠ‚ç‚¹æ•°é‡
+	int  linkNum;				//è¾¹çš„æ•°é‡
+	int type;					//ç½‘ç»œç±»å‹
+	network(int N, netType type);	//é»˜è®¤æ„é€ å‡½æ•°
+	network(string in);			//è¯»å–æ–‡ä»¶æ„é€ ç½‘ç»œï¼Œæ”¯æŒè‡ªåŠ¨è¯†åˆ«txtæ ¼å¼
 
-	network(int N, netType type,int netid);	//Ä¬ÈÏ¹¹Ôìº¯Êı£¬´øÍøÂç±àºÅ
-	network(string in, int netid) ;			//¶ÁÈ¡ÎÄ¼ş¹¹ÔìÍøÂç£¬Ö§³Ö×Ô¶¯Ê¶±ğtxt¸ñÊ½£¬´øÍøÂç±àºÅ
+	network(int N, netType type,int netid);	//é»˜è®¤æ„é€ å‡½æ•°ï¼Œå¸¦ç½‘ç»œç¼–å·
+	network(string in, int netid) ;			//è¯»å–æ–‡ä»¶æ„é€ ç½‘ç»œï¼Œæ”¯æŒè‡ªåŠ¨è¯†åˆ«txtæ ¼å¼ï¼Œå¸¦ç½‘ç»œç¼–å·
 
-	//network(network & n2);		//¿½±´¹¹Ôìº¯Êı
-	~network();					//Îö¹¹º¯Êı
-	void showNetwork();			//ÏÔÊ¾ÍøÂç
-	int addLinkToNetwork(int from, int to, double weight);	//´Ófromµ½toÌí¼ÓÈ¨ÖµÎªweightµÄÁ´½Ó
-	int delLinkFromNetwork(int from, int to);				//´Ófromµ½toÉ¾³ıÁ´½Ó
-	int addNodesToNetwork(int N);							//Ìí¼ÓÊıÁ¿ÎªNµÄ½Úµã
-	int delNodeFromNetwork(int nodeid);						//É¾³ı±àºÅÎªnodeidµÄÍøÂç½Úµã
-	int isValidLink(int from, int to);						//ÑéÖ¤´Ófromµ½toµÄÁ´½ÓÊÇ·ñ´æÔÚ
-	int setLinkWeight(int from, int to, double weight);		//ĞŞ¸Ä´Ófromµ½toµÄÁ´½ÓÈ¨Öµ
-	double getLinkWeight(int from, int to);					//»ñÈ¡´Ófromµ½toµÄÁ´½ÓÈ¨Öµ
-	void outputNetwork(string out);							//Êä³öÍøÂçÎªÆÕÍ¨¸ñÊ½£¬Ö§³Ö×Ô¶¯´´½¨Ä¿Â¼(xxx/xxx.txt)
-	void outputNetwork_pajek(string out);					//Êä³öÍøÂçÎªÆÕÍ¨pajek¸ñÊ½£¬Ö§³Ö×Ô¶¯´´½¨Ä¿Â¼(xxx/xxx.txt)
-	void outputNetwork_pajek_frac(string out);				//Êä³öÍøÂçÎª¸ß¼¶pajek¸ñÊ½£¬Ö§³Ö×Ô¶¯´´½¨Ä¿Â¼(xxx/xxx.txt)
+	//network(network & n2);		//æ‹·è´æ„é€ å‡½æ•°
+	~network();					//ææ„å‡½æ•°
+	void showNetwork();			//æ˜¾ç¤ºç½‘ç»œ
+	int addLinkToNetwork(int from, int to, double weight);	//ä»fromåˆ°toæ·»åŠ æƒå€¼ä¸ºweightçš„é“¾æ¥
+	int delLinkFromNetwork(int from, int to);				//ä»fromåˆ°toåˆ é™¤é“¾æ¥
+	int addNodesToNetwork(int N);							//æ·»åŠ æ•°é‡ä¸ºNçš„èŠ‚ç‚¹
+	int delNodeFromNetwork(int nodeid);						//åˆ é™¤ç¼–å·ä¸ºnodeidçš„ç½‘ç»œèŠ‚ç‚¹
+	int isValidLink(int from, int to);						//éªŒè¯ä»fromåˆ°toçš„é“¾æ¥æ˜¯å¦å­˜åœ¨
+	int setLinkWeight(int from, int to, double weight);		//ä¿®æ”¹ä»fromåˆ°toçš„é“¾æ¥æƒå€¼
+	double getLinkWeight(int from, int to);					//è·å–ä»fromåˆ°toçš„é“¾æ¥æƒå€¼
+	void outputNetwork(string out);							//è¾“å‡ºç½‘ç»œä¸ºæ™®é€šæ ¼å¼ï¼Œæ”¯æŒè‡ªåŠ¨åˆ›å»ºç›®å½•(xxx/xxx.txt)
+	void outputNetwork_pajek(string out);					//è¾“å‡ºç½‘ç»œä¸ºæ™®é€špajekæ ¼å¼ï¼Œæ”¯æŒè‡ªåŠ¨åˆ›å»ºç›®å½•(xxx/xxx.txt)
+	void outputNetwork_pajek_frac(string out);				//è¾“å‡ºç½‘ç»œä¸ºé«˜çº§pajekæ ¼å¼ï¼Œæ”¯æŒè‡ªåŠ¨åˆ›å»ºç›®å½•(xxx/xxx.txt)
 };
 

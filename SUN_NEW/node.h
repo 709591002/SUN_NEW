@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -9,38 +9,38 @@
 #include "windows.h"
 using namespace std;
 
-//½Úµã×´Ì¬
-#define NODE_DEAD       0 //½Úµã²»´æÔÚ
-#define NODE_ACTIVE     1 //½Úµã´æÔÚ
+//èŠ‚ç‚¹çŠ¶æ€
+#define NODE_DEAD       0 //èŠ‚ç‚¹ä¸å­˜åœ¨
+#define NODE_ACTIVE     1 //èŠ‚ç‚¹å­˜åœ¨
 
 class node
 {
 public:
-	int id;											//½ÚµãIDºÅ
-	map<int, double> adjOut;						//³ö¶ÈÁÚ½Ó½ÚµãĞÅÏ¢£¬±àºÅºÍÈ¨ÖØ
-	int  numAdjOut;									//³ö¶ÈÁÚ¾Ó½Úµã¸öÊı
-	map<int, double> adjIn;							//Èë¶ÈÁÚ½Ó½ÚµãĞÅÏ¢£¬±àºÅºÍÈ¨ÖØ
-	int  numAdjIn;									//Èë¶ÈÁÚ¾Ó½Úµã¸öÊı
+	int id;											//èŠ‚ç‚¹IDå·
+	map<int, double> adjOut;						//å‡ºåº¦é‚»æ¥èŠ‚ç‚¹ä¿¡æ¯ï¼Œç¼–å·å’Œæƒé‡
+	int  numAdjOut;									//å‡ºåº¦é‚»å±…èŠ‚ç‚¹ä¸ªæ•°
+	map<int, double> adjIn;							//å…¥åº¦é‚»æ¥èŠ‚ç‚¹ä¿¡æ¯ï¼Œç¼–å·å’Œæƒé‡
+	int  numAdjIn;									//å…¥åº¦é‚»å±…èŠ‚ç‚¹ä¸ªæ•°
 
-	map<int, map<int, double>> adjMultiOut;			//¶àÍøÂç³ö¶ÈÁÚ½Ó½ÚµãĞÅÏ¢£¬ÍøÂçºÅ£¬±àºÅºÍÈ¨ÖØ
-	int  numAdjMultiOut;							//¶àÍøÂç³ö¶ÈÁÚ¾Ó½Úµã¸öÊı
-	map<int, map<int, double>> adjMultiIn;			//¶àÍøÂçÈë¶ÈÁÚ½Ó½ÚµãĞÅÏ¢£¬ÍøÂçºÅ£¬±àºÅºÍÈ¨ÖØ
-	int  numAdjMultiIn;								//¶àÍøÂçÈë¶ÈÁÚ¾Ó½Úµã¸öÊı
+	map<int, map<int, double>> adjMultiOut;			//å¤šç½‘ç»œå‡ºåº¦é‚»æ¥èŠ‚ç‚¹ä¿¡æ¯ï¼Œç½‘ç»œå·ï¼Œç¼–å·å’Œæƒé‡
+	int  numAdjMultiOut;							//å¤šç½‘ç»œå‡ºåº¦é‚»å±…èŠ‚ç‚¹ä¸ªæ•°
+	map<int, map<int, double>> adjMultiIn;			//å¤šç½‘ç»œå…¥åº¦é‚»æ¥èŠ‚ç‚¹ä¿¡æ¯ï¼Œç½‘ç»œå·ï¼Œç¼–å·å’Œæƒé‡
+	int  numAdjMultiIn;								//å¤šç½‘ç»œå…¥åº¦é‚»å±…èŠ‚ç‚¹ä¸ªæ•°
 
-	double strength;								//½ÚµãÈ¨Öµ
-	int cid;										//´ØÍÅid
-	int status;										// 1: ½Úµã´æÔÚ;  0: ½Úµã²»´æÔÚ;
-	node(int id);									//¹¹Ôìº¯Êı
-	~node();										//Îö¹¹º¯Êı
-	void showNode();								//ÏÔÊ¾½ÚµãĞÅÏ¢
-	int addLinkToNode(int nodeid, double weight);	//Îª½ÚµãÔö¼Ó³ö¶ÈÁÚ¾Ó
-	int delLinkFromNode(int nodeid);				//Îª½ÚµãÉ¾³ı³ö¶ÈÁÚ¾Ó
-	int addLinkFromNode(int nodeid, double weight);	//Îª½ÚµãÔö¼ÓÈë¶ÈÁÚ¾Ó
-	int delLinkToNode(int nodeid);					//Îª½ÚµãÉ¾³ıÈë¶ÈÁÚ¾Ó
-	int addLinkToNodeMulti(int netid, int nodeid, double weight);	//Îª½ÚµãÔö¼Ó¶àÍøÂç³ö¶ÈÁÚ¾Ó
-	int delLinkToNodeMulti(int netid, int nodeid);					//Îª½ÚµãÉ¾³ı¶àÍøÂç³ö¶ÈÁÚ¾Ó
-	int addLinkFromNodeMulti(int netid, int nodeid, double weight);	//Îª½ÚµãÔö¼Ó¶àÍøÂçÈë¶ÈÁÚ¾Ó
-	int delLinkFromNodeMulti(int netid, int nodeid);				//Îª½ÚµãÉ¾³ı¶àÍøÂçÈë¶ÈÁÚ¾Ó
+	double strength;								//èŠ‚ç‚¹æƒå€¼
+	int cid;										//ç°‡å›¢id
+	int status;										// 1: èŠ‚ç‚¹å­˜åœ¨;  0: èŠ‚ç‚¹ä¸å­˜åœ¨;
+	node(int id);									//æ„é€ å‡½æ•°
+	~node();										//ææ„å‡½æ•°
+	void showNode();								//æ˜¾ç¤ºèŠ‚ç‚¹ä¿¡æ¯
+	int addLinkToNode(int nodeid, double weight);	//ä¸ºèŠ‚ç‚¹å¢åŠ å‡ºåº¦é‚»å±…
+	int delLinkFromNode(int nodeid);				//ä¸ºèŠ‚ç‚¹åˆ é™¤å‡ºåº¦é‚»å±…
+	int addLinkFromNode(int nodeid, double weight);	//ä¸ºèŠ‚ç‚¹å¢åŠ å…¥åº¦é‚»å±…
+	int delLinkToNode(int nodeid);					//ä¸ºèŠ‚ç‚¹åˆ é™¤å…¥åº¦é‚»å±…
+	int addLinkToNodeMulti(int netid, int nodeid, double weight);	//ä¸ºèŠ‚ç‚¹å¢åŠ å¤šç½‘ç»œå‡ºåº¦é‚»å±…
+	int delLinkToNodeMulti(int netid, int nodeid);					//ä¸ºèŠ‚ç‚¹åˆ é™¤å¤šç½‘ç»œå‡ºåº¦é‚»å±…
+	int addLinkFromNodeMulti(int netid, int nodeid, double weight);	//ä¸ºèŠ‚ç‚¹å¢åŠ å¤šç½‘ç»œå…¥åº¦é‚»å±…
+	int delLinkFromNodeMulti(int netid, int nodeid);				//ä¸ºèŠ‚ç‚¹åˆ é™¤å¤šç½‘ç»œå…¥åº¦é‚»å±…
 };
 
 
