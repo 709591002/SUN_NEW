@@ -1,20 +1,20 @@
-ï»¿// SUN_NEW.cpp : å®šä¹‰æŽ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
-// é‡æ–°ç¼–å†™çš„å¤æ‚ç½‘ç»œæ¨¡åž‹
+// SUN_NEW.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌÐòµÄÈë¿Úµã¡£
+// ÖØÐÂ±àÐ´µÄ¸´ÔÓÍøÂçÄ£ÐÍ
 
 #include "stdafx.h"
 #include "multiNet.h"
 int main()
 {
-	//å¼€å§‹è®¡æ—¶å™¨
+	//¿ªÊ¼¼ÆÊ±Æ÷
 	time_t start = 0, end = 0;
 	time(&start);
 
-	//è®¾ç½®é»˜è®¤å­—ä½“
+	//ÉèÖÃÄ¬ÈÏ×ÖÌå
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
 
-	network n1(1000,DIRECT_WITH_WEIGHT);
+	network n1(100000,DIRECT_WITH_WEIGHT);
 
-	cout << "åˆ›å»ºå®Œæ¯•" << endl;
+	cout << "´´½¨Íê±Ï" << endl;
 
 	for (int i = 1; i < n1.nodeNum; i++)
 	{
@@ -23,9 +23,9 @@ int main()
 
 	n1.outputNetwork("aaa/sss.txt");
 
-	//ç»“æŸè®¡æ—¶
+	//½áÊø¼ÆÊ±
 	time(&end);
-	cout << "ç¨‹åºæ•´ä½“è¿è¡Œäº†ï¼š" << (end - start) << "ç§’" << endl;
+	cout << "³ÌÐòÕûÌåÔËÐÐÁË£º" << (end - start) << "Ãë" << endl;
 	return 0;
 }
 
