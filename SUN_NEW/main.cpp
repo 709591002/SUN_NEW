@@ -10,7 +10,7 @@ int main()
 	time(&start);
 
 	//…Ë÷√ƒ¨»œ◊÷ÃÂ
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_INTENSITY | FOREGROUND_INTENSITY);
+	CCol(0, 0);
 
 	network n1(100000,DIRECT_WITH_WEIGHT);
 
