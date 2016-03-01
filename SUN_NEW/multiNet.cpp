@@ -133,10 +133,12 @@ multiNet::multiNet(string in,int fileNum)
 	}
 
 	//最后一次写入多网络链接
-	int error=inputLinksToMulti(in + "/links.txt");
-
-	//
+	
+    inputLinksToMulti(in + "/links.txt");
+	
+    //如果多网络文件读取错误，则放弃读取整个多网络（该部分已注销）
 	/*
+     //int error=inputLinksToMulti(in + "/links.txt");
 	if (error)
 	{
 		CCol(0,2);
