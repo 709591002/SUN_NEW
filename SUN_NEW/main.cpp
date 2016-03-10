@@ -12,7 +12,7 @@ int main()
 	//设置默认字体
 	CCol(0, 0);
 
-	network n1(10000000,DIRECT_WITH_WEIGHT);
+	network n1(1000,DIRECT_WITH_WEIGHT);
 
 	cout << "创建完毕" << endl;
 
@@ -29,7 +29,6 @@ int main()
     
     //计算时间差
     double timeAll=difftime(end ,start);
-    cout<<timeAll<<endl;
 	cout << "程序整体运行了：" <<(int)timeAll/3600 << " 小时 "
                             <<(int)timeAll/60%60 << " 分钟 "
                             <<(int)timeAll%60 << " 秒 。" << endl;
