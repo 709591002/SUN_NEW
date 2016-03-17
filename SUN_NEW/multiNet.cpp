@@ -1,32 +1,32 @@
 ﻿#include "multiNet.h"
 
+using namespace std;
+
 //构造空网络
 multiNet::multiNet()
 {
 	linkNum = 0;				//初始化链接数量
 	nodeNum = 0;				//初始化节点数量
 	netNum = 0;
-	network n(10, UN_DIRECT_UN_WEIGHT);
-	nets.insert(nets.begin(),n);
+	nets.insert(make_pair(0,network(10,0)));
 	type = MULTI;
 }
 
 //双网络构造函数
-multiNet::multiNet(network A,network B				//两个网络
-					,multiType type)				//网络类型
+multiNet::multiNet(network A,network B)			//两个网络
 {
-	netNum=2;										//初始化子网络数量
+	netNum=2;									//初始化子网络数量
 	A.netid = 1;									//网络ID0
 	B.netid = 2;									//网络ID1
 	
 	nets.clear();
 
 	//初始化子网络容器
-	nets.insert(nets.end(),A);
-	nets.insert(nets.end(),B);
+	nets.insert(make_pair(A.netid,A));
+	nets.insert(make_pair(B.netid,B));
 
-	nodeNum=nets[0].nodeNum+ nets[1].nodeNum;		//初始化节点数量
-	linkNum = nets[0].linkNum + nets[1].linkNum;	//初始化边的数量
+	nodeNum=nets[A.netid].nodeNum+ nets[B.netid].nodeNum;		//初始化节点数量
+	linkNum = nets[A.netid].linkNum + nets[B.netid].linkNum;	//初始化边的数量
 	this->type=type;								//初始化网络类型
 }
 
@@ -34,7 +34,7 @@ multiNet::multiNet(network A,network B				//两个网络
 //复制N个网络组成多网络，构造函数
 multiNet::multiNet(int N			//子网络数量
 				, network n1		//要复制的网络对象
-				, multiType type)	//网络类型
+	)
 {
 	netNum = N;										//初始化子网络数量
 	nodeNum = 0;
@@ -45,21 +45,20 @@ multiNet::multiNet(int N			//子网络数量
 	for (int i = 1; i <= netNum; i++)
 	{
 		n1.netid = i;
-		nets.insert(nets.end(),n1);
+		nets.insert(make_pair(n1.netid,n1));
 	}
 
 	//初始化子网络链接数和节点数
 	for (auto it : nets)
 	{
-		nodeNum += it.nodeNum;
-		linkNum += it.linkNum;
+		nodeNum += it.second.nodeNum;
+		linkNum += it.second.linkNum;
 	}
-	this->type=type;								//初始化网络类型
 }
 
 //读取网络容器来构造多网络
-multiNet::multiNet(vector<network> temp				//网络容器
-					, multiType type)				//网络类型
+multiNet::multiNet(vector<network> temp	)			//网络容器
+				
 {
 	//初始化网络容器
 	nets.clear();
@@ -74,34 +73,22 @@ multiNet::multiNet(vector<network> temp				//网络容器
 		
 		netNum++;								//增加节点信息
 		it.netid = netNum;						//分配网络编号
-		nets.insert(nets.begin()+ netNum,it);	//插入节点
+		nets.insert(make_pair(netNum,it));	//插入节点
 		
 		//每插入一个节点，增加相关信息
 		nodeNum += it.nodeNum;
 		linkNum += it.linkNum;
 	}
-	this->type = type;
 }
 
 //读取目录中的文件群来构造多网络对象，格式为	net1.txt	net2.txt	......	links.txt
-multiNet::multiNet(string in,int fileNum)
+multiNet::multiNet(string in)
 {
 	if (in.empty())
 	{
-		CCol(0,2);
+		CCol(0, 2);
 		cout << "目录不允许为空，已自动返回原始多网络。" << endl;
-		CCol(0,0);
-		new (this) multiNet();
-	}
-
-
-	
-	//小于2说明不满足最低条件
-	if (fileNum < 2)
-	{
-		CCol(0,2);
-		cout << "目录没有所需文件，请修改路径名称重试，已自动返回原始多网络。" << endl;
-		CCol(0,0);
+		CCol(0, 0);
 		new (this) multiNet();
 	}
 
@@ -117,24 +104,52 @@ multiNet::multiNet(string in,int fileNum)
 	nodeNum = 0;				//初始化节点数量
 	netNum = 0;
 
+	//从links添加网络
+	string inlink = in + "/links.txt";
+	ifstream filelink(inlink.data(), ios::in);
+
+	//检查文件是否读取失败
+	if (filelink.fail())
+	{
+		CCol(0, 2);
+		cout << "读取多网络链接文件失败，路径为： " << inlink.c_str() << "，已自动返回原始多网络。" << endl;
+		CCol(0, 0);
+		new (this) multiNet();
+		return;
+	}
+
+	vector<int> netsF;			//储存网络编号
+	string line;					//储存临时一行
+
+	int tempNodeNum = 0;
+
+	getline(filelink, line);		//开始读取节点信息，即第一行
+	stringstream stream(line);	//处理一行信息，以空格为分隔符
+
+	//保存网络编号，后面创建用
+	int netnum;
+	while (stream >> netnum)
+	{
+		netsF.insert(netsF.end(),netnum);
+	}
+
+
 	//循环fileNum - 1次，先把网络写入
-	for (int i = 1; i < fileNum; i++)
+	for (auto it:netsF)
 	{
 		//将int转换为string
 		stringstream ss;
 		string tempNum;
-		ss << i;
+		ss << it;
 		ss >> tempNum;
 
 		//从netx.txt文件创建临时网络对象，并插入多网络
-		network temp(in + "/net" + tempNum + ".txt");
-		temp.netid=i;
-		addNetworkToMulti(temp);
+		addNetworkToMulti(network(in + "/net" + tempNum + ".txt"),it);
 	}
 
 	//最后一次写入多网络链接
 	
-    inputLinksToMulti(in + "/links.txt");
+	inputLinksToMulti(in + "/links.txt");
 	
     //如果多网络文件读取错误，则放弃读取整个多网络（该部分已注销）
 	/*
@@ -170,7 +185,7 @@ void multiNet::showMultiNet()
 	cout << "该多网络包含子网络 "<<netNum<<" 个，节点数 " <<nodeNum<<" 个，链接数 "<<linkNum<<" 个。"<< endl;
 	for (auto it : nets)
 	{
-		it.showNetwork();
+		it.second.showNetwork();
 	}
 }
 
@@ -178,7 +193,7 @@ void multiNet::showMultiNet()
 int multiNet::addLinkBetweenNets(int net1,int node1,int net2,int node2,double weight)
 {
 	//判断net1和net2没有越界
-	if (net1 > netNum || net2 > netNum || net1<=0||net2<=0)
+	if (!isValidNet(net1) ||!isValidNet(net2) || net1<=0||net2<=0)
 	{
 		int error = BEYONDLIMIT;
 
@@ -195,13 +210,13 @@ int multiNet::addLinkBetweenNets(int net1,int node1,int net2,int node2,double we
 	if (net1 == net2)
 	{
 		int error=0;
-		error=nets[net1-1].addLinkToNetwork(node1, node2, weight);
+		error=nets[net1].addLinkToNetwork(node1, node2, weight);
 		linkNum++;
 		return error;
 	}
 
 	//查看node1和node2是否越界
-	if (node1 > nets[net1-1].nodeNum || node2 > nets[net2-1].nodeNum|| node1<=0||node2<=0)
+	if ( !nets[net1].isValidNode(node1) || !nets[net2].isValidNode(node2) || node1<=0||node2<=0)
 	{
 		int error = BEYONDLIMIT;
 
@@ -218,11 +233,11 @@ int multiNet::addLinkBetweenNets(int net1,int node1,int net2,int node2,double we
 	int error=0;
 
 	//在node1增加node1到node2的出度链接
-	error=nets[net1-1].nodes[node1-1].addLinkToNodeMulti(net2, node2, weight);
-	error=nets[net1-1].linkNum++;
+	error=nets[net1].nodes[node1].addLinkToNodeMulti(net2, node2, weight);
+	error=nets[net1].linkNum++;
 	
 	//在node2增加node1到node2的入度链接
-	error=nets[net2-1].nodes[node2-1].addLinkFromNodeMulti(net1, node1, weight);
+	error=nets[net2].nodes[node2].addLinkFromNodeMulti(net1, node1, weight);
 	
 	linkNum++;
 	return error;
@@ -233,7 +248,7 @@ int multiNet::addLinkBetweenNets(int net1,int node1,int net2,int node2,double we
 int multiNet::delLinkBetweenNets(int net1, int node1, int net2, int node2)
 {
 	//判断net1和net2没有越界
-	if (net1 > netNum || net2 > netNum || net1<=0 || net2<=0)
+	if (isValidNet(net1) || isValidNet(net2) || net1<=0 || net2<=0)
 	{
 		int error = BEYONDLIMIT;
 
@@ -250,13 +265,13 @@ int multiNet::delLinkBetweenNets(int net1, int node1, int net2, int node2)
 	if (net1 == net2)
 	{
 		int error=0;
-		error = nets[net1-1].delLinkFromNetwork(node1, node2);
+		error = nets[net1].delLinkFromNetwork(node1, node2);
 		linkNum--;
 		return error;
 	}
 
 	//查看node1和node2是否越界
-	if (node1 > nets[net1-1].nodeNum || node2 > nets[net2-1].nodeNum|| node1<=0|| node2<=0)
+	if (!nets[net1].isValidNode(node1) || !nets[net2].isValidNode(node2) || node1<=0|| node2<=0)
 	{
 		int error = BEYONDLIMIT;
 
@@ -273,11 +288,11 @@ int multiNet::delLinkBetweenNets(int net1, int node1, int net2, int node2)
 	int error=0;
 
 	//在node1增加node1到node2的出度链接
-	error = nets[net1-1].nodes[node1].delLinkToNodeMulti(net2, node2);
-	error = nets[net1-1].linkNum--;
+	error = nets[net1].nodes[node1].delLinkToNodeMulti(net2, node2);
+	error = nets[net1].linkNum--;
 
 	//在node2增加node1到node2的入度链接
-	error = nets[net2-1].nodes[node2].delLinkFromNodeMulti(net1, node1);
+	error = nets[net2].nodes[node2].delLinkFromNodeMulti(net1, node1);
 
 	linkNum--;
 	return error;
@@ -301,7 +316,7 @@ int multiNet::delNodeFromMultiNet(int netid, int nodeid)
 	}
 
 	//查看nodeid是否越界
-	if (nodeid > nets[netid-1].nodeNum||nodeid<=0)
+	if (!nets[netid].isValidNode(nodeid)||nodeid<=0)
 	{
 		int error = BEYONDLIMIT;
 
@@ -319,57 +334,58 @@ int multiNet::delNodeFromMultiNet(int netid, int nodeid)
 	//如果该节点存留多网络链接关联，则全部删除
 	
 	//清除多网络出度
-	if (nets[netid-1].nodes[nodeid-1].numAdjMultiOut > 0)
+	if (nets[netid].nodes[nodeid].numAdjMultiOut > 0)
 	{
-		for (auto it : nets[netid - 1].nodes[nodeid - 1].adjMultiOut)
+		for (auto it : nets[netid].nodes[nodeid].adjMultiOut)
 			for (auto it2 : it.second)
 			{
-				nets[it.first - 1].nodes[it2.first - 1].delLinkFromNodeMulti(netid, nodeid);
+				nets[it.first].nodes[it2.first].delLinkFromNodeMulti(netid, nodeid);
 				//删除，网络it.first的节点it2.first <<-- 网络netid的节点nodeid
 				//指向该节点链接的起点所在网络链接数量减少
-				nets[it.first - 1].linkNum--;
-				nets[netid - 1].nodes[nodeid - 1].numAdjMultiOut--;
+				nets[it.first].linkNum--;
+				nets[netid].nodes[nodeid].numAdjMultiOut--;
 
 				//多网络链接总数量减少
 				linkNum--;
 			}
 		//检查是否清理干净
-		if (nets[netid - 1].nodes[nodeid - 1].numAdjMultiOut == 0)
+		if (nets[netid].nodes[nodeid].numAdjMultiOut == 0)
 		{
 			//出度清理干净了
-			nets[netid - 1].nodes[nodeid - 1].adjMultiOut.clear();
+			nets[netid].nodes[nodeid].adjMultiOut.clear();
 		}
 	}
 
 	//清除多网络入度
-	if (nets[netid-1].nodes[nodeid-1].numAdjMultiIn > 0)
+	if (nets[netid].nodes[nodeid].numAdjMultiIn > 0)
 	{
-		for(auto it: nets[netid-1].nodes[nodeid-1].adjMultiIn)
+		for(auto it: nets[netid].nodes[nodeid].adjMultiIn)
 			for (auto it2 : it.second)
 			{
-				nets[it.first-1].nodes[it2.first-1].delLinkToNodeMulti(netid, nodeid);
+				nets[it.first].nodes[it2.first].delLinkToNodeMulti(netid, nodeid);
 				//删除，网络it.first的节点it2.first -->> 网络netid的节点nodeid
 				//指向该节点链接的起点所在网络链接数量减少
-				nets[it.first-1].linkNum--;
-				nets[netid-1].nodes[nodeid-1].numAdjMultiIn--;
+				nets[it.first].linkNum--;
+				nets[netid].nodes[nodeid].numAdjMultiIn--;
 
 				//多网络链接总数量减少
 				linkNum--;
 			}
 		//检查是否清理干净
-		if (nets[netid-1].nodes[nodeid-1].numAdjMultiIn == 0)
+		if (nets[netid].nodes[nodeid].numAdjMultiIn == 0)
 		{
 			//入度清理干净了
-			nets[netid-1].nodes[nodeid-1].adjMultiIn.clear();
+			nets[netid].nodes[nodeid].adjMultiIn.clear();
 		}
 	}
 
+	//多网络总链接数减少数量，等于该节点所有链接数量总和
+	linkNum -= +nets[netid].nodes[nodeid].numAdjOut + nets[netid].nodes[nodeid].numAdjIn;
 
 	//入度和出度清除完毕，开始从网络层面清除节点
-	int error = nets[netid-1].delNodeFromNetwork(nodeid);
+	int error = nets[netid].delNodeFromNetwork(nodeid);
 
-	//多网络总链接数减少数量，等于该节点所有链接数量总和
-	linkNum -= +nets[netid-1].nodes[nodeid-1].numAdjOut + nets[netid-1].nodes[nodeid-1].numAdjIn;
+
 
 	if (!error)
 	{
@@ -380,7 +396,7 @@ int multiNet::delNodeFromMultiNet(int netid, int nodeid)
 }
 
 //添加一个网络到多网络
-int multiNet::addNetworkToMulti(network n1)
+int multiNet::addNetworkToMulti(network n1,int netid)
 {
 	if (n1.nodeNum == 0)
 	{
@@ -394,6 +410,17 @@ int multiNet::addNetworkToMulti(network n1)
 		return error;
 	}
 
+	if (isValidNet(netid))
+	{
+		int error = 1;
+		//改变字体颜色为红
+		CCol(0, 2);
+		cout << "发生一个错误 ，多网络已存在网络 "<<netid <<" ，故无法添加。"<<endl;
+		//改变字体颜色为普通
+		CCol(0, 0);
+		return error;
+	}
+
 	//网络数量加一
 	netNum++;
 
@@ -402,11 +429,26 @@ int multiNet::addNetworkToMulti(network n1)
 	nodeNum += n1.nodeNum;
 
 	//改变netid
-	n1.netid = netNum;
+	n1.netid = netid;
 
 	//nets容器中添加网络
-	nets.insert(nets.end(),n1);
+	nets.insert(make_pair(n1.netid,n1));
 	
+	return 0;
+}
+
+
+int multiNet::isValidNet(int netid)
+{
+	if (netid < 0)
+	{
+		return 0;
+	}
+	auto it = nets.find(netid);
+	if (it != nets.end())
+	{
+		return 1;
+	}
 	return 0;
 }
 
@@ -449,15 +491,20 @@ void multiNet::outputLinksFromMulti(string out)
 	//改变字体颜色为普通
 	CCol(0,0);
 
-	//开始写入文件
-	file << nodeNum << " " << type << endl;
+	//第一行写入多网络号
+	for (auto it : nets)
+	{
+		file << it.second.netid << " ";
+	}
 
+	file << endl;
+	//开始写入多链接
 	for(auto it:nets)
-		for (auto it1 : it.nodes)
+		for (auto it1 : it.second.nodes)
 		{
 			//it.netid	网络1
 			//it1.id	节点1
-			for (auto it2 : it1.adjMultiOut)
+			for (auto it2 : it1.second.adjMultiOut)
 			{
 				//it2.first	网络2
 				for (auto it3 : it2.second)
@@ -466,16 +513,16 @@ void multiNet::outputLinksFromMulti(string out)
 					//it3.second	权值
 
 					//weight会保留两位小数点
-					file << it.netid << " " << it1.id << " " << it2.first << " " << it3.first << " " << setiosflags(ios::fixed) << setprecision(2) << it3.second << endl;
+					file << it.second.netid << " " << it1.second.id << " " << it2.first << " " << it3.first << " " << setiosflags(ios::fixed) << setprecision(2) << it3.second << endl;
 				}
 			}
 		}
 }
 
 //读取多网络链接txt文件，添加到当前多网络
-int multiNet::inputLinksToMulti(string in)
+int multiNet::inputLinksToMulti(string inlink)
 {
-	if (in.empty())
+	if (inlink.empty())
 	{
 		CCol(0,2);
 		cout << "路径不允许为空，已自动返回。" << endl;
@@ -484,13 +531,13 @@ int multiNet::inputLinksToMulti(string in)
 	}
 
 	int error_return = 0;
-	ifstream file(in.data(), ios::in);
+	ifstream filelink(inlink.data(), ios::in);
 
 	//检查文件是否读取失败
-	if (file.fail())
+	if (filelink.fail())
 	{
 		CCol(0,2);
-		cout << "读取多网络链接文件失败，路径为： " << in.c_str() << "，已自动返回错误。" << endl;
+		cout << "读取多网络链接文件失败，路径为： " << inlink.c_str() << "，已自动返回错误。" << endl;
 		CCol(0,0);
 		return 2;
 	}
@@ -498,25 +545,37 @@ int multiNet::inputLinksToMulti(string in)
 	else
 	{
 		CCol(0,1);
-		cout << "读取多网络链接文件成功，路径为： " << in.c_str() << endl;
+		cout << "读取多网络链接文件成功，路径为： " << inlink.c_str() << endl;
 		CCol(0,0);
 		string line;				//储存临时一行
 
 		int tempNodeNum = 0;
 
-		getline(file, line);		//开始读取节点信息，即第一行
+		getline(filelink, line);		//开始读取节点信息，即第一行
 		stringstream stream(line);	//处理一行信息，以空格为分隔符
-		stream >> tempNodeNum;		//获取多网络链接数量
-		stream >> type;				//获取多网类型
+		
+		int netnum;
+		while (stream >> netnum)
+		{
+			if (!isValidNet(netnum))
+			{
+				CCol(0, 2);
+				cout << "正在读取多网络链接文件，网络 "<< netnum <<" 缺失，已自动创建，路径为： " << inlink.c_str() << endl;
+				CCol(0, 0);
+				addNetworkToMulti(network(1,0),netNum);
+				error_return = 1;
+			}
+		}
+
 
 		//下面开始添加多网络链接
-		while (!file.eof())
+		while (!filelink.eof())
 		{
 
-			getline(file, line);		//获取临时一行
+			getline(filelink, line);		//获取临时一行
 			stringstream stream(line);	//处理一行信息，以空格为分隔符
 
-			if (file.fail()) {
+			if (filelink.fail()) {
 				break;
 			}
 
@@ -546,7 +605,7 @@ int multiNet::inputLinksToMulti(string in)
 	if (error_return)
 	{
 		CCol(0,2);
-		cout << "读取多网络链接文件完毕，但部分信息有误，路径为： " << in.c_str() << endl;
+		cout << "读取多网络链接文件完毕，但部分信息有误，路径为： " << inlink.c_str() << endl;
 		CCol(0,0);
 	}
 
@@ -593,11 +652,11 @@ void multiNet::outputMultiNet(string out)
 		//int转换为string
 		stringstream ss;
 		string tempNum;
-		ss << it.netid;
+		ss << it.second.netid;
 		ss >> tempNum;
 		
 		//开始输出
-		it.outputNetwork(out + "/net" + tempNum+".txt");
+		it.second.outputNetwork(out + "/net" + tempNum+".txt");
 	}
 
 	//开始输出多网络链接文件
@@ -643,11 +702,11 @@ void multiNet::outputMultiNet_pajek(string out)
 		//int转换为string
 		stringstream ss;
 		string tempNum;
-		ss << it.netid;
+		ss << it.second.netid;
 		ss >> tempNum;
 
 		//开始输出
-		it.outputNetwork_pajek(out + "/net" + tempNum + ".txt");
+		it.second.outputNetwork_pajek(out + "/net" + tempNum + ".txt");
 	}
 
 	//开始输出多网络链接文件

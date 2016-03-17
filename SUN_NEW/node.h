@@ -11,9 +11,6 @@
 #endif
 using namespace std;
 
-//节点状态
-#define NODE_DEAD       0 //节点不存在
-#define NODE_ACTIVE     1 //节点存在
 
 class node
 {
@@ -31,8 +28,8 @@ public:
 
 	double strength;								//节点权值
 	int cid;										//簇团id
-	int status;										// 1: 节点存在;  0: 节点不存在;
-	node(int id);									//构造函数
+	node();										//构造函数
+	node(int id);								//构造函数
 	~node();										//析构函数
 	void showNode();								//显示节点信息
 	int addLinkToNode(int nodeid, double weight);	//为节点增加出度邻居
