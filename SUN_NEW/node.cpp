@@ -1,6 +1,11 @@
 ﻿#include "node.h"
 #include "other.h"
 
+node::node()
+{
+	
+}
+
 //节点类构造函数
 node::node(int id)
 {
@@ -13,10 +18,8 @@ node::node(int id)
 	numAdjMultiOut=0;		//初始化多网络出度邻居节点个数
 	adjMultiIn.clear();		//初始化多网络入度邻接节点信息
 	numAdjMultiIn=0;		//初始化多网络入度邻居节点个数
-
 	strength = 0.0;			//初始化节点权重
 	this->id = id;			//初始化节点ID号
-	status = NODE_ACTIVE;	//激活该节点
 }
 
 //节点类析构函数
@@ -28,7 +31,6 @@ node::~node()
 //打印信息
 void node::showNode()
 {
-	cout << endl;
 	cout << "---------------------------------------" << endl;
 	//打印该节点基础信息
 
@@ -91,6 +93,7 @@ void node::showNode()
 			cout << "  <<--  " << " 网络 " << it.first << " 的 " << it2.first << " ,权重：" << it2.second << endl;
 	}
 
+	cout << endl;
 	//改变字体颜色为普通
 	CCol(0,0);
 
