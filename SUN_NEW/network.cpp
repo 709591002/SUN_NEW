@@ -146,7 +146,7 @@ network::network(string in)
 			//孙老师格式
 			else if (tempTwo=="sun")
 			{
-			int nodeNumF = atoi(tempNum.c_str());		//储存网络节点数，包含string转换为int的过程
+			//int nodeNumF = atoi(tempNum.c_str());		//储存网络节点数，包含string转换为int的过程
 
 			//开始读取链接文件信息，循环“节点数量”次
 			while (!file.eof())
@@ -443,6 +443,8 @@ int network::addNodeToNetwork(int N)//为网络增加编号为N的节点
 		cout << "发生一个错误 ，无法为 网络 " << netid << " 增加编号为 " << N << " 的节点，它已存在！" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
+        
+        return error;
 	}
 
 	//增加编号为N的节点

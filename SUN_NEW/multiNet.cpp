@@ -27,7 +27,7 @@ multiNet::multiNet(network A,network B)			//两个网络
 
 	nodeNum=nets[A.netid].nodeNum+ nets[B.netid].nodeNum;		//初始化节点数量
 	linkNum = nets[A.netid].linkNum + nets[B.netid].linkNum;	//初始化边的数量
-	this->type=type;								//初始化网络类型
+	//this->type=type;								//初始化网络类型
 }
 
 
@@ -120,8 +120,6 @@ multiNet::multiNet(string in)
 
 	vector<int> netsF;			//储存网络编号
 	string line;					//储存临时一行
-
-	int tempNodeNum = 0;
 
 	getline(filelink, line);		//开始读取节点信息，即第一行
 	stringstream stream(line);	//处理一行信息，以空格为分隔符
@@ -549,7 +547,6 @@ int multiNet::inputLinksToMulti(string inlink)
 		CCol(0,0);
 		string line;				//储存临时一行
 
-		int tempNodeNum = 0;
 
 		getline(filelink, line);		//开始读取节点信息，即第一行
 		stringstream stream(line);	//处理一行信息，以空格为分隔符
