@@ -180,7 +180,9 @@ multiNet::~multiNet()
 //显示网络
 void multiNet::showMultiNet()
 {
+	CCol(1, 3);
 	cout << "该多网络包含子网络 "<<netNum<<" 个，节点数 " <<nodeNum<<" 个，链接数 "<<linkNum<<" 个。"<< endl;
+	CCol(0, 0);
 	for (auto it : nets)
 	{
 		it.second.showNetwork();
