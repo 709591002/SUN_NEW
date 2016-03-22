@@ -5,20 +5,17 @@
 
 #pragma once
 
-#include "targetver.h"
+#include <stdio.h>
+
 #ifdef _WIN32
 #include "windows.h"
-#endif
-#include <stdio.h>
-#ifdef _WIN32
 #include <tchar.h>
 #endif
+
 #include <iostream>
 #include <vector>
 #include <map>
-#include "network.h"
-#include "node.h"
-#include "error.h"
+
 //#include "other.h"
 
 using namespace std;

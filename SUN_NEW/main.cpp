@@ -2,7 +2,7 @@
 // 重新编写的复杂网络模型
 
 #include "stdafx.h"
-#include "multiNet.h"
+#include "network.h"
 int main()
 {
 	//开始计时器
@@ -12,9 +12,20 @@ int main()
 	//设置默认字体
 	CCol(0, 0);
 	
-	network n1("aaa/facebook_combined.txt");
+	network n1(1, 99);
+	n1.addNodeToNetwork(32132132);
+	n1.addLinkToNetwork(99, 32132132, 9.9);
+	n1.redistribute();
+	
+	multiNet m1(n1, n1);
+	
+	m1.addLinkBetweenNets(1, 1, 2, 2, 88.8);
+	m1.addLinkBetweenNets(2, 2, 1, 1, 77.7);
 
-	n1.outputNetwork_pajek("aaa/facebook_pajek.net");
+	//m1.showMultiNet();
+	network nn(m1);
+
+
 
 	/*
 	cout << "创建完毕" << endl;

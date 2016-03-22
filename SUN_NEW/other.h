@@ -1,5 +1,9 @@
 ﻿#pragma once
+
+#include <string>
 #include "stdafx.h"
+#include "network.h"
+#include "error.h"
 
 #ifdef _WIN32  
 #include <direct.h>  
