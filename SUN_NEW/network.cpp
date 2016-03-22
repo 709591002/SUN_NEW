@@ -450,29 +450,71 @@ network::network()
 //通过多网络构造单网络
 network::network(multiNet mul)
 {
-	//重新分配多网络节点编号
+	nodeNum = 0;
+	linkNum = 0;
+	netid = 0;
+	//为多网络mul重新编号
+	mul.redistribute();
 
-	//从1开始分配
-	int num = 1;
-	for (auto itnet:mul.nets)
+	//初始化num，从第二个网络开始叠加
+	int num = mul.nets[1].nodeNum+1;
+
+	//从第二个网络开始重新分配节点，直到所有节点编号不一样
+	for (int i = 2; i <= mul.netNum; i++)
+	{
+		for (int j = 1; j <= mul.nets[i].nodeNum; j++)
+		{
+			mul.changeNodeid(i, j, num);
+			//cout << i << " , " << j << " , " << num << endl;
+			num++;
+		}
+	}
+
+	//逐个添加网络节点
+
+	//遍历所有网络所有节点 （只添加出度）
+	for (auto itnet : mul.nets)
 	{
 		for (auto itnodes : mul.nets[itnet.first].nodes)
 		{
-			//如果不存在顺序节点，则规定新节点
-			if (!mul.nets[itnet.first].isValidNode(num))
+			//从单网络出度添加边
+			for (auto itout : mul.nets[itnet.first].nodes[itnodes.first].adjOut)
 			{
-				mul.changeNodeid(itnet.first, itnodes.first, num);
-				cout << itnet.first << "," << itnodes.first << "," << num << endl;
+				if (!isValidNode(itnodes.first))
+				{
+					addNodeToNetwork(itnodes.first);
+				}
+
+				if (!isValidNode(itout.first))
+				{
+					addNodeToNetwork(itout.first);
+				}
+
+				addLinkToNetwork(itnodes.first, itout.first, itout.second);
 			}
-			//cout << num << endl;
-			num++;
+
+			//从多网络出度添加边
+			for (auto mulout : mul.nets[itnet.first].nodes[itnodes.first].adjMultiOut)
+			{
+				//遍历每个网络
+				for(auto mulout2: mul.nets[itnet.first].nodes[itnodes.first].adjMultiOut[mulout.first])
+				{
+					if (!isValidNode(itnodes.first))
+					{
+						addNodeToNetwork(itnodes.first);
+					}
+
+					if (!isValidNode(mulout2.first))
+					{
+						addNodeToNetwork(mulout2.first);
+					}
+
+					addLinkToNetwork(itnodes.first, mulout2.first, mulout2.second);
+				}
+			}
 		}
-		cout << "next" << endl;
 	}
 
-		cout <<"result: "<<num<< " , " <<mul.nodeNum<< endl;
-
-	//逐个添加网络节点
 }
 
 //构造函数

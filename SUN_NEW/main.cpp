@@ -22,9 +22,14 @@ int main()
 	m1.addLinkBetweenNets(1, 1, 2, 2, 88.8);
 	m1.addLinkBetweenNets(2, 2, 1, 1, 77.7);
 
+	m1.addNetworkToMulti(n1, 99);
 	//m1.showMultiNet();
 	network nn(m1);
 
+	m1.showMultiNet();
+	
+
+	nn.showNetwork();
 
 
 	/*
