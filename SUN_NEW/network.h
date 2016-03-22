@@ -42,5 +42,7 @@ public:
 	void outputNetwork(string out);							//输出网络为普通格式，支持自动创建目录(xxx/xxx.txt)
 	void outputNetwork_pajek(string out);					//输出网络为普通pajek格式，支持自动创建目录(xxx/xxx.txt)
 	void outputNetwork_pajek_frac(string out);				//输出网络为高级pajek格式，支持自动创建目录(xxx/xxx.txt)
+	int changeNodeid(int oldid, int newid);					//改变网络编号
+	int redistribute();										//重新分配节点编号，从1开始
 };
 

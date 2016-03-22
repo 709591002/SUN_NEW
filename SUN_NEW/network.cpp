@@ -671,6 +671,9 @@ double network::getLinkWeight(int from, int to)
 //网络对象输出为普通文件格式，支持自动创建路径(格式为 XX/XX/XXX/XXX.txt)
 void network::outputNetwork(string out) //输出流
 {
+	//重新定义编号，pajek强制从1开始
+	redistribute();
+
 	if (out.empty())
 	{
 		CCol(0,2);
@@ -726,6 +729,9 @@ void network::outputNetwork(string out) //输出流
 //网络对象输出为普通pajek文件格式，支持自动创建路径(格式为 XX/XX/XXX/XXX.txt)
 void network::outputNetwork_pajek(string out)
 {
+	//重新定义编号，pajek强制从1开始
+	redistribute();
+
 	if (out.empty())
 	{
 		CCol(0,2);
@@ -797,6 +803,9 @@ p q v_{pq}                         // the edge from p to q has value v_{pq}
 //网络对象输出为带颜色的pajek文件格式，支持自动创建路径(格式为 XX/XX/XXX/XXX.txt)
 void network::outputNetwork_pajek_frac(string out)
 {
+	//重新定义编号，pajek强制从1开始
+	redistribute();
+
 	if (out.empty())
 	{
 		CCol(0,2);
@@ -857,4 +866,118 @@ void network::outputNetwork_pajek_frac(string out)
 			}
 		}
 	}
+}
+
+//改变网络编号，不改变结构
+int network::changeNodeid(int oldid, int newid)
+{
+	if (oldid == newid)
+	{
+		int error = 1;
+
+		//改变字体颜色为红
+		CCol(0, 2);
+		cout << "发生一个错误 ，无法改变 网络 " << netid << "的 节点编号 从 " << oldid << " --> " << newid << "，因为编号相同 。" << endl;
+		//改变字体颜色为普通
+		CCol(0, 0);
+
+		return error;
+	}
+
+	if (!isValidNode(oldid))
+	{
+		int error = 1;
+
+		//改变字体颜色为红
+		CCol(0, 2);
+		cout << "发生一个错误 ，无法改变 网络 " << netid << "的 节点编号 从 " << oldid << " --> " << newid << "，因为原节点不存在 。" << endl;
+		//改变字体颜色为普通
+		CCol(0, 0);
+
+		return error;
+	}
+
+	if (isValidNode(newid))
+	{
+		int error = 1;
+
+		//改变字体颜色为红
+		CCol(0, 2);
+		cout << "发生一个错误 ，无法改变 网络 " << netid << "的 节点编号 从 " << oldid << " --> " << newid << "，因为新节点已被占用 。" << endl;
+		//改变字体颜色为普通
+		CCol(0, 0);
+
+		return error;
+	}
+
+	//找到原有节点所在位置
+	auto it = nodes.find(oldid);
+
+	//改变原有节点的id信息
+	it->second.id = newid;
+
+	//插入新节点
+	nodes.insert(make_pair(newid, it->second));
+
+	//删除原有节点
+	nodes.erase(it);
+
+	//开始改变节点原有属性
+	
+	//遍历所有出度
+	for (auto it : nodes[newid].adjOut)
+	{
+		//对于每一个出度节点，改变他们的入度节点
+		auto itout = nodes[it.first].adjIn.find(oldid);
+		//插入新的节点信息
+		nodes[it.first].adjIn.insert(make_pair(newid, itout->second));
+		//删除旧的节点信息
+		nodes[it.first].adjIn.erase(itout);
+	}
+
+	//遍历所有入度
+	for (auto it : nodes[newid].adjIn)
+	{
+		//对于每一个入度节点，改变他们的出度信息
+		auto itin = nodes[it.first].adjOut.find(oldid);
+		//插入新的节点信息
+		nodes[it.first].adjOut.insert(make_pair(newid, itin->second));
+		//删除旧的节点信息
+		nodes[it.first].adjOut.erase(itin);
+	}
+	return 0;
+}
+
+
+int network::redistribute()
+{
+	CCol(0, 1);
+	cout << "正在为网络重新分配节点编号。" << endl;
+	CCol(0, 0);
+	
+	//没有节点，则返回
+	if (nodeNum == 0)
+	{
+		return 0;
+	}
+
+	//如果存在0号节点
+	if (nodes.find(0) != nodes.end())
+	{
+		//将0节点插入到末尾后面
+		auto end = nodes.rbegin();
+		changeNodeid(0, end->first + 1);
+	}
+
+	for (int i = 1; i <= nodeNum; i++)
+	{
+		//如果不存在，则改变序号
+		if (nodes.find(i) == nodes.end())
+		{
+			auto end = nodes.rbegin();
+			changeNodeid(end->first, i);
+		}
+	}
+
+	return 0;
 }

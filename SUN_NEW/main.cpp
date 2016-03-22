@@ -12,19 +12,10 @@ int main()
 	//设置默认字体
 	CCol(0, 0);
 	
-	network n1(10,0);
-	n1.addNodeToNetwork(99);
-	n1.addLinkToNetwork(1, 99, 2.9);
-	n1.addLinkToNetwork(1, 2, 3.3);
-	n1.addLinkToNetwork(1, 4, 4.3);
-	multiNet m1(n1, n1);
-	m1.addLinkBetweenNets(1, 99, 2, 1,9.99);
-	m1.addLinkBetweenNets(2, 99, 1, 3, 8.33);
-	m1.addNetworkToMulti(network(100,1), 99);
+	network n1("aaa/facebook_combined.txt");
 
-	m1.outputMultiNet_pajek("aaa/aaa");
-	multiNet m2("aaa/aaa");
-	m2.showMultiNet();
+	n1.outputNetwork_pajek("aaa/facebook_pajek.net");
+
 	/*
 	cout << "创建完毕" << endl;
 
