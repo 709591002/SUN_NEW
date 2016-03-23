@@ -145,9 +145,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="error.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="multiNet.h" />
     <ClInclude Include="network.h" />
+    <ClInclude Include="node.h" />
     <ClInclude Include="other.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -155,7 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="model.cpp" />
+    <ClCompile Include="multiNet.cpp" />
     <ClCompile Include="network.cpp" />
+    <ClCompile Include="node.cpp" />
     <ClCompile Include="other.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="main.cpp" />

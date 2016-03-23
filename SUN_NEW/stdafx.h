@@ -3,23 +3,27 @@
 // 特定于项目的包含文件
 //
 
-#pragma once
-
-#include <stdio.h>
+#include <vector>
+#include <map>
+#include <iostream>
+#include <fstream> 
+#include <iomanip>
+#include <string>
+#include <sstream>
 
 #ifdef _WIN32
 #include "windows.h"
-#include <tchar.h>
 #endif
 
-#include <iostream>
-#include <vector>
-#include <map>
-
-//#include "other.h"
+#include "other.h"
+#include "network.h"
+#include "node.h"
+#include "multiNet.h"
 
 using namespace std;
 
-
+class multiNet;
+class network;
+class node;
 
 // TODO:  在此处引用程序需要的其他头文件

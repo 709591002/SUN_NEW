@@ -2,7 +2,7 @@
 // 重新编写的复杂网络模型
 
 #include "stdafx.h"
-#include "network.h"
+
 int main()
 {
 	//开始计时器
