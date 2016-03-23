@@ -5,7 +5,7 @@ int CreatDir(char *pDir)
 {
 	int i = 0;
 	int iRet;
-	int iLen;
+	size_t iLen;
 	char* pszDir;
 
 	if (NULL == pDir)
@@ -13,7 +13,7 @@ int CreatDir(char *pDir)
 		return 0;
 	}
 
-	pszDir = strdup(pDir);
+	pszDir = _strdup(pDir);
 	iLen = strlen(pszDir);
 
 	// 创建中间目录  
@@ -51,10 +51,9 @@ void GetDirAndCreate(string FullName)
 
 	//转换读取目录的格式
 	char* temp;
-	const int len = FullName.length();
+	size_t len = FullName.length();
 	temp = new char[len + 1];
 	strcpy(temp, FullName.c_str());
-
 	//创建目录
 	CreatDir(temp);
 

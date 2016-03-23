@@ -624,7 +624,7 @@ void multiNet::outputMultiNet(string out)
 
 	//转换读取目录的格式
 	char* temp;
-	const int len = out.length();
+	size_t len = out.length();
 	temp = new char[len + 1];
 	strcpy(temp, out.c_str());
 
@@ -685,7 +685,7 @@ void multiNet::outputMultiNet_pajek(string out)
 
 	//转换读取目录的格式
 	char* temp;
-	const int len = out.length();
+	size_t len = out.length();
 	temp = new char[len + 1];
 	strcpy(temp, out.c_str());
 

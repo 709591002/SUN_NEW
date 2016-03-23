@@ -26,12 +26,8 @@ int main()
 	//m1.showMultiNet();
 	network nn(m1);
 
-	m1.showMultiNet();
-	
-
-	nn.showNetwork();
-
-
+	nn.outputNetwork("aaa/ddd.txt");
+	m1.outputMultiNet("aaa/mulllll");
 	/*
 	cout << "创建完毕" << endl;
 
