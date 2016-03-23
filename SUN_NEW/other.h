@@ -26,6 +26,7 @@
 #define ACCESS _access  
 #define MKDIR(a) _mkdir((a))  
 #else
+#define _strdup strdup
 #define ACCESS access  
 #define MKDIR(a) mkdir((a),0755)  
 #endif  
