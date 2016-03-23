@@ -1,15 +1,15 @@
-#pragma once
+ï»¿#pragma once
 #include "stdafx.h"
 using namespace std;
 
 class multiNet
 {
 public:
-	int netNum;					//×ÓÍøÂçÊıÁ¿
-	map <int, network> nets;		//×ÓÍøÂçÈİÆ÷
-	int  nodeNum;				//½ÚµãÊıÁ¿
-	int  linkNum;				//±ßµÄÊıÁ¿
-	int type;					//ÍøÂçÀàĞÍ
+	int netNum;					//å­ç½‘ç»œæ•°é‡
+	map <int, network> nets;		//å­ç½‘ç»œå®¹å™¨
+	int  nodeNum;				//èŠ‚ç‚¹æ•°é‡
+	int  linkNum;				//è¾¹çš„æ•°é‡
+	int type;					//ç½‘ç»œç±»å‹
 
 	multiNet();
 	multiNet(network A, network B);
