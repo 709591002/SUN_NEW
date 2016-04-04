@@ -108,12 +108,13 @@ int node::addLinkToNode(int nodeid //为当前节点增加一个到nodeid的链�
 	{
 		int error = LINKITSELF;
 
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误，让节点 " << nodeid << " 连接到自己了！" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -124,13 +125,13 @@ int node::addLinkToNode(int nodeid //为当前节点增加一个到nodeid的链�
 	if (it != adjOut.end())
 	{
 		int error = REDUNDANTLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误，" << id << " -->> " << nodeid << " 的链接已经建立。" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -153,13 +154,13 @@ int node::delLinkFromNode(int nodeid)
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误，不能删除节点自身！" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -176,13 +177,13 @@ int node::delLinkFromNode(int nodeid)
 	else
 	{
 		int error = NOLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误," << id << " -->> " << nodeid << " 的连接根本不存在！" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -198,13 +199,13 @@ int node::addLinkFromNode(int nodeid		//从编号为nodeid的节点入度
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误，让节点 " << nodeid << " 被自己指向了！" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -213,13 +214,13 @@ int node::addLinkFromNode(int nodeid		//从编号为nodeid的节点入度
 	if (it != adjIn.end())
 	{
 		int error = REDUNDANTLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误，" << id << " <<-- " << nodeid << " 的入度链接已经建立。" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -235,13 +236,13 @@ int node::delLinkToNode(int nodeid)
 	if (nodeid == id)
 	{
 		int error = LINKITSELF;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误，不能删除节点自身！" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -258,14 +259,14 @@ int node::delLinkToNode(int nodeid)
 	else
 	{
 		int error = NOLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误,无法删除 " << id << " -->> " << nodeid << " ，链接不存在。" << endl;
 
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -291,13 +292,13 @@ int node::addLinkToNodeMulti(int netid			//目标网络ID
 	if (it != adjMultiOut[netid].end())
 	{
 		int error = REDUNDANTLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误，本节点 -->> 网络 " << netid << " 的节点 " << nodeid << " 的链接已经建立。" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 	else
@@ -319,13 +320,13 @@ int node::delLinkToNodeMulti(int netid				//目标网络ID
 	if (it1 == adjMultiOut.end())
 	{
 		int error = NOLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误,本节点 -->> 网络 " << netid << " 的节点 " << nodeid << " 的链接不存在！无法删除。" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -341,13 +342,13 @@ int node::delLinkToNodeMulti(int netid				//目标网络ID
 	else
 	{
 		int error = NOLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误,本节点 -->> 网络 " << netid << " 的节点 " << nodeid << " 的链接不存在！无法删除。" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 	return 0;
@@ -369,13 +370,13 @@ int node::addLinkFromNodeMulti(int netid			//目标网络ID
 	if (it != adjMultiIn[netid].end())
 	{
 		int error = REDUNDANTLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误， 本节点 <<-- 网络 " << netid << " 的节点 " << nodeid << " 的链接已经建立。" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 	else
@@ -396,13 +397,13 @@ int node::delLinkFromNodeMulti(int netid			//目标网络ID
 	if (it1 == adjMultiIn.end())
 	{
 		int error = NOLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误,本节点 <<-- 网络 " << netid << " 的节点 " << nodeid << " 的链接不存在！无法删除。" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 	//检查从netid网络的nodeid节点来的数据是否存在，不存在则返回错误
@@ -416,13 +417,13 @@ int node::delLinkFromNodeMulti(int netid			//目标网络ID
 	else
 	{
 		int error = NOLINK;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误,本节点 <<-- 网络 " << netid << " 的节点 " << nodeid << " 的链接不存在！无法删除。" << endl;
 		//设置默认字体
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 	return 0;

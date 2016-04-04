@@ -86,9 +86,11 @@ multiNet::multiNet(string in)
 {
 	if (in.empty())
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "目录不允许为空，已自动返回原始多网络。" << endl;
 		CCol(0, 0);
+#endif
 		new (this) multiNet();
 	}
 
@@ -111,9 +113,11 @@ multiNet::multiNet(string in)
 	//检查文件是否读取失败
 	if (filelink.fail())
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "读取多网络链接文件失败，路径为： " << inlink.c_str() << "，已自动返回原始多网络。" << endl;
 		CCol(0, 0);
+#endif
 		new (this) multiNet();
 		return;
 	}
@@ -154,9 +158,12 @@ multiNet::multiNet(string in)
 	//int error=inputLinksToMulti(in + "/links.txt");
 	if (error)
 	{
+	#ifdef SHOWERR
 	CCol(0,2);
 	cout << "目录文件信息有误，请确认信息无误后重试，已自动返回原始多网络。" << endl;
 	CCol(0,0);
+	#endif
+
 	new (this) multiNet();
 	return;
 	}
@@ -196,13 +203,13 @@ int multiNet::addLinkBetweenNets(int net1, int node1, int net2, int node2, doubl
 	if (!isValidNet(net1) || !isValidNet(net2) || net1 <= 0 || net2 <= 0)
 	{
 		int error = BEYONDLIMIT;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法添加多网络链接，网络 " << net1 << " 或 网络 " << net2 << " 越界。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -219,13 +226,13 @@ int multiNet::addLinkBetweenNets(int net1, int node1, int net2, int node2, doubl
 	if (!nets[net1].isValidNode(node1) || !nets[net2].isValidNode(node2) || node1 <= 0 || node2 <= 0)
 	{
 		int error = BEYONDLIMIT;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法添加 网络" << net1 << "的 节点 " << node1 << " -->> " << "网络" << net2 << "的 节点" << node2 << "，因为越界。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -251,13 +258,13 @@ int multiNet::delLinkBetweenNets(int net1, int node1, int net2, int node2)
 	if (isValidNet(net1) || isValidNet(net2) || net1 <= 0 || net2 <= 0)
 	{
 		int error = BEYONDLIMIT;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法删除多网络链接，网络 " << net1 << " 或 网络 " << net2 << " 越界。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -274,13 +281,13 @@ int multiNet::delLinkBetweenNets(int net1, int node1, int net2, int node2)
 	if (!nets[net1].isValidNode(node1) || !nets[net2].isValidNode(node2) || node1 <= 0 || node2 <= 0)
 	{
 		int error = BEYONDLIMIT;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法删除多网络链接，节点 " << node1 << " 或 节点 " << node2 << " 越界。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -305,13 +312,13 @@ int multiNet::delNodeFromMultiNet(int netid, int nodeid)
 	if (netid > netNum || netid <= 0)
 	{
 		int error = BEYONDLIMIT;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法删除多网络节点，网络 " << netid << " 越界。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -319,13 +326,13 @@ int multiNet::delNodeFromMultiNet(int netid, int nodeid)
 	if (!nets[netid].isValidNode(nodeid) || nodeid <= 0)
 	{
 		int error = BEYONDLIMIT;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法删除多网络节点，节点 " << nodeid << " 越界。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -402,11 +409,14 @@ int multiNet::addNetworkToMulti(network n1, int netid)
 	if (n1.nodeNum == 0)
 	{
 		int error = 1;
+
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法添加空网络到多网络" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
+#endif
 
 		return error;
 	}
@@ -414,11 +424,14 @@ int multiNet::addNetworkToMulti(network n1, int netid)
 	if (isValidNet(netid))
 	{
 		int error = 1;
+
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，多网络已存在网络 " << netid << " ，故无法添加。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
+#endif
 		return error;
 	}
 
@@ -458,9 +471,11 @@ void multiNet::outputLinksFromMulti(string out)
 {
 	if (out.empty())
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "路径不允许为空，已自动返回。" << endl;
 		CCol(0, 0);
+#endif
 		return;
 	}
 
@@ -476,12 +491,13 @@ void multiNet::outputLinksFromMulti(string out)
 
 	if (file.fail())
 	{
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "创建文件路径错误： " << out.c_str() << " ，请检查路径是否正确！" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
+#endif
 
 		return;
 	}
@@ -525,9 +541,11 @@ int multiNet::inputLinksToMulti(string inlink)
 {
 	if (inlink.empty())
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "路径不允许为空，已自动返回。" << endl;
 		CCol(0, 0);
+#endif
 		return 2;
 	}
 
@@ -537,9 +555,11 @@ int multiNet::inputLinksToMulti(string inlink)
 	//检查文件是否读取失败
 	if (filelink.fail())
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "读取多网络链接文件失败，路径为： " << inlink.c_str() << "，已自动返回错误。" << endl;
 		CCol(0, 0);
+#endif
 		return 2;
 	}
 	//文件没有读取失败，正常进行
@@ -559,9 +579,11 @@ int multiNet::inputLinksToMulti(string inlink)
 		{
 			if (!isValidNet(netnum))
 			{
+#ifdef SHOWERR
 				CCol(0, 2);
 				cout << "正在读取多网络链接文件，网络 " << netnum << " 缺失，已自动创建，路径为： " << inlink.c_str() << endl;
 				CCol(0, 0);
+#endif
 				addNetworkToMulti(network(1, 0), netNum);
 				error_return = 1;
 			}
@@ -604,9 +626,11 @@ int multiNet::inputLinksToMulti(string inlink)
 
 	if (error_return)
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "读取多网络链接文件完毕，但部分信息有误，路径为： " << inlink.c_str() << endl;
 		CCol(0, 0);
+#endif
 	}
 
 	return error_return;
@@ -616,9 +640,11 @@ void multiNet::outputMultiNet(string out)
 {
 	if (out.empty())
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "目录不允许为空，已自动返回。" << endl;
 		CCol(0, 0);
+#endif
 		return;
 	}
 
@@ -632,9 +658,13 @@ void multiNet::outputMultiNet(string out)
 	//创建目录
 	if (CreatDir(temp) == -1)
 	{
+
+	#ifdef SHOWERR
 	CCol(0,2);
 	cout << "目录创建失败，路径为： " << out << "，已自动返回。" << endl;
 	CCol(0,0);
+	#endif
+
 	return;
 	}
 	*/
@@ -677,9 +707,11 @@ void multiNet::outputMultiNet_pajek(string out)
 {
 	if (out.empty())
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "目录不允许为空，已自动返回。" << endl;
 		CCol(0, 0);
+#endif
 		return;
 	}
 
@@ -726,30 +758,33 @@ int multiNet::changeNetid(int oldid, int newid)
 	//如果修改id一样，则返回错误
 	if (oldid == newid)
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "修改网络ID出现错误，无法修改为自己。 " << endl;
 		CCol(0, 0);
-
+#endif
 		return 1;
 	}
 
 	//查看原网络是否存在
 	if (!isValidNet(oldid))
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "修改网络ID出现错误，原 网络 " << oldid << " 并不存在。" << endl;
 		CCol(0, 0);
-
+#endif
 		return 1;
 	}
 
 	//查看新网络是否被占用
 	if (isValidNet(newid))
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "修改网络ID出现错误，新 网络 " << newid << " 已被占用。" << endl;
 		CCol(0, 0);
-
+#endif
 		return 1;
 	}
 
@@ -817,29 +852,34 @@ int multiNet::changeNodeid(int netid, int oldid, int newid)
 	//netid是否存在？
 	if (!isValidNet(netid))
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "修改多网络 节点ID出现错误，网络 " << netid << " 并不存在。" << endl;
 		CCol(0, 0);
-
+#endif
 		return 1;
 	}
 
 	//老节点编号是否存在
 	if (!nets[netid].isValidNode(oldid))
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "修改多网络 节点ID出现错误，网络 " << netid << " 的 节点 " << oldid << " 并不存在。" << endl;
 		CCol(0, 0);
 
+#endif
 		return 1;
 	}
 
 	//新节点编号是否被占用？
 	if (nets[netid].isValidNode(newid))
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "修改多网络 节点ID出现错误，网络 " << netid << " 的 节点 " << newid << " 已经存在。" << endl;
 		CCol(0, 0);
+#endif
 
 		return 1;
 	}

@@ -93,9 +93,11 @@ network::network(int N		//节点的数量
 
 	if (start < 0)
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "网络初始化无法从负数开始！故本网络从0开始构造。" << endl;
 		CCol(0, 0);
+#endif
 		start = 0;
 	}
 	//如果规定节点数大于0
@@ -115,9 +117,11 @@ network::network(int N		//节点的数量
 	//如果节点数小于0
 	else
 	{
+#ifdef SHOWERR
 		CCol(0, 2);
 		cout << "网络初始化节点数量无法为负数！已返回默认对象！" << endl;
 		CCol(0, 0);
+#endif
 		new (this) network(1, 0);
 	}
 
@@ -134,9 +138,11 @@ network::network(string in)
 	//检查文件是否读取失败
 	if (file.fail())
 	{
+#ifdef SHOWERR
 		CCol(0,2);
 		cout << "读取文件失败，路径为： " << in.c_str() << "，已自动将本对象替换为 空网络。" << endl;
 		CCol(0,0);
+#endif
 		new (this) network(1,0);
 	}
 	//文件没有读取失败，正常进行
@@ -357,9 +363,11 @@ network::network(string in)
 		
 		if (error)
 		{
+#ifdef SHOWERR
 			CCol(0,2);
 			cout << "文件格式错误，路径为： " << in.c_str() << "，已自动将本对象替换为 空网络。" << endl;
 			CCol(0,0);
+#endif
 			nodes.clear();		//清空节点信息
 			new (this) network(1,0);
 		}
@@ -425,12 +433,14 @@ int network::addLinkToNetwork(int from, int to //从from到to增加链接
 	{
 		error = BEYONDLIMIT;
 
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误，无法为 网络"<<netid<<" 添加从 " << from << " -->> " << to << " 的链接，因为越界了。" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
-		
+#endif
+
 		return error;
 	}
 
@@ -459,12 +469,14 @@ int network::delLinkFromNetwork(int from, int to)//从from到to删除链接
 	{
 		error = BEYONDLIMIT;
 
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误 ，无法删除 网络 "<<netid<<"的 " << from << " --> " << to << " 的链接，因为越界了。" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
-		
+#endif
+
 		return error;
 	}
 	
@@ -478,11 +490,13 @@ int network::delLinkFromNetwork(int from, int to)//从from到to删除链接
 	{
 		error = NOLINK;
 
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误 ，无法删除从 " << from << " --> " << to << " 的链接，因为没有链接。" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
 
 		return error;
 	}
@@ -501,11 +515,13 @@ int network::addNodeToNetwork(int N)//为网络增加编号为N的节点
 	if (N < 0)
 	{
 		int error=1;
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误 ，无法为 网络 "<<netid<<" 增加编号为 " << N << " 的节点，它编号小于0" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
 
 		return error;
 	}
@@ -513,12 +529,13 @@ int network::addNodeToNetwork(int N)//为网络增加编号为N的节点
 	if (isValidNode(N))
 	{
 		int error = 1;
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法为 网络 " << netid << " 增加编号为 " << N << " 的节点，它已存在！" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-        
+#endif
         return error;
 	}
 
@@ -541,12 +558,13 @@ int network::delNodeFromNetwork(int nodeid) //要删除节点编号
 	{
 		error = REDUNDANTLINK;
 
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，要删除的节点不存在 " << nodeid << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -556,11 +574,13 @@ int network::delNodeFromNetwork(int nodeid) //要删除节点编号
 	{
 		error = BEYONDLIMIT;
 
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误 ，无法删除 网络"<<netid<<" 的 节点"<<nodeid<<" ，它还存在多网络链接 " << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
 
 		return error;
 	}
@@ -661,11 +681,15 @@ int network::setLinkWeight(int from, int to, double weight)
 	if (!isValidNode(from) || from < 0 || !isValidNode(to) || to < 0)
 	{
 		int error = BEYONDLIMIT;
+
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误，无法设置 网络" <<netid<< " 的 " << from << " -->> " << to << " 的权值，因为节点不存在。" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
+
 		return error;
 	}
 
@@ -679,11 +703,13 @@ int network::setLinkWeight(int from, int to, double weight)
 	{
 		int error = NOLINK;
 		
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误，无法设置 网络"<<netid<<" 的 " << from << " -->> " << to << " 的权值，因为出度信息不存在。" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
 
 		return error;
 	}
@@ -698,11 +724,13 @@ int network::setLinkWeight(int from, int to, double weight)
 	{
 		int error = NOLINK;
 
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误，无法设置 网络" << netid << " 的 " << from << " -->> " << to << " 的权值，因为入度信息不存在。" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
 
 		return error;
 	}
@@ -716,11 +744,15 @@ double network::getLinkWeight(int from, int to)
 	if (!isValidNode(from) || from < 0 || !isValidNode(to) || to < 0)
 	{
 		int error = BEYONDLIMIT;
+
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误，无法获取从 网络" << netid << " 的 " << from << " -->> " << to << " 的权值，因为越界了。" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
+
 		return error;
 	}
 
@@ -733,11 +765,13 @@ double network::getLinkWeight(int from, int to)
 	{
 		int error = NOLINK;
 
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "发生一个错误，无法获取从 网络" << netid << " 的 " << from << " -->> " << to << " 的权值，因为没有链接了。" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
 
 		return error;
 	}
@@ -751,9 +785,11 @@ void network::outputNetwork(string out) //输出流
 
 	if (out.empty())
 	{
+#ifdef SHOWERR
 		CCol(0,2);
 		cout << "路径不允许为空，已自动返回。" << endl;
 		CCol(0,0);
+#endif
 		return;
 	}
 
@@ -769,12 +805,13 @@ void network::outputNetwork(string out) //输出流
 
 	if (file.fail())
 	{
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "创建文件路径错误： " << out.c_str() <<" ，请检查路径是否正确！"<< endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
 
 		return;
 	}
@@ -809,9 +846,11 @@ void network::outputNetwork_pajek(string out)
 
 	if (out.empty())
 	{
+#ifdef SHOWERR
 		CCol(0,2);
 		cout << "路径不允许为空，已自动返回。" << endl;
 		CCol(0,0);
+#endif
 		return;
 	}
 
@@ -827,12 +866,13 @@ void network::outputNetwork_pajek(string out)
 
 	if (file.fail())
 	{
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "创建文件路径错误： " << out.c_str() << " ，请检查路径是否正确！" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
 		return;
 	}
 	//改变字体颜色为红
@@ -883,9 +923,11 @@ void network::outputNetwork_pajek_frac(string out)
 
 	if (out.empty())
 	{
+#ifdef SHOWERR
 		CCol(0,2);
 		cout << "路径不允许为空，已自动返回。" << endl;
 		CCol(0,0);
+#endif
 		return;
 	}
 
@@ -901,12 +943,13 @@ void network::outputNetwork_pajek_frac(string out)
 
 	if (file.fail())
 	{
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0,2);
 		cout << "创建文件路径错误： " << out.c_str() << " ，请检查路径是否正确！" << endl;
 		//改变字体颜色为普通
 		CCol(0,0);
+#endif
 		return;
 	}
 	//改变字体颜色为红
@@ -949,26 +992,26 @@ int network::changeNodeid(int oldid, int newid)
 	if (oldid == newid)
 	{
 		int error = 1;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法改变 网络 " << netid << "的 节点编号 从 " << oldid << " --> " << newid << "，因为编号相同 。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
 	if (!isValidNode(oldid))
 	{
 		int error = 1;
-
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法改变 网络 " << netid << "的 节点编号 从 " << oldid << " --> " << newid << "，因为原节点不存在 。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
-
+#endif
 		return error;
 	}
 
@@ -976,11 +1019,13 @@ int network::changeNodeid(int oldid, int newid)
 	{
 		int error = 1;
 
+#ifdef SHOWERR
 		//改变字体颜色为红
 		CCol(0, 2);
 		cout << "发生一个错误 ，无法改变 网络 " << netid << "的 节点编号 从 " << oldid << " --> " << newid << "，因为新节点已被占用 。" << endl;
 		//改变字体颜色为普通
 		CCol(0, 0);
+#endif
 
 		return error;
 	}

@@ -3,6 +3,9 @@
 // 特定于项目的包含文件
 //
 
+//不注销则显示错误信息
+//#define SHOWERR
+
 #include <vector>
 #include <map>
 #include <iostream>
