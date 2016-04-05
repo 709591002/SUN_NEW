@@ -19,7 +19,9 @@
 #include <io.h>  
 #else  
 #include <stdarg.h>  
-#include <sys/stat.h>  
+#include <sys/stat.h>
+#include <unistd.h>
+#include <fcntl.h>
 #endif  
 
 #ifdef _WIN32  

@@ -22,7 +22,7 @@ erModel::erModel(int nodeNum, double p):network(nodeNum,1)
 }
 
 
-baModel::baModel(int m0,int m,int N):erModel( m0, p)
+baModel::baModel(int m0,int m,int N):erModel( m0, 1)
 {
 	int i, j, l, x1;
 
@@ -30,7 +30,6 @@ baModel::baModel(int m0,int m,int N):erModel( m0, p)
 	int newly;
 
 	int trueN;
-	double p;
 	int old;
 
 	vector<int> array;
@@ -40,7 +39,6 @@ baModel::baModel(int m0,int m,int N):erModel( m0, p)
 	// 1) start with a small number(m0) nodes
 	/* or start with a few nodes and links*/
 	// a fully connected network
-	p = 1;
 	
 
 	for (i = 1; i <= nodeNum; i++)

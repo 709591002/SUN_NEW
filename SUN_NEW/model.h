@@ -5,6 +5,7 @@
 using namespace std;
 
 
+//er模型
 class erModel :public network
 {
 public:
@@ -14,6 +15,7 @@ public:
 };
 
 
+//ba模型
 class baModel :public erModel
 {
 public:
