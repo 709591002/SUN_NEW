@@ -1,5 +1,5 @@
 ﻿#include "model.h"
-
+#include <math.h>
 
 erModel::erModel(int nodeNum, double p):network(nodeNum,1)
 {
@@ -82,44 +82,38 @@ baModel::baModel(int m0,int m,int N):erModel( m0, 1)
 	}
 }
 
+
+//fitness网络，无标度网络
 fitnessModel::fitnessModel(int nodeNum ,int linkNum ,double gamma):network(nodeNum,1)
 {
-	int x;
 	double w;
 	double alpha;
-	int error1, error2;
+	int error1;
 	srand((unsigned)time(0));
 
 	//算出alpha值
 	alpha = 1 / (gamma - 1);
 
-	//printf("alpha是%f \n", alpha);
-
 	int i, n;
 	n = nodeNum;
 
 	//数组存储节点weight
-	vector<double> a;
-
-	//初始化0位
-	a.insert(a.end(),0);
+	map<int,double> a;
 
 	//存储每个节点的weight值
 	double sump = 0;
 	for (i = 1; i <= n; i++)
 	{
-		a.insert(a.end(), pow(i, alpha*(-1.0)));
+		a.insert(make_pair(i, pow(i, alpha*(-1.0))));
 		sump += a[i];
 	}
-
-	double sumtemp = 0.0;
-
-
+    
 	//标准化
-	for (i = 1; i <= n; i++)
-	{
-		a[i] /= sump;
-	}
+    for(auto it:a)
+    {
+        a[it.first]/=sump;
+    }
+
 
 	//序列化
 	for (i = 1; i <= n; i++)
@@ -133,68 +127,61 @@ fitnessModel::fitnessModel(int nodeNum ,int linkNum ,double gamma):network(nodeN
 			a[i] = a[i] + a[i - 1];
 		}
 	}
-
+    
 	//开始加边
 	int Num = linkNum;
 
 	while (Num > 0)
 	{
 		int i, j;
-
+        
+        //生成第一个随机数
 		w = (double)rand() / (a[n] * RAND_MAX);
-		x = -999;
-		for (int k = 1; k <= n; k++)
-		{
-			if (w <= a[k] && w > a[k - 1])
-			{
-				x = k;
-				break;
-			}
-		}
+		
+        //寻找w的位置，k则是节点数
+        auto it = find_if(a.begin(), a.end(),
+                          [w](const pair<int, double> & x) -> bool
+                          { return x.second > w; }
+                          );
+        
+        //看看x是否找到了，没找到则从头开始
+        if(it!=a.end())
+        {
+            i=it->first;
+        }
+        else
+        {
+            continue;
+        }
 
-		if (x > 0)
-		{
-			i = x;
-		}
-		else
-		{
-			continue;
-		}
-
-
-		w = (double)rand() / (a[n] * RAND_MAX);
-
-		for (int k = 1; k <= n; k++)
-		{
-			if (w <= a[k] && w > a[k - 1])
-			{
-				x = k;
-				break;
-			}
-		}
+        //生成第二个随机数
+        w = (double)rand() / (a[n] * RAND_MAX);
 
 
-		if (x > 0)
-		{
-			j = x;
-		}
-		else
-		{
-			continue;
-		}
-
-
-
+        //寻找w的位置，k则是节点数
+        it = find_if(a.begin(), a.end(),
+                     [w](const pair<int, double> & x) -> bool
+                     { return x.second > w; }
+                     );
+        
+        //看看j是否找到了，没找到则从头开始
+        if(it!=a.end())
+        {
+            j=it->first;
+        }
+        else
+        {
+            continue;
+        }
+         
 		if (i != j)
 		{
 			error1 = addLinkToNetwork(i, j, 1.0);
-			//error2 = addLinkToNetwork(j, i, 1.0); //因为要单向加边，故注销
 
 			//如果没错误，则继续
-			//if (error1 != REDUNDANTLINK && error2 != REDUNDANTLINK) //因为要单向加边，故注销
 			if (error1 != REDUNDANTLINK)
 			{
-			Num--;	
+                Num--;
 			}
 		}
 	}
