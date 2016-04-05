@@ -24,4 +24,12 @@ public:
 
 };
 
+class fitnessModel :public network
+{
+public:
+
+	fitnessModel(int nodeNum, int linkNum, double gamma);
+
+};
+
 void uniformly_random_int(int * v, int begin, int end); //model会用到的随机算法
