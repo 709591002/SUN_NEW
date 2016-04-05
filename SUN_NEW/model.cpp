@@ -151,9 +151,6 @@ fitnessModel::fitnessModel(int nodeNum ,int linkNum ,double gamma):network(nodeN
         if(it!=a.end()&&w>a[it->first-1])
         {
             i=it->first;
-            cout<<w<<endl;
-            cout<<"i: "<<it->first<<" : "<<it->second<<endl<<endl;
-
         }
         else
         {
@@ -175,8 +172,6 @@ fitnessModel::fitnessModel(int nodeNum ,int linkNum ,double gamma):network(nodeN
         if(it!=a.end()&&w>a[it->first-1])
         {
             j=it->first;
-            cout<<w<<endl;
-            cout<<"j: "<<it->first<<" : "<<it->second<<endl<<endl;
         }
         else
         {
