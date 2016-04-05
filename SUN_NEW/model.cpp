@@ -1,6 +1,18 @@
 ﻿#include "model.h"
 #include <math.h>
 
+//自定义map容器搜索算法
+struct Finder
+{
+    Finder(double n_) : n(n_) { }
+    double n;
+    bool operator()(const pair<int, double> & x) const
+    {
+        return x.second > n;
+    }
+};
+
+//er模型
 erModel::erModel(int nodeNum, double p):network(nodeNum,1)
 {
 	int i, j, n;
@@ -21,7 +33,7 @@ erModel::erModel(int nodeNum, double p):network(nodeNum,1)
 	}
 }
 
-
+//BA模型
 baModel::baModel(int m0,int m,int N):erModel( m0, 1)
 {
 	int i, j, l, x1;
@@ -139,15 +151,22 @@ fitnessModel::fitnessModel(int nodeNum ,int linkNum ,double gamma):network(nodeN
 		w = (double)rand() / (a[n] * RAND_MAX);
 		
         //寻找w的位置，k则是节点数
+        /*
         auto it = find_if(a.begin(), a.end(),
                           [w](const pair<int, double> & x) -> bool
                           { return x.second > w; }
                           );
+        */
+        
+        auto it =find_if(a.begin(), a.end(), Finder(w));
         
         //看看x是否找到了，没找到则从头开始
         if(it!=a.end())
         {
             i=it->first;
+            cout<<w<<endl;
+            cout<<"i: "<<it->first<<" : "<<it->second<<endl<<endl;
+
         }
         else
         {
@@ -159,15 +178,20 @@ fitnessModel::fitnessModel(int nodeNum ,int linkNum ,double gamma):network(nodeN
 
 
         //寻找w的位置，k则是节点数
+        /*
         it = find_if(a.begin(), a.end(),
                      [w](const pair<int, double> & x) -> bool
                      { return x.second > w; }
                      );
+        */
+        it =find_if(a.begin(), a.end(), Finder(w));
         
         //看看j是否找到了，没找到则从头开始
         if(it!=a.end())
         {
             j=it->first;
+            cout<<w<<endl;
+            cout<<"j: "<<it->first<<" : "<<it->second<<endl<<endl;
         }
         else
         {

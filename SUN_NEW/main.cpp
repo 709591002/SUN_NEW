@@ -14,7 +14,7 @@ int main()
 	CCol(0, 0);
 	////////////////////////////////////////////////////////////////////////////////////////////
 	
-	fitnessModel et(10000,20000,0.6);
+	fitnessModel et(10,20,0.6);
 	et.showNetwork();
 	et.outputNetwork_pajek("pajek/aaa.net");
 	
