@@ -24,7 +24,8 @@ int main()
 	time(&end);
     
     //计算时间差
-    double timeAll=difftime(end ,start);
+	double timeAll;
+	timeAll = difftime(end , start);
 	cout << "程序整体运行了：" <<(int)timeAll/3600 << " 小时 "
                             <<(int)timeAll/60%60 << " 分钟 "
                             <<(int)timeAll%60 << " 秒 。" << endl;
