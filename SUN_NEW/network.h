@@ -33,6 +33,7 @@ public:
 	int changeNodeid(int oldid, int newid);					//改变网络编号
 	int redistribute();										//重新分配网络编号
 	//重新分配节点编号，从1开始
+    vector<int> getLevelNodes(int nodeid, int d);           //获得指定层级的节点编号
 };
 
 

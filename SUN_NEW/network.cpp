@@ -1102,6 +1102,42 @@ int network::redistribute()
 	return 0;
 }
 
+vector<int> network::getLevelNodes(int nodeid, int d)
+{
+    //存放储存的结果
+    vector<int> result;
+    
+    //排除节点的容器
+    map<int,int> information;
+    
+    //寻找距离小于0，返回本节点
+    if (d<=0)
+    {
+        result.insert(result.end(), nodeid);
+        return result;
+    }
+    
+    //寻找距离为1，返货第一层排除结果
+    if (d==1)
+    {
+        
+    //第一层循环
+    for (auto it:nodes[nodeid].adjOut)
+    {
+        //将邻居节点排除在外
+        result.insert(result.end(), it.first);
+    }
+
+        return result;
+    }
+    
+    //寻找距离大于1，循环N次，丰富排除节点
+    for(int i=d;i==0;i--)
+    {
+        
+    }
+    return result;
+}
 #pragma endregion
 
 ////////////////////////////
