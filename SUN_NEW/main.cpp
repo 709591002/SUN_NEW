@@ -14,9 +14,13 @@ int main()
 	CCol(0, 0);
 	////////////////////////////////////////////////////////////////////////////////////////////
 	
-	fitnessModel et(10000,30000,0.7);
-	et.showNetwork();
-	et.outputNetwork_pajek("pajek/aaa.net");
+	fitnessModel et(500,10000,0.7);
+	//et.showNetwork();
+    auto l=et.getLevelNodes(2, 3);
+    for(auto it:l)
+    {
+        cout<<it<<endl;
+    }
 	
 	////////////////////////////////////////////////////////////////////////////////////////////
     

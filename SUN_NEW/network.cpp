@@ -1107,36 +1107,83 @@ vector<int> network::getLevelNodes(int nodeid, int d)
     //存放储存的结果
     vector<int> result;
     
-    //排除节点的容器
-    map<int,int> information;
+    //初始化层级数值
+    for(auto it:nodes)
+    {
+        nodes[it.first].level=-1;
+    }
     
-    //寻找距离小于0，返回本节点
+    //每一层节点的容器
+    map<int,vector<int>> information;
+    
+    //添加原点到information
+    vector<int> o;
+    o.insert(o.begin(),nodeid);
+    //添加原点信息到information
+    information.insert(make_pair(0,o));
+    
+    //寻找距离d小于0
     if (d<=0)
     {
-        result.insert(result.end(), nodeid);
-        return result;
+        return information[0];
     }
     
-    //寻找距离为1，返货第一层排除结果
-    if (d==1)
+    //寻找距离d为1
+    else
     {
+        //d次循环
+        for(int i=1;i<=d;i++)
+        {
+            //information中新建一个层，储存信息
+            vector<int> temp;
+            temp.clear();
+            information.insert(make_pair(i,temp));
+            
+            //如果上一层为空，则跳过
+            if(information[i-1].empty())
+            {
+                
+                continue;
+            }
+            
+            //遍历上一层中，每一个节点
+            for(auto it1:information[i-1])
+            {
+                //对每一个节点，遍历它的出度
+                for(auto it2:nodes[it1].adjOut)
+                {
+                    //it1为当前中心节点号
+                    //如果该邻居节点还没有被写入level信息，则写入当前层级信息
+                    if(nodes[it2.first].level==-1)
+                    {
+                    //改写当前层级数
+                    nodes[it2.first].level=i;
+                    //节点写入information
+                    information[i].insert(information[i].begin(), it2.first);
+                    }
+                }
+                
+                //对每一个节点，遍历它的入度
+                for(auto it2:nodes[it1].adjIn)
+                {
+                    //it1为当前中心节点号
+                    //如果该邻居节点还没有被写入level信息，则写入当前层级信息
+                    if(nodes[it2.first].level==-1)
+                    {
+                        //改写当前层级数
+                        nodes[it2.first].level=i;
+                        //节点写入information
+                        information[i].insert(information[i].begin(), it2.first);
+                    }
+                }
+                
+            }
+        }
         
-    //第一层循环
-    for (auto it:nodes[nodeid].adjOut)
-    {
-        //将邻居节点排除在外
-        result.insert(result.end(), it.first);
-    }
-
-        return result;
+        //返回最后一层结果
+        return information[d];
     }
     
-    //寻找距离大于1，循环N次，丰富排除节点
-    for(int i=d;i==0;i--)
-    {
-        
-    }
-    return result;
 }
 #pragma endregion
 
