@@ -7,6 +7,7 @@ class node
 public:
 	int id;											//节点ID号
     int level;                                      //节点层级
+	int ci;											//节点CI值
 	map<int, double> adjOut;						//出度邻接节点信息，编号和权重
 	int  numAdjOut;									//出度邻居节点个数
 	map<int, double> adjIn;							//入度邻接节点信息，编号和权重

@@ -35,7 +35,7 @@ public:
 	//重新分配节点编号，从1开始
     vector<int> getLevelNodes(int nodeid, int d);           //获得指定层级的节点编号
     
-    int refreshCI();
+    void refreshCI(int d);									//刷新CI值
     
 };
 

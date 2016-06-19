@@ -14,13 +14,13 @@ int main()
 	CCol(0, 0);
 	////////////////////////////////////////////////////////////////////////////////////////////
 	
-	fitnessModel et(500,10000,0.7);
+	fitnessModel et(50,1000,0.7);
 	//et.showNetwork();
-    auto l=et.getLevelNodes(2, 3);
-    for(auto it:l)
-    {
-        cout<<it<<endl;
-    }
+	et.refreshCI(2);
+	for (auto it : et.nodes)
+	{
+		cout << it.first << "," << it.second.ci << endl;
+	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////
     

@@ -1185,6 +1185,34 @@ vector<int> network::getLevelNodes(int nodeid, int d)
     }
     
 }
+void network::refreshCI(int d)
+{
+	//遍历每一个节点
+	for (auto it1 : nodes)
+	{
+		//it1是当前节点号
+		//获取层级节点
+		auto levelData = getLevelNodes(it1.first, d);
+		int tempSum = 0;
+
+		//获取层级节点之和
+		for (auto it2 : levelData)
+		{
+			tempSum += nodes[it2].numAdjIn + nodes[it2].numAdjOut-1;
+		}
+
+		//如果是孤立节点，则CI值设为0
+		if (it1.second.numAdjIn + it1.second.numAdjIn <= 0)
+		{
+			nodes[it1.first].ci = 0;
+		}
+		else
+		{
+			nodes[it1.first].ci = tempSum*(it1.second.numAdjIn + it1.second.numAdjIn-1);
+		}
+
+	}
+}
 #pragma endregion
 
 ////////////////////////////

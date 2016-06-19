@@ -22,6 +22,7 @@ node::node(int id)
 	strength = 0.0;			//初始化节点权重
 	this->id = id;			//初始化节点ID号
     level=-1;                //初始化层级信息
+	ci = -1;
 }
 
 //节点类析构函数
